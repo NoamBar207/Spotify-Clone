@@ -1,0 +1,34 @@
+.station-details-container {
+
+
+    background-color: $clr-black-12;
+    color: $clr-white-F;
+    height: 100%;
+    height: 700px;
+    padding-inline-start: 220px;
+
+
+
+    .song-container {
+        width: 100%;
+        @include flex-center;
+        justify-content: space-between;
+        gap: 8px;
+
+        .song-img-title {
+            // @include flex-center;
+            display: flex;
+            align-items: center;
+            width: 350px;
+            gap:12px;
+
+            img {
+                display: flex;
+                // align-self: flex-start;
+                justify-self: flex-start;
+            }
+        }
+
+    }
+
+}

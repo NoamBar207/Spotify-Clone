@@ -1,0 +1,97 @@
+[
+    {
+        "_id": "5cksxjas89xjsa8xjsa8jxs09",
+        "name": "Funky Monks",
+        "tags": [
+            "Funk",
+            "Happy"
+        ],
+        "createdAt": 1541652422,
+        "createdBy": {
+            "_id": "u101",
+            "fullname": "Puki Ben David",
+            "imgUrl": "http://some-photo/"
+        },
+        "likedByUsers": [
+            "{minimal-user}",
+            "{minimal-user}"
+        ],
+        "songs": [
+            {
+                "kind": "youtube#searchResult",
+                "etag": "RPt0_qRu0U90AWUau_aq_lP9XQQ",
+                "id": {
+                  "kind": "youtube#video",
+                  "videoId": "C5zSsJ5CU54"
+                },
+                "snippet": {
+                  "publishedAt": "2022-01-16T16:32:07Z",
+                  "channelId": "UCVtREKGuU0ZjpJMVRJddQXQ",
+                  "title": "הירוקים מהכרמל",
+                  "description": "שה לה לה לה לה לה הירוקים מהכרמל שה לה לה לה לה לה באים היום להשתולל מכבי כל הגוף רועד איתך אני כבר לא יכול ולא מצליח להסביר ת׳הרגשה ...",
+                  "thumbnails": {
+                    "default": {
+                      "url": "https://i.ytimg.com/vi/C5zSsJ5CU54/default.jpg",
+                      "width": 120,
+                      "height": 90
+                    },
+                    "medium": {
+                      "url": "https://i.ytimg.com/vi/C5zSsJ5CU54/mqdefault.jpg",
+                      "width": 320,
+                      "height": 180
+                    },
+                    "high": {
+                      "url": "https://i.ytimg.com/vi/C5zSsJ5CU54/hqdefault.jpg",
+                      "width": 480,
+                      "height": 360
+                    }
+                  },
+                  "channelTitle": "GA02OFFICIAL",
+                  "liveBroadcastContent": "none",
+                  "publishTime": "2022-01-16T16:32:07Z"
+                }
+              },
+            {
+                "kind": "youtube#searchResult",
+                "etag": "_qmdbvZjQadFQ22Yn49sIECnD-k",
+                "id": {
+                    "kind": "youtube#video",
+                    "videoId": "XXYlFuWEuKI"
+                },
+                "snippet": {
+                    "publishedAt": "2021-01-05T17:00:12Z",
+                    "channelId": "UCF_fDSgPpBQuh1MsUTgIARQ",
+                    "title": "The Weeknd - Save Your Tears (Official Music Video)",
+                    "description": "Official music video by The Weeknd performing \"Save Your Tears\"– 'After Hours' available everywhere now: ...",
+                    "thumbnails": {
+                        "default": {
+                            "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/default.jpg",
+                            "width": 120,
+                            "height": 90
+                        },
+                        "medium": {
+                            "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/mqdefault.jpg",
+                            "width": 320,
+                            "height": 180
+                        },
+                        "high": {
+                            "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/hqdefault.jpg",
+                            "width": 480,
+                            "height": 360
+                        }
+                    },
+                    "channelTitle": "TheWeekndVEVO",
+                    "liveBroadcastContent": "none",
+                    "publishTime": "2021-01-05T17:00:12Z"
+                }
+            }
+        ],
+        "msgs": [
+            {
+                "id": "m101",
+                "from": "{mini-user}",
+                "txt": "Manish?"
+            }
+        ]
+    }
+]

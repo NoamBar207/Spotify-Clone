@@ -1,0 +1,47 @@
+
+
+
+.app-footer {
+
+    background-color: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.625rem;
+    width: 100%;
+    padding: 0 16px;
+    position: fixed;
+    bottom: 0;
+
+    .song-player-container {
+        display: flex;
+        gap:16px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 40px;
+        .song-player-left{
+            >*{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 32px;
+                height: 32px;
+            }
+            display: flex;
+            gap: 8px;
+        }
+        .song-player-right{
+            display: flex;
+            gap: 8px;
+        }
+    }
+
+    .app-footer-volume{
+        display: flex;
+
+        .volume-container{
+            @include flex-center
+        }
+    }
+}

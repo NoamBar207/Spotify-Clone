@@ -1,0 +1,28 @@
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin for-laptop-layout {
+	@media (max-width: 1200px) {
+		@content;
+	}
+}
+
+
+@mixin for-tablet-layout {
+	@media (max-width: 767px) {
+		@content;
+	}
+}
+
+
+@mixin for-mobile-layout {
+	@media (max-width: 480px) {
+		@content;
+	}
+}
+
+
+
