@@ -19,10 +19,20 @@ const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 
 
 
+export function setCurrStation(station) {
+    return async (dispatch) => {
+        try{
+            const action = {type:'SET_CURR_STATION', station}
+            dispatch(action)
+        } catch(err){
+            console.error('Cannot set currStation', err);
+        }
+    }
+}
 
 
 export function setCurrSong(song) {
-    return async (dispatch ,getState) => {
+    return async (dispatch, getState) => {
         // let currSong
         try {
             // currSong = YOTUBE_SOURCE+songVideoId
@@ -38,7 +48,7 @@ export function setCurrSong(song) {
 
 
 export function setIsPlaying(isPlaying) {
-    return async (dispatch,getState) => {
+    return async (dispatch, getState) => {
         try {
             const action = { type: 'SET_IS_PLAYING', isPlaying }
             dispatch(action)

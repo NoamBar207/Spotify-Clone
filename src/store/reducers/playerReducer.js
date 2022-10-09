@@ -1,5 +1,5 @@
 const initialState = {
-    player: null
+    player: {}
 }
 
 

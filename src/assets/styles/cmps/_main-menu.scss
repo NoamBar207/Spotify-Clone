@@ -1,18 +1,12 @@
 .main-menu-container {
-
-	background-color: green;
+	grid-area: menu;
+	background-color: $clr-black-12;
 	color: $clr-text-grey;
 	display: flex;
 	flex-direction: column;
 	// z-index: 10;
-	width: 200px;
-	// background-color: #f4f5f7;
-	position: absolute;
-	height: 100%;
-	transition: 0.4s;
-	// right: -100%;
-	// right: 0;
-	top: 0;
+	// width: 200px;
+	// transition: 0.4s;
 
 	&.show {
 		right: 0;

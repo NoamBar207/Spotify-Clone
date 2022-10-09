@@ -8,10 +8,11 @@ import volumeSvg from '../assets/img/volume-svgrepo-com.svg'
 import speakerSvg from '../assets/img/speaker-svgrepo-com.svg'
 import queueSvg from '../assets/img/queue-duotone-svgrepo-com.svg'
 import micSvg from '../assets/img/microphone-svgrepo-com.svg'
-import homePageIcon from '../assets/img/homepage-house-svgrepo-com.svg'
+import homePageIcon from '../assets/img/homepage-house-svgrepo-com.png'
 import libraryIcon from '../assets/img/library-svgrepo-com.svg'
 import searchIcon from '../assets/img/search-svgrepo-com.svg'
 import pauseIcon from '../assets/img/pause-svgrepo-com.svg'
+import likedSongs from '../assets/img/liked-songs.png'
 
 
 export const importService = {
@@ -27,5 +28,6 @@ export const importService = {
     homePageIcon,
     libraryIcon,
     pauseIcon,
-    searchIcon
+    searchIcon,
+    likedSongs
 }

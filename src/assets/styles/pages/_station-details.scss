@@ -1,35 +1,70 @@
-.station-details-container {
-
-
+.station-deatils {
+    grid-area: station-deatils;
     background-color: $clr-black-12;
-    color: $clr-white-F;
-    // height: 100%;
-    width: calc(100vw - 200px);
-    height: 700px;
-    // padding-inline-start: 220px;
+    padding-inline-start: 32px;
+
+    .play-btn-station{
+        // padding: 24px 32px;
+        // margin: 32px 24px 0px 24px;
+        padding-top: 24px;
+        // padding-block-start: 32px;
+    }
+
+    .station-details-container {
+        color: $clr-white-F;
+        // height: 100%;
+        // padding: 0 32px;
 
 
+        .details-header {
+            font-size: 12px;
+            height: 36px;
+            @include flex-center;
+            justify-content: flex-start;
+            gap: 16px;
+            color: $clr-text-grey;
+            border-bottom: 1px solid hsla(0, 0%, 100%, .1);
+            padding-inline-start: 22px;
 
-    .song-container {
-        width: 100%;
-        @include flex-center;
-        justify-content: space-between;
-        gap: 8px;
-
-        .song-img-title {
-            // @include flex-center;
-            display: flex;
-            align-items: center;
-            width: 350px;
-            gap:12px;
-
-            img {
+            .title-number-div {
                 display: flex;
-                // align-self: flex-start;
-                justify-self: flex-start;
             }
         }
 
-    }
+        .song-container {
+            // width: 100%;
+            // display: flex;
+            @include flex-center;
+            justify-content: flex-start;
+            gap: 16px;
+            height: 56px;
+            font-size: 16px;
+            border-radius: 4px;
+            padding-inline-start: 22px;
 
+            &:hover {
+                background-color: hsla(0, 0%, 100%, .1);
+            }
+
+            .song-img-title {
+                // @include flex-center;
+                display: flex;
+                align-items: center;
+                width: 30vw;
+                gap: 12px;
+
+                img {
+                    display: flex;
+                    // align-self: flex-start;
+                    justify-self: flex-start;
+                }
+
+            }
+
+            .added-at {
+                font-size: 14px;
+            }
+
+        }
+    }
 }

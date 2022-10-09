@@ -8,19 +8,28 @@ import { setPlayer } from '../store/actions/player.action';
 import { useRef } from 'react';
 import { SliderBar } from './util.cmps/SlideBar';
 import { utilService } from '../services/util.service';
+import { height } from '@mui/system';
 
 export const AppFooter = () => {
 
 
-    const { currSong, isPlaying } = useSelector((state) => state.stationModule)
+    const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
     const { player } = useSelector((state) => state.playerModule)
     const [songName, setSongName] = useState('')
     const [songAutor, setSongAutor] = useState('')
     const [songDuration, setSongDuration] = useState(0)
     const [songTotalDuration, setSongTotalDuration] = useState('')
-    const [songTotalDurationNum, setSongTotalDurationNum] = useState('')
+    const [songTotalDurationNum, setSongTotalDurationNum] = useState(0)
+    const [volume, setVolume] = useState(0)
+    const [reapetInd, setReapetInd] = useState(false)
+
+
+
+    const [shuffle, setShuffle] = useState(false)
+    const [shuffledSongs, setShuffleSongs] = useState(null)
     // let songTimeInterval = useRef(0)
     let intervalId = useRef()
+    let currStationId = useRef(currStation.id)
 
 
     const dispatch = useDispatch()
@@ -33,74 +42,127 @@ export const AppFooter = () => {
         }
     }
 
-    // useEffect(() => {
-    //     return ()=>{
-    //         // dispatch(setPlayer(null))
-    //         // dispatch(setCurrSong(null))
-    //         clearInterval(intervalId.current)
-    //     }
-    //     // console.log('useEffect');
-    // },[])
+    useEffect(() => {
+        // Objct.keys(currSong).length && isPlaying ? ()=>{console.log('at On Play'), playerOnPlay() }: ()=>{console.log('at On Pause'); playerOnPause()}
+        // console.log('hey');
+    }, [isPlaying])
+
+
+
+
 
     const playerReady = (event) => {
+        //cleaning
         clearInterval(intervalId.current)
         setSongDuration(0)
 
         titleSplitter()
-
-        // console.log(event.target.seekTo());
         event.target.playVideo()
+
+        //setters
         dispatch(setIsPlaying(true))
         dispatch(setPlayer(event.target))
         setSongTotalDuration(utilService.getSongDurationToMin(+event.target.getDuration()))
         setSongTotalDurationNum(+event.target.getDuration())
+        if (!volume) {
+            setVolume(event.target.getVolume())
+        }
     }
 
     const playerOnPlay = () => {
+        // if (songDuration) {
+        //     console.log(songDuration, 'heree58');
+        //     player.seekTo(50)
+        // }
         clearInterval(intervalId.current)
         intervalId.current = setInterval(() => {
             setSongDuration(prevDuration => +prevDuration + 1)
         }, 1000)
-        // if (songDuration) {
-        //     console.log(songDuration, 'heree58');
-        //     player.seekTo(songDuration)
-        // }
         player.playVideo()
-        dispatch(setIsPlaying(true))
+        player.setVolume(volume)
     }
 
-    const playerOnStop = () => {
-        console.log('stop video', intervalId);
+    const playerOnPause = () => {
+        if(!Object.keys(player).length) return 
         clearInterval(intervalId.current)
-        console.log('stop video', intervalId.current);
-        dispatch(setIsPlaying(false))
-        player.stopVideo()
+        player.pauseVideo()
     }
-    // const togglePlayPause = () => {
-    //     if (!player) return
-    //     dispatch(setIsPlaying(!isPlaying))
-    //     if (isPlaying) {
-    //         player.stopVideo()
-    //     } else {
-    //         player.playVideo()
-    //     }
-    // }
-
-
-    // useEffect(() => {
-    //     console.log(isPlaying);
-    // }, [isPlaying])
-
 
     const titleSplitter = () => {
         let fullTitle = currSong.snippet.title
-        let idxToSplit = fullTitle.indexOf('-')
-        setSongAutor(fullTitle.slice(0, idxToSplit))
+        setSongAutor('')
+        setSongName('')
+        let idxToSplit = 0
+        if (fullTitle.includes('-')) {
+            idxToSplit = fullTitle.indexOf('-')
+            setSongAutor(fullTitle.slice(0, idxToSplit))
+        }
         if (fullTitle.includes('(')) {
             let idxOfTitleFinish = fullTitle.indexOf('(')
             setSongName(fullTitle.slice(idxToSplit + 1, idxOfTitleFinish))
         } else setSongName(fullTitle.slice(idxToSplit))
     }
+
+    const togglePlayer = () => {
+        isPlaying ? dispatch(setIsPlaying(false)) : dispatch(setIsPlaying(true))
+    }
+
+    const handleChangeVolume = (event) => {
+        console.log(event.target);
+        setVolume(event.target.value)
+        player.setVolume(event.target.value)
+    }
+
+    const handleChangeSongMin = (event) => {
+        console.log(event.target);
+        // setVolume(event.target.value)
+        // player.setVolume(event.target.value)
+        setSongDuration(event.target.value)
+        player.seekTo(event.target.value)
+    }
+
+    const onPrevNextSong = (diff) => {
+        // if(shuffle && Object.keys(currSong).length){
+        //     let idxPrevSong = currStation.songs.findIndex(song => (song.id.videoId === currSong.id.videoId))
+        //     let songsAmount = currStation.songs.length
+        //     let idxNextSong = Math.Random() * songsAmount
+
+        // }
+        if (reapetInd) {
+            console.log(reapetInd);
+            player.seekTo(0)
+            setSongDuration(0)
+        }
+        else if (Object.keys(currSong).length) {
+            let idxRem = currStation.songs.findIndex(song => (song.id.videoId === currSong.id.videoId))
+            idxRem += diff
+            if (idxRem === -1) {
+                idxRem = 0
+                player.seekTo(0)
+                setSongDuration(0)
+            }
+            if (idxRem === currStation.songs.length) idxRem = 0
+            dispatch(setCurrSong(currStation.songs[idxRem]))
+        } else return
+    }
+
+    const onShuffle = () => {
+        setShuffle(!shuffle)
+        if (shuffle) {
+            let shuffled = utilService.shuffleFunc(currStation.songs, currSong)
+            console.log(shuffled);
+            console.log(currStation.songs);
+        }
+    }
+
+
+    const onReapet = () => {
+        if (Object.keys(currSong).length) {
+            setReapetInd(!reapetInd)
+        }
+        else return
+    }
+
 
     // const startStopSong = () => {
     // //     isPlaying = !isPlaying
@@ -108,21 +170,19 @@ export const AppFooter = () => {
 
     return (
         <section className="app-footer" >
-
-
             <div className='curr-song'>
                 {Object.keys(currSong).length ?
                     <div className='curr-song-container'>
                         <div className='curr-song-img'>
-                            <img src={currSong.snippet.thumbnails.default.url} />
+                            <img src={currSong.snippet.thumbnails.default.url} style={{ height: '70px', width: '70px' }} />
                             {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
                             <YouTube
                                 videoId={currSong?.id.videoId}
                                 opts={opts}
                                 onReady={playerReady}
                                 onPlay={playerOnPlay}
-                                onPause={playerOnStop}
-                            // onEnd={() => onChangeSong(1)}
+                                onPause={playerOnPause}
+                                onEnd={() => onPrevNextSong(1)}
                             />
                         </div>
                         <div className='title-author'>
@@ -144,44 +204,38 @@ export const AppFooter = () => {
             <div className="song-player-container">
                 <div className="song-player-controls">
                     <div className='song-player-left'>
-                        <div>
-                            <img src={importService.shuffleSvg} style={{ width: '20px', height: '20px' }} />
+                        <div onClick={onShuffle}>
+                            <i class="fa-solid fa-shuffle" style={{ width: '20px', height: '20px' }}></i>
                         </div>
-                        <div>
+                        <div onClick={() => onPrevNextSong(-1)}>
                             <img src={importService.prevSvg} style={{ width: '20px', height: '20px' }} />
                         </div>
                     </div>
                     <div className='song-player-play-pause'>
-                        {!isPlaying ?
-                            <img src={importService.playSvg} style={{ width: '36px', height: '36px' }} onClick={playerOnPlay} /> :
-                            <img src={importService.pauseIcon} style={{ width: '36px', height: '36px' }} onClick={playerOnStop} />
-
+                        {!isPlaying ? <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px' }}></i></span> :
+                            <span onClick={togglePlayer}><i class="fa-sharp fa-solid fa-circle-pause" style={{ width: '36px', height: '36px' }}></i></span>
                         }
                     </div>
                     <div className='song-player-right'>
-                        <div>
+                        <div onClick={() => onPrevNextSong(1)}>
                             <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} />
                         </div>
-                        <div>
-                            <img src={importService.repeatSvg} style={{ width: '20px', height: '20px' }} />
+                        <div onClick={onReapet}>
+                            <i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px' }}></i>
                         </div>
                     </div>
                 </div>
                 <div className='song-time-slider'>
-                    <h1>{songDuration}</h1>
-                    <SliderBar disabled={false} value={+songDuration} maxValue={songTotalDurationNum} />
-                    {Object.keys(currSong).length ? <h1>{songTotalDuration}</h1>: <></> }
+                    <h1>{utilService.getSongDurationToMin(songDuration)}</h1>
+                    <SliderBar disabled={false} value={+songDuration} maxValue={songTotalDurationNum} handleChange={handleChangeSongMin} />
+                    {Object.keys(currSong).length ? <h1>{songTotalDuration}</h1> : <></>}
 
                 </div>
             </div>
 
 
             <div className='app-footer-volume'>
-                <div className='volume-container'>
-                    <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} />
-                    <input type='range'></input>
-                </div>
-                <div>
+                {/* <div>
                     <img src={importService.speakerSvg} style={{ width: '20px', height: '20px' }} />
                 </div>
                 <div>
@@ -189,6 +243,13 @@ export const AppFooter = () => {
                 </div>
                 <div>
                     <img src={importService.micSvg} style={{ width: '20px', height: '20px' }} />
+                </div> */}
+                <div className='volume-container'>
+                    <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} />
+                    {/* <input type='range'></input> */}
+                </div>
+                <div style={{ width: '93px' }}>
+                    <SliderBar disabled={false} value={volume} maxValue={100} handleChange={(event) => handleChangeVolume(event)} />
                 </div>
             </div>
 

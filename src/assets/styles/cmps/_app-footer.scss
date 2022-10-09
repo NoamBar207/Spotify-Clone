@@ -5,11 +5,13 @@
     align-items: center;
     // justify-content: center;
     // @include flex-center;
-    height: 5.625rem;
-    width: 100%;
-    padding: 0 16px;
-    position: fixed;
-    bottom: 0;
+    grid-area: app-footer;
+    // height: 5.625rem;
+    // width: 96vw;
+    padding: 0 8px;
+    z-index: 15;
+    // position: fixed;
+    // bottom: 0;
 
     .song-player-container {
         display: flex;
@@ -65,16 +67,18 @@
 
     .app-footer-volume {
         display: flex;
-
+        width: calc(30% - 16px);
+        justify-content: flex-end;
+        padding-inline-end: 16px;
         .volume-container {
-            @include flex-center
+            @include flex-center;
         }
     }
 
     .curr-song{
-        width: 375px;
+        width: 30%;
         height: 90px;
-        background-color: aqua;
+        display: flex;
 
         .curr-song-container{
             display: flex;
@@ -86,6 +90,8 @@
 
             .curr-song-img{
                 height: 90px;
+                display: flex;
+                align-items: center;
             }
         }
 

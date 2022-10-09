@@ -1,0 +1,89 @@
+.app-header-container {
+    grid-area: app-header;
+    @include flex-center;
+    padding-inline-start: 8px;
+    justify-content: space-between;
+    background-color: $clr-black-12 ;
+    color: $clr-white-F;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    padding: 8px 0px;
+
+    .header-home-search {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .header-home-btn{
+            height: 28px;
+            width: 28px;
+            border-radius: 15px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+
+        .header-search-container {
+            box-sizing: border-box;
+            // border: 1px solid rgba(255, 255, 255, 0.292);
+            background-color: $clr-blk-gry;
+            display: flex;
+            border-radius: 50px;
+            width: 440px;
+            height: 48px;
+
+            &:hover {
+                background-color: $clr-hover-search;
+
+                .fa-magnifying-glass {
+                    color: $clr-white-F;
+                }
+            }
+
+
+            .label-search {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: 8px;
+                flex: 1;
+                font-size: 14px;
+                color: $clr-search-grey;
+
+                ::placeholder {
+                    /* Chrome, Firefox, Opera, Safari 10.1+ */
+                    color: $clr-search-grey;
+                    // opacity: 1; /* Firefox */
+                }
+
+                &:focus-within {
+                    // background-color: white;
+                    outline: none;
+                    // color: $clr-text-group;
+                }
+
+                .header-search {
+                    &:focus {
+                        // box-shadow: 0 0 0 2px #fff;
+                        border-radius: 50px;
+                        outline: none;
+
+                    }
+
+                    border: none;
+                    background: transparent;
+                    height: 32px;
+                    width: 100%;
+                }
+
+                .fa-magnifying-glass {
+                    @include flex-center;
+                    padding-right: 4px;
+                }
+            }
+        }
+    }
+}

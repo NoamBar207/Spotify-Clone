@@ -1,8 +1,31 @@
 
 .station-header-container{
-    height:340px ;
     display: flex;
-    // justify-content: flex-end;
     align-items: flex-end;
-  
+    height: 305px;
+    padding-block-end: 25px;
+    color: $clr-white-F;
+    gap: 16px;
+
+    .station-header-img{
+        height: 192px;
+    }
+
+    .station-header-deatails{
+        display: flex;
+        flex-direction: column;
+
+        .station-header{
+            font-size: 96px;
+            margin: 0;
+            padding: 8px 0 12px 0;
+        }
+
+        .playlist{
+            font-size: 12px;
+            margin: 0;
+            padding-top: 4px;
+        }
+
+    }
 }

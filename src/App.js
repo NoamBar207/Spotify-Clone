@@ -4,6 +4,7 @@ import { AppFooter } from './cmps/AppFooter'
 import { MainMenu } from './cmps/MainMenu';
 import { Home } from './pages/Home'
 import { StationDeatails } from './pages/StationDeatails';
+import { AppHeader } from './cmps/AppHeader';
 
 
 function App() {
@@ -25,12 +26,13 @@ function App() {
 		// </Router>
 		<Router>
 			<div className='App'>
+				<AppHeader />
 				<MainMenu />
 				<Routes>
 					<Route path='/' element={<StationDeatails />} />
 					{/* <Route path='/' element={<Home />} /> */}
 				</Routes>
-				<AppFooter />
+				<AppFooter />	
 			</div>
 		</Router>
 	)
