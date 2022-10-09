@@ -43,8 +43,8 @@ export const AppFooter = () => {
     }
 
     useEffect(() => {
-        // Objct.keys(currSong).length && isPlaying ? ()=>{console.log('at On Play'), playerOnPlay() }: ()=>{console.log('at On Pause'); playerOnPause()}
-        // console.log('hey');
+        if (Object.keys(player).length && isPlaying) playerOnPlay()
+        else if (Object.keys(player).length && !isPlaying) playerOnPause()
     }, [isPlaying])
 
 
@@ -83,7 +83,7 @@ export const AppFooter = () => {
     }
 
     const playerOnPause = () => {
-        if(!Object.keys(player).length) return 
+        if (!Object.keys(player).length) return
         clearInterval(intervalId.current)
         player.pauseVideo()
     }

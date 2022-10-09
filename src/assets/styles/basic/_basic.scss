@@ -17,13 +17,14 @@ body {
     height: 100vh;
     // height: 100%;
     display: grid;
-    // grid-gap: 8px;
-    grid-column-gap: 8px;
+    grid-gap: 8px;
+    background-color: $clr-black-000;
+    // grid-column-gap: 8px;
     grid-template-columns: 180px calc(100% - 188px);
-    grid-template-rows: 64px calc(100% - 154px) 90px;
+    grid-template-rows: 56px calc(100% - 164px) 90px;
     grid-template-areas:
         "app-header app-header"
-        "menu station-deatils"
+        "menu main-content"
         "app-footer app-footer";
 
     ul {

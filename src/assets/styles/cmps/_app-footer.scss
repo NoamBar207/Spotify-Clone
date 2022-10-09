@@ -3,15 +3,9 @@
     background-color: grey;
     display: flex;
     align-items: center;
-    // justify-content: center;
-    // @include flex-center;
     grid-area: app-footer;
-    // height: 5.625rem;
-    // width: 96vw;
     padding: 0 8px;
     z-index: 15;
-    // position: fixed;
-    // bottom: 0;
 
     .song-player-container {
         display: flex;

@@ -1,8 +1,4 @@
 
-
-//Basic 
-@import './basic/basic';
-
 //Set-up
 @import './set-up/mixins';
 @import './set-up/variables';
@@ -21,4 +17,9 @@
 @import './cmps/app-footer';
 @import './cmps/station-header';
 @import './cmps/main-menu';
-@import './cmps/app-header'
+@import './cmps/app-header';
+
+
+
+//Basic 
+@import './basic/basic';

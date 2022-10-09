@@ -47,13 +47,6 @@ export function StationDeatails() {
     }
 
 
-    const CheckFunction = () => {
-        station.songs.map(song => {
-            console.log(song);
-        })
-    }
-
-
     const getAutorName = (song) => {
         // let fullTitle = currSong.snippet.title
         // let idxToSplit = 0
@@ -87,9 +80,7 @@ export function StationDeatails() {
 
     const onPlay = () => {
         if(!Object.keys(currSong).length){
-            console.log(currStation.songs[0], 'onPlay!!')
             dispatch(setCurrSong(currStation.songs[0]))
-            // dispatch(setIsPlaying(true))
         }else{
             if(isPlaying){
                 dispatch(setIsPlaying(false))

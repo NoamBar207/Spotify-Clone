@@ -5,6 +5,7 @@ import { MainMenu } from './cmps/MainMenu';
 import { Home } from './pages/Home'
 import { StationDeatails } from './pages/StationDeatails';
 import { AppHeader } from './cmps/AppHeader';
+import { SearchPage } from './pages/SearchPage';
 
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
 				<AppHeader />
 				<MainMenu />
 				<Routes>
-					<Route path='/' element={<StationDeatails />} />
+					{/* <Route path='/' element={<StationDeatails />} /> */}
+					<Route path='/' element={<SearchPage />} />
 					{/* <Route path='/' element={<Home />} /> */}
 				</Routes>
 				<AppFooter />	
