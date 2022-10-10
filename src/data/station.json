@@ -1,7 +1,7 @@
 [
   {
     "_id": "5cksxjas89xjsa8xjsa8jxs09",
-    "name": "Funky Monks",
+    "name": "All Songs",
     "tags": [
       "Funk",
       "Happy"
@@ -332,6 +332,353 @@
           "publishTime": "2019-10-04T04:00:02Z"
         },
         "createdAt":1665160533437
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "thvdDH4mQRBKLT99aJL3KcFX3J0",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "APWhx97QvxE"
+        },
+        "snippet": {
+          "publishedAt": "2010-11-12T18:53:23Z",
+          "channelId": "UCWEtnEiVwUy7mwFeshyAWLA",
+          "title": "Eric Clapton - I Shot The Sheriff (Official Live Video)",
+          "description": "Watch Eric Clapton perform \"I Shot The Sheriff\" live from Chicago at Crossroads 2010. Originally written by Bob Marley, Clapton's ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/APWhx97QvxE/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/APWhx97QvxE/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/APWhx97QvxE/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "RHINO",
+          "liveBroadcastContent": "none",
+          "publishTime": "2010-11-12T18:53:23Z"
+        },
+        "createdAt":1664828349845
+      }
+    ],
+    "msgs": [
+      {
+        "id": "m101",
+        "from": "{mini-user}",
+        "txt": "Manish?"
+      }
+    ]
+  },
+
+
+
+
+
+
+
+  {
+    "_id": "5cksxjas89xjsa8xjsa8jxs09",
+    "name": "Hip-Hop",
+    "tags": [
+      "Funk",
+      "Happy"
+    ],
+    "createdAt": 1541652422,
+    "likedSongsImg": "https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png" ,
+    "createdBy": {
+      "_id": "u101",
+      "fullname": "Puki Ben David",
+      "imgUrl": "http://some-photo/"
+    },
+    "likedByUsers": [
+      "{minimal-user}",
+      "{minimal-user}"
+    ],
+    "songs": [
+      {
+        "kind": "youtube#searchResult",
+        "etag": "_qmdbvZjQadFQ22Yn49sIECnD-k",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "XXYlFuWEuKI"
+        },
+        "snippet": {
+          "publishedAt": "2021-01-05T17:00:12Z",
+          "channelId": "UCF_fDSgPpBQuh1MsUTgIARQ",
+          "title": "The Weeknd - Save Your Tears (Official Music Video)",
+          "description": "Official music video by The Weeknd performing \"Save Your Tears\"– 'After Hours' available everywhere now: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/XXYlFuWEuKI/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "TheWeekndVEVO",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-01-05T17:00:12Z"
+        },
+        "createdAt": 1664888354797
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "mEajmpfj6yYMrJ8DMsWbMFxzpwE",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "5TTQhIeFhBk"
+        },
+        "snippet": {
+          "publishedAt": "2009-08-25T21:05:31Z",
+          "channelId": "UC3L5PYo5eLxuyqRMJn3_j6Q",
+          "title": "Jay z ft Rihanna and Kanye west - Run this town",
+          "description": "Jay z ft Rihanna and Kanye West - Run this town.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/5TTQhIeFhBk/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/5TTQhIeFhBk/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/5TTQhIeFhBk/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Kayser926",
+          "liveBroadcastContent": "none",
+          "publishTime": "2009-08-25T21:05:31Z"
+        },
+        "createdAt": 1664902241025
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "-jZ1rpbm9iDsyCtZu0ZUo-Ob7NM",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "VbrEsOLu75c"
+        },
+        "snippet": {
+          "publishedAt": "2018-12-21T05:58:17Z",
+          "channelId": "UCOjEHmBKwdS7joWpW0VrXkg",
+          "title": "21 Savage - A Lot (Official Audio)",
+          "description": "Listen to the official audio of \"A Lot\" by 21 Savage. Subscribe to 21 Savage's official channel for exclusive music videos and ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/VbrEsOLu75c/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/VbrEsOLu75c/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/VbrEsOLu75c/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "21 Savage",
+          "liveBroadcastContent": "none",
+          "publishTime": "2018-12-21T05:58:17Z"
+        },
+        "createdAt": 1664903156651
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "Uzbt4ZQUDhqqahQbnpyAkkkzaJ8",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "fHR1CZ9x61E"
+        },
+        "snippet": {
+          "publishedAt": "2018-08-01T23:27:07Z",
+          "channelId": "UCfrh3boIswkrq5JrpNfhL0Q",
+          "title": "Drake - Passionfruit",
+          "description": "\"Passionfruit\" by Drake ℗ 2017 Young Money Entertainment/Cash Money Records.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/fHR1CZ9x61E/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/fHR1CZ9x61E/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/fHR1CZ9x61E/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Young Money Entertainment",
+          "liveBroadcastContent": "none",
+          "publishTime": "2018-08-01T23:27:07Z"
+        },
+        "createdAt":1665160533437
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "10I4cZ5Mbt1oA_UoOJoQmR2xmk4",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "OWl9p3oFKgg"
+        },
+        "snippet": {
+          "publishedAt": "2019-10-04T04:00:02Z",
+          "channelId": "UClRx3MMyYUyqOxyEqA5F2nQ",
+          "title": "Travis Scott - HIGHEST IN THE ROOM (Audio)",
+          "description": "HIGHEST IN THE ROOM OUT NOW https://travisscott.lnk.to/HIGHEST OFFICIAL STORE: https://shop.travisscott.com/ Travis Scott ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/OWl9p3oFKgg/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/OWl9p3oFKgg/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/OWl9p3oFKgg/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "TravisScottVEVO",
+          "liveBroadcastContent": "none",
+          "publishTime": "2019-10-04T04:00:02Z"
+        },
+        "createdAt":1665160533437
+      }
+    ],
+    "msgs": [
+      {
+        "id": "m101",
+        "from": "{mini-user}",
+        "txt": "Manish?"
+      }
+    ]
+  },
+
+
+
+  
+  {
+    "_id": "5cksxjas89xjsa8xjsa8jxs09",
+    "name": "Rock",
+    "tags": [
+      "Funk",
+      "Happy"
+    ],
+    "createdAt": 1541652422,
+    "likedSongsImg": "https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png" ,
+    "createdBy": {
+      "_id": "u101",
+      "fullname": "Puki Ben David",
+      "imgUrl": "http://some-photo/"
+    },
+    "likedByUsers": [
+      "{minimal-user}",
+      "{minimal-user}"
+    ],
+    "songs": [
+      {
+        "kind": "youtube#searchResult",
+        "etag": "c0E70_TtvXcVXyRjKKS4PD0MmhI",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "UprwkbzUX6g"
+        },
+        "snippet": {
+          "publishedAt": "2009-10-27T01:40:12Z",
+          "channelId": "UCtCOFqqGGGunX71nfZgPQOQ",
+          "title": "Eric Clapton - Wonderful Tonight",
+          "description": "Watch the official live video for Wonderful Tonight by Eric Clapton from In Concert: A Benefit for the Crossroads Centre at Antigua.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/UprwkbzUX6g/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/UprwkbzUX6g/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/UprwkbzUX6g/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Eric Clapton",
+          "liveBroadcastContent": "none",
+          "publishTime": "2009-10-27T01:40:12Z"
+        },
+        "createdAt": 1665084207169
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "NGwyTg1HS8nTSAA-qHRjf2AxyPY",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "fX5USg8_1gA"
+        },
+        "snippet": {
+          "publishedAt": "2007-04-18T15:18:41Z",
+          "channelId": "UCjHFUp5bleixYt_Xnz-4JTw",
+          "title": "Eric Clapton - Layla",
+          "description": "This belongs to the Madison Square Garden concert in 1999. You may find more interesting music videos in my channel, take a ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/fX5USg8_1gA/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/fX5USg8_1gA/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/fX5USg8_1gA/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Albert Canta",
+          "liveBroadcastContent": "none",
+          "publishTime": "2007-04-18T15:18:41Z"
+        },
+        "createdAt": 1665085706771
       },
       {
         "kind": "youtube#searchResult",

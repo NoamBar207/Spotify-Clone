@@ -1,0 +1,15 @@
+.search-page-container {
+    grid-area: main-content;
+    background-color: $clr-black-12;
+    border-radius: 8px;
+    padding: 0 32px;
+
+
+    .search-page-grid {
+        display: grid;
+        // height: calc(100% - 164px);
+        margin-right: 8px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 24px;
+    }
+}

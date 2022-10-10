@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom'
+import { HashRouter, HashRouter as Router, Route, Routes } from 'react-router-dom'
 import { AppFooter } from './cmps/AppFooter'
 import { MainMenu } from './cmps/MainMenu';
 import { Home } from './pages/Home'
@@ -25,18 +25,18 @@ function App() {
 		// 		</Routes>
 		// 	</div>
 		// </Router>
-		<Router>
+		<HashRouter>
 			<div className='App'>
 				<AppHeader />
 				<MainMenu />
 				<Routes>
-					{/* <Route path='/' element={<StationDeatails />} /> */}
+					<Route path='/station' element={<StationDeatails />} />
 					<Route path='/' element={<SearchPage />} />
 					{/* <Route path='/' element={<Home />} /> */}
 				</Routes>
 				<AppFooter />	
 			</div>
-		</Router>
+		</HashRouter>
 	)
 }
 

@@ -17,7 +17,7 @@ export function StationHeader() {
                 <h1 className="playlist">PLAYLIST</h1>
                 <h1 className="station-header">
                     {/* station name */}
-                    Liked Songs
+                    {currStation.name}
                 </h1>
                 <div className="user-info">
                     <div>

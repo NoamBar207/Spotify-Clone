@@ -8,18 +8,20 @@
 ///Pages
 @import './pages/home';
 @import './pages/station-details';
+@import './pages/search-page';
 
 
 
 
-///Cmpss
+///Cmps
 @import './cmps/playlists';
 @import './cmps/app-footer';
 @import './cmps/station-header';
 @import './cmps/main-menu';
 @import './cmps/app-header';
 
-
+//Util Cmps
+@import './cmps/util.cmp/card-cmp';
 
 //Basic 
 @import './basic/basic';
