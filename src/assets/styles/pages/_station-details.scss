@@ -4,7 +4,15 @@
     // padding-inline-start: 32px;
     margin-right: 8px;
     border-radius: 8px;
-    
+    height: 100%;
+    overflow-y: auto;
+    // background-image:linear-gradient(#20173F 1%, $clr-black-12 99%);
+
+    .color-container{
+        // transform: 90deg;
+    }
+
+
     .play-btn-station{
         padding: 24px 32px;
         // margin: 32px 24px 0px 24px;
@@ -14,7 +22,6 @@
 
     .station-details-container {
         color: $clr-white-F;
-        // height: 100%;
         padding: 0 32px;
 
 

@@ -2,26 +2,34 @@
     grid-area: app-header;
     @include flex-center;
     padding-inline-start: 8px;
-    justify-content: space-between;
     background-color: $clr-black-000 ;
     color: $clr-white-F;
-    width: 100%;
+    width: 100vw;
     position: fixed;
     top: 0;
-    padding: 8px 0px;
+    padding: 8px;
+
+    .header-logo {
+        @include flex-center;
+        gap: 8px;
+        width: 180px;
+        font-size: 20px
+    }
 
     .header-home-search {
-        display: flex;
-        align-items: center;
+        @include flex-center;
         gap: 16px;
+        width: 100%;
 
-        .header-home-btn{
-            height: 28px;
-            width: 28px;
-            border-radius: 15px;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
+        .header-home-btn {
+            padding: 10px;
+            // height: 28px;
+            // width: 28px;
+            border-radius: 50%;
+            background-color: $clr-black-grey;
+            // background-position: center center;
+            // background-repeat: no-repeat;
+            // background-size: cover;
 
         }
 
@@ -29,14 +37,14 @@
         .header-search-container {
             box-sizing: border-box;
             // border: 1px solid rgba(255, 255, 255, 0.292);
-            background-color: $clr-blk-gry;
+            // background-color: $clr-blk-gry;
             display: flex;
             border-radius: 50px;
             width: 440px;
             height: 48px;
 
             &:hover {
-                background-color: $clr-hover-search;
+                background-color: $clr-black-000;
 
                 .fa-magnifying-glass {
                     color: $clr-white-F;
@@ -85,5 +93,20 @@
                 }
             }
         }
+    }
+    .no-user-header{
+        @include flex-center;
+        gap: 8px;
+        padding-right: 16px;
+        // flex-direction: column;
+    }
+
+    .user-logo-container{
+        @include flex-center;
+        gap: 16px;
+        margin-right: 32px;
+        padding:1px 8px 1px 2px;
+        background-color: $clr-opacity-user;
+        border-radius: 15px;
     }
 }

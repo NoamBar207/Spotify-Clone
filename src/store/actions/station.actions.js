@@ -20,6 +20,7 @@ const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 
 
 export function setCurrStation(station) {
+    // console.log('setCurr Station ', station);
     return async (dispatch) => {
         try{
             const action = {type:'SET_CURR_STATION', station}

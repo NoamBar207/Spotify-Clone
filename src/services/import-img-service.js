@@ -13,6 +13,7 @@ import libraryIcon from '../assets/img/library-svgrepo-com.svg'
 import searchIcon from '../assets/img/search-svgrepo-com.svg'
 import pauseIcon from '../assets/img/pause-svgrepo-com.svg'
 import likedSongs from '../assets/img/liked-songs.png'
+import uploadSvg from '../assets/img/add-user-add-svgrepo-com.svg'
 
 
 export const importService = {
@@ -29,5 +30,6 @@ export const importService = {
     libraryIcon,
     pauseIcon,
     searchIcon,
-    likedSongs
+    likedSongs,
+    uploadSvg
 }

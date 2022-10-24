@@ -6,9 +6,10 @@
 
 
 ///Pages
-@import './pages/home';
+@import './pages/homepage';
 @import './pages/station-details';
 @import './pages/search-page';
+@import './pages/sign-up';
 
 
 
@@ -21,7 +22,9 @@
 @import './cmps/app-header';
 
 //Util Cmps
+@import './cmps/util.cmp/ganere-cmp';
 @import './cmps/util.cmp/card-cmp';
-
+@import './cmps/util.cmp/util-btn';
+@import './cmps/util.cmp/narrow-card-cmp';
 //Basic 
 @import './basic/basic';

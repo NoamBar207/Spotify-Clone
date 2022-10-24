@@ -1,0 +1,33 @@
+.ganere-container-grid {
+    background-color: aqua;
+    display: flex;
+    border-radius: 12px;
+
+    &:before {
+        content: "";
+        display: block;
+        height: 0;
+        width: 0;
+        padding-bottom: calc(75%);
+        // padding-bottom: calc(3/4 * 100%);
+        // padding-bottom: 100%;
+    }
+
+    .ganere-container-main {
+        // height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: $clr-white-F;
+        
+        .ganere-title{
+            padding: 16px;
+            font-size: 24px;
+        }
+        
+        .ganere-pic {
+            align-self: flex-end;
+        }
+    }
+}

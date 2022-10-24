@@ -1,13 +1,16 @@
 import { storageService } from './async-storage.service'
+import { httpService } from './http.service'
 // const gStation = require('../data/station.json')
 // console.log(gStation);
+// const gStation
 
-const STORAGE_KEY = 'Station'
+const STORAGE_KEY = 'station'
 
 const PAGE_SIZE = 5
 export const stationService = {
     query,
-    // getById,
+    getById,
+    loadUserStations
     // remove,
     // save
 }
@@ -15,14 +18,26 @@ export const stationService = {
 
 
 async function query() {
-	const station = await storageService.query(STORAGE_KEY)
-	return station
+    // const stations = await storageService.query(STORAGE_KEY)
+    // const stations = await httpService.get(STORAGE_KEY)
+    const stations = await httpService.get(STORAGE_KEY)
+    return stations
 }
 
-async function update(station) {
-	var updatedStation = await storageService.put(STORAGE_KEY, station)
+// async function update(station) {
+//     var updatedStation = await storageService.put(STORAGE_KEY, station)
 
-	return updatedStation
+//     return updatedStation
+// }
+
+async function getById(stationId) {
+    var station = await httpService.get(`${STORAGE_KEY}/${stationId}`)
+    return Promise.resolve(station);
+}
+
+async function loadUserStations(stationsId){
+    var stations = await httpService.get(STORAGE_KEY)
+    return Promise.resolve(stations);
 }
 
 
@@ -32,12 +47,7 @@ async function update(station) {
 //     return Promise.resolve(gStation);
 // }
 
-// function getById(songId) {
-//     const song = gStation.find(song => songId === song._id)
-//     return Promise.resolve(song);
-// }
-
-// function remove(songId) {
+// function remove(stationId) {
 //     const idx = gStation.findIndex(song => song._id === songId)
 //     gStation.splice(idx, 1)
 //     return _saveSongsToFile();

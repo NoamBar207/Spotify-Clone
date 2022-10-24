@@ -1,35 +1,29 @@
-.card-container-grid {
-    background-color: aqua;
+.card-container {
     display: flex;
-    border-radius: 12px;
+    flex-direction: column;
+    padding: 16px;
+    background-color: $clr-black-18;
+    border-radius: 4px;
+    gap: 8px;
 
-    &:before {
-        content: "";
-        display: block;
-        height: 0;
-        width: 0;
-        padding-bottom: calc(100%);
-        // padding-bottom: calc(3/4 * 100%);
-        // padding-bottom: 100%;
-
-
+    .card-img {
+        img {
+            height: 100%;
+            width: 100%;
+        }
     }
 
-    .card-container-main {
-        height: 100%;
-        width: 100%;
+    h4 {
+        margin: 0;
+        font-size: 0.875rem;
+    }
+
+    .card-info {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        color: $clr-white-F;
-        
-        .card-title{
-            padding: 16px;
-            font-size: 24px;
-        }
-        
-        .card-pic {
-            align-self: flex-end;
-        }
+
+        gap: 4px;
+
+
     }
 }

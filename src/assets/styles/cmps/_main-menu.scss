@@ -1,6 +1,6 @@
 .main-menu-container {
 	grid-area: menu;
-	background-color: $clr-black-12;
+	background-color: $clr-black-000;
 	color: $clr-text-grey;
 	display: flex;
 	flex-direction: column;
@@ -22,14 +22,31 @@
 		display: flex;
 		align-items: center;
 		gap: 16px;
-		font-family:font-circ-bold ;
+		font-family: font-circ-bold;
+		font-size: 13px;
+
+		.menu-create-playlist{
+			@include flex-center;
+			background-color: $clr-text-grey;
+			height: 24px;
+			width: 24px;
+			border-radius: 3px;
+			// padding: 6px 6px 4px 6px;
+		}
 
 	}
 
 	.menu-pic {
-		svg{
-			fill:$clr-text-grey;
+		svg {
+			fill: $clr-text-grey;
 		}
+	}
+
+	hr{
+		width: 80%;
+		border: 0;
+		height: 1px;
+		background-color: $clr-black-grey;
 	}
 
 }

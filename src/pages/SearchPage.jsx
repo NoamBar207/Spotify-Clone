@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { CardCmp } from "../cmps/util.cmps/CardCmp"
+import { GanereCmp } from "../cmps/util.cmps/GanereCmp"
 import { stationService } from "../services/station.service";
 import { useNavigate } from 'react-router-dom'
 
@@ -26,7 +26,6 @@ export function SearchPage() {
     const loadStation = async () => {
         try {
             const stations = await stationService.query()
-            console.log(stations);
             setStationList(stations)
             // const stateStation = station[0]
             // dispatch(setCurrStation(station[0]))
@@ -44,7 +43,7 @@ export function SearchPage() {
             {Object.keys(stationList).length ? 
             <div className="search-page-grid">
                 {stationList.map(station => {
-                    return <CardCmp ganere={station.name} />
+                    return <GanereCmp ganere={station.name} />
                 })}
             </div> :<></>
             } 

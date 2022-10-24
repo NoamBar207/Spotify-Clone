@@ -1,0 +1,55 @@
+.homepage-container {
+    grid-area: main-content;
+    padding: 24px 24px 0;
+    color: $clr-white-F;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow-y: auto;
+    // background:linear-gradient(#2A1F52 10%, #121212 90%);
+    // background-attachment:fixed;
+    background:linear-gradient( #2A1F52 1%, #121212, #000000 );
+    background-repeat: no-repeat;
+    
+
+
+
+    .homepage-greet {
+        // background-color: aqua;
+        font-size: 1.4rem;
+
+        .narrow-card-grid{
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-row-gap: 16px;
+            grid-column-gap:24px;
+        }
+
+    }
+
+
+    // .playlists-homepage-container{
+    //     display: grid;
+    //     // grid-template-columns: auto;
+    //     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    //     // height: 250px;
+    //     grid-gap:24px;
+    //     background-color: green;
+    // }
+
+
+    .homepage-playlists {
+        .homepage-playlists-title{
+            height: 46px;
+        }
+
+        .homepage-playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(156px, 1fr));
+            grid-auto-rows: auto;
+            // grid-template-rows:  repeat(auto-fit, minmax(180px, 250px));
+            grid-gap: 24px;
+        }
+    }
+}

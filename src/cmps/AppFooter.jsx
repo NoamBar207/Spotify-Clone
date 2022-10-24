@@ -108,13 +108,12 @@ export const AppFooter = () => {
     }
 
     const handleChangeVolume = (event) => {
-        console.log(event.target);
+        // console.log(event.target);
         setVolume(event.target.value)
         player.setVolume(event.target.value)
     }
 
     const handleChangeSongMin = (event) => {
-        console.log(event.target);
         // setVolume(event.target.value)
         // player.setVolume(event.target.value)
         setSongDuration(event.target.value)
@@ -134,7 +133,7 @@ export const AppFooter = () => {
             setSongDuration(0)
         }
         else if (Object.keys(currSong).length) {
-            let idxRem = currStation.songs.findIndex(song => (song.id.videoId === currSong.id.videoId))
+            let idxRem = currStation.songs.findIndex(song => (song.id.videoId === currSong.videoId))
             idxRem += diff
             if (idxRem === -1) {
                 idxRem = 0
@@ -177,7 +176,7 @@ export const AppFooter = () => {
                             <img src={currSong.snippet.thumbnails.default.url} style={{ height: '70px', width: '70px' }} />
                             {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
                             <YouTube
-                                videoId={currSong?.id.videoId}
+                                videoId={currSong?.videoId}
                                 opts={opts}
                                 onReady={playerReady}
                                 onPlay={playerOnPlay}
@@ -205,23 +204,25 @@ export const AppFooter = () => {
                 <div className="song-player-controls">
                     <div className='song-player-left'>
                         <div onClick={onShuffle}>
-                            <i class="fa-solid fa-shuffle" style={{ width: '20px', height: '20px' }}></i>
+                            <i class="fa-solid fa-shuffle" style={{ width: '20px', height: '20px', color: 'white' }}></i>
                         </div>
                         <div onClick={() => onPrevNextSong(-1)}>
-                            <img src={importService.prevSvg} style={{ width: '20px', height: '20px' }} />
+                            <span><i class="fa-solid fa-backward-step" style={{ width: '24px', height: '24px', color: 'white' }}></i></span>
+                            {/* <img src={importService.prevSvg} style={{ width: '20px', height: '20px' }} /> */}
                         </div>
                     </div>
                     <div className='song-player-play-pause'>
-                        {!isPlaying ? <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px' }}></i></span> :
-                            <span onClick={togglePlayer}><i class="fa-sharp fa-solid fa-circle-pause" style={{ width: '36px', height: '36px' }}></i></span>
+                        {!isPlaying ? <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px', color: 'white' }}></i></span> :
+                            <span onClick={togglePlayer}><i class="fa-sharp fa-solid fa-circle-pause" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>
                         }
                     </div>
                     <div className='song-player-right'>
                         <div onClick={() => onPrevNextSong(1)}>
-                            <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} />
+                            <span><i class="fa-solid fa-forward-step" style={{ width: '24px', height: '24px', color: 'white' }}></i></span>
+                            {/* <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} /> */}
                         </div>
                         <div onClick={onReapet}>
-                            <i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px' }}></i>
+                            <i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i>
                         </div>
                     </div>
                 </div>
@@ -245,8 +246,15 @@ export const AppFooter = () => {
                     <img src={importService.micSvg} style={{ width: '20px', height: '20px' }} />
                 </div> */}
                 <div className='volume-container'>
-                    <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} />
-                    {/* <input type='range'></input> */}
+                    {/* {volume === 0 ? <i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i> : <></>}
+                    {volume < 50 && volume !== 0 ? <i class="fa-solid fa-volume-low" style={{ color: 'white' }}></i> : <></>}
+                    {volume >= 50 ? <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i> : <></>} */}
+
+
+                    <i class="fa-solid fa-volume-high" style={{color:'white'}}></i>
+
+
+                    {/* <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} /> */}
                 </div>
                 <div style={{ width: '93px' }}>
                     <SliderBar disabled={false} value={volume} maxValue={100} handleChange={(event) => handleChangeVolume(event)} />

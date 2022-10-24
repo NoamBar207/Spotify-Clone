@@ -1,0 +1,131 @@
+.sign-up-container {
+	background-color: #fafbfc;
+	// color: $clr-white-F;
+	margin: auto;
+	@include flex-center;
+	flex-direction: column;
+	position: relative;
+	width: 100vw;
+	min-height: 100vh;
+	z-index: 20;
+	// box-shadow: 0 0 10px rgb(0 0 0 / 10%);
+
+	.sign-up-header {
+		@include flex-center;
+		font-size: 32px;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		line-height: 28px;
+		// border-bottom: 1px solid $clr-text-grey;
+		width: 100%;
+		span{
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+	}
+
+	// .sign-up-title {
+	// 	color: $clr-black-000;
+	// 	font-size: 17px;
+	// 	font-weight: 700;
+	// 	letter-spacing: -0.01em;
+	// 	line-height: 28px;
+	// 	margin-bottom: 15px;
+	// 	margin-top: 5px;
+	// 	text-align: center;
+	// }
+
+	.sign-up-main {
+		padding: 10px;
+		@include flex-center;
+		flex-direction: column;
+
+		.sign-up-or{
+			display: flex;
+			width: 100%;
+			color: $clr-text-grey;
+			hr{
+				width: 100%;
+				border: 0;
+				height: 1px;
+				background-color: $clr-text-grey;
+			}
+			span{
+				padding: 0 27px;
+			}
+		}
+		h1{
+			margin: 0;
+			font-size: 18px;
+			padding-bottom: 18px;
+		}
+		
+		h3 {
+			margin: 0;
+			font-size: 14px;
+			// justify-self: flex-start;
+			align-self: flex-start;
+			padding-bottom: 8px;
+		}
+
+
+
+		.facebook {
+			color: $clr-white-F;
+			background-color: $clr-blue-facbook;
+			min-width: 400px;
+			max-width: 450px;
+		}
+
+		.google {
+			// color: $clr-white-F;
+			// background-color: $clr-black-12;
+			min-width: 400px;
+			max-width: 450px;
+		}
+
+		.signup-btn {
+			background-color: $clr-green-play;
+			width: 155px;
+		}
+
+		input {
+			font-size: 14px;
+			background-color: #fafbfc;
+			border: 2px solid #dfe1e6;
+			outline: none;
+			padding: 0.5em;
+			height: 44px;
+			// width: 270px;
+			width: 100%;
+			border-radius: 3px;
+			font-size: 14px;
+			height: 44px;
+			margin-bottom: 15px;
+			max-width: 400px;
+		}
+	}
+
+	.file-label {
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.file-label-txt {
+			padding-inline-start: 3px;
+			font-size: rem(12px);
+			// color: $clr4;
+			font-weight: 700;
+		}
+
+		.upload-img {
+			width: 80px;
+		}
+
+		.file-input{
+			height: 0;
+			margin: 0;
+		}
+	}
+}

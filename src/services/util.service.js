@@ -4,9 +4,30 @@ var cloneDeep = require('lodash.clonedeep');
 export const utilService = {
     getSongDurationToMin,
     getFormatedDate,
-    shuffleFunc
+    shuffleFunc,
+    getAutorName
 }
 
+
+
+function getAutorName(song) {
+    // let fullTitle = currSong.snippet.title
+    // let idxToSplit = 0
+    // if (fullTitle.includes('-')) {
+    //     idxToSplit = fullTitle.indexOf('-')
+    // } 
+    // if (fullTitle.includes('(')) {
+    //     let idxOfTitleFinish = fullTitle.indexOf('(')
+    // } else setSongName(fullTitle.slice(idxToSplit))
+
+    let fullTitle = song.snippet.title
+    let idxToSplit
+    if (fullTitle.includes('-')) {
+        idxToSplit = fullTitle.indexOf('-')
+    }
+    let authorSong = fullTitle.slice(0, idxToSplit)
+    return authorSong
+}
 
 
 function getSongDurationToMin(songDuration) {

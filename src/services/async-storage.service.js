@@ -3,7 +3,7 @@
 // const station = require('../data/station.json')
 const station = require('../data/station.json')
 
-console.log(station);
+// console.log(station);
 export const storageService = {
 	query,
 	get,

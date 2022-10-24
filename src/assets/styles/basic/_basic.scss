@@ -13,7 +13,11 @@ body {
 
 }
 
-.App {
+h2{
+    margin: 0;
+}
+
+.root-cmp {
     height: 100vh;
     // height: 100%;
     display: grid;
@@ -21,7 +25,7 @@ body {
     background-color: $clr-black-000;
     // grid-column-gap: 8px;
     grid-template-columns: 180px calc(100% - 188px);
-    grid-template-rows: 56px calc(100% - 164px) 90px;
+    grid-template-rows: 56px calc(100% - 149px) 72px;
     grid-template-areas:
         "app-header app-header"
         "menu main-content"

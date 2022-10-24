@@ -15,6 +15,20 @@
 // D & D Later....
 
 
+
+
+miniSong = { 
+  videoId :"0BVcTGheXOg",
+  snippet : {
+    title:'רד אקסס * אסף אמדורסקי * אלה לי - מרי לו (מיוחד למצעד השנתי)',
+    thumbnails: {
+      default: {
+        url:'https://i.ytimg.com/vi/0BVcTGheXOg/default.jpg',
+      }
+    },
+  }
+}
+
 // server.js
 var gStationLiveUsers = {
   stationId : 4

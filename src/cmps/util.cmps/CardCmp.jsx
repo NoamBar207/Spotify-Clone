@@ -1,28 +1,67 @@
-import { useNavigate } from 'react-router-dom'
+import { useEffect } from "react";
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { utilService } from "../../services/util.service"
+import { setCurrStation } from "../../store/actions/station.actions";
 
 
-export function CardCmp({ ganere }) {
+export function CardCmp({ station }) {
 
-
+    // console.log(station);
+    // const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
+    const dispatch = useDispatch()
+    const [authorsState, setAutorsState] = useState('')
     const navigate = useNavigate()
 
+    useEffect(() => {
+        infoAutorsGetter()
+    }, [])
 
-    const onGanerePick =()=>{
-        // navigate(`/station/${station._id}`)
-        navigate(`/station`)
+    // useEffect(() => {
+        // console.log(currStation);
+    // }, [currStation])
+
+    const infoAutorsGetter = () => {
+        station.songs.map((song, idx) => {
+            let author = utilService.getAutorName(song)
+            if (idx > 3) return
+            else if (idx === 0) setAutorsState(author)
+            else if (idx < 3 && !authorsState.includes(author)) {
+                setAutorsState(prevState => {
+                    return prevState + ', ' + author
+                })
+            }
+            else if (idx === 3) setAutorsState(prevState => {
+                return prevState + ', and more'
+            })
+        })
+    }
+
+    const onGanerePick = async () => {
+        console.log('picl', station);
+        await dispatch(setCurrStation(station))
+        navigate(`/station/${station._id}`)
+
+        // await setCurrStation(station)
     }
 
     return (
-        <section className="card-container-grid" onClick={onGanerePick}>
-            <section className="card-container-main">
-                <div className="card-title">
-                    {ganere}
-                </div>
-                <div className="card-pic">
-                    PicHere
-                </div>
+        <section className="card-container" onClick={onGanerePick}>
+            <div className="card-img">
+                <img src={station.songs[0].snippet.thumbnails.high.url} />
+            </div>
+            <div className="card-info">
+                <h2 className="card-title">{station.name}</h2>
+                <h4 className="card-autors">{
+                    authorsState
+                    // station.songs.map((song, idx) => {
+                    //     if (idx === 4) return
+                    //     return idx < 3 ? utilService.getAutorName(song) + ', ' : ' and more...'
+                    // })
+                }</h4>
 
-            </section>
+            </div>
         </section>
     )
 }
