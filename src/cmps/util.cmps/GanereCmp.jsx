@@ -1,22 +1,22 @@
 import { useNavigate } from 'react-router-dom'
 
 
-export function GanereCmp({ ganere }) {
+export function GanereCmp({ station }) {
 
 
     const navigate = useNavigate()
 
 
-    const onGanerePick =()=>{
+    const onStationPick =()=>{
         // navigate(`/station/${station._id}`)
         navigate(`/station`)
     }
 
     return (
-        <section className="ganere-container-grid" onClick={onGanerePick}>
+        !station.name.includes("Playlist") && <section className="ganere-container-grid" onClick={onStationPick}>
             <section className="ganere-container-main">
                 <div className="ganere-title">
-                    {ganere}
+                    {station.name}
                 </div>
                 <div className="ganere-pic">
                     PicHere

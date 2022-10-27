@@ -15,6 +15,7 @@ export const SignUp = () => {
 		fullname: '',
 		username: '',
 		password: '',
+		stations:[],
 		imgUrl: ''
 	})
 
@@ -50,6 +51,8 @@ export const SignUp = () => {
 			username: '',
 			password: '',
 			fullname: '',
+			stations:[],
+			imgUrl: ''
 		})
 		navigate(`/`)
 	}

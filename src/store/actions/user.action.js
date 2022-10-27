@@ -7,6 +7,7 @@ export function onSignup(credentials) {
 		// let newScrum = await boardService.getBoardForGuest()?
 		// let newCred = {...credentials, boards:[newScrum._id], starred:[newScrum._id]}
 		try {
+			// console.log(credentials);
 			const user = await userService.signup(credentials)
 			dispatch({
 				type: 'SET_USER',
@@ -49,6 +50,16 @@ export function getUser() {
 		}
 		catch (err) {
 			console.log('Cannot SET USER', err)
+		}
+	}
+}
+
+export function onUpdateUser(user) {
+	return async (dispatch) => {
+		try {
+			dispatch({ type: 'SET_USER', user })
+		} catch (err) {
+			console.log('cannot update user', err);
 		}
 	}
 }

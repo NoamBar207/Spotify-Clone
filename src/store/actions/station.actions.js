@@ -22,10 +22,10 @@ const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 export function setCurrStation(station) {
     // console.log('setCurr Station ', station);
     return async (dispatch) => {
-        try{
-            const action = {type:'SET_CURR_STATION', station}
+        try {
+            const action = { type: 'SET_CURR_STATION', station }
             dispatch(action)
-        } catch(err){
+        } catch (err) {
             console.error('Cannot set currStation', err);
         }
     }
@@ -57,6 +57,18 @@ export function setIsPlaying(isPlaying) {
             console.log(state);
         } catch (err) {
             console.error('cannot set isPlaying', err);
+        }
+    }
+}
+
+export function setUserStation(userStations) {
+    return async (dispatch) => {
+        try {
+            const action = { type: 'SET_USER_STATIONS', userStations }
+            dispatch(action)
+        }
+        catch (err) {
+            console.error('cannot set user Stations', err);
         }
     }
 }

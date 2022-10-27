@@ -39,17 +39,14 @@ export function CardCmp({ station }) {
     }
 
     const onGanerePick = async () => {
-        console.log('picl', station);
         await dispatch(setCurrStation(station))
         navigate(`/station/${station._id}`)
-
-        // await setCurrStation(station)
     }
 
     return (
-        <section className="card-container" onClick={onGanerePick}>
+        !station.name.includes("Playlist") && <section className="card-container" onClick={onGanerePick}>
             <div className="card-img">
-                <img src={station.songs[0].snippet.thumbnails.high.url} />
+                <img src={station.songs[0]?.snippet.thumbnails.high.url} />
             </div>
             <div className="card-info">
                 <h2 className="card-title">{station.name}</h2>

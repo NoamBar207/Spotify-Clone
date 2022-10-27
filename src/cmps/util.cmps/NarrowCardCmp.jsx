@@ -4,7 +4,7 @@
 export function NarrowCardCmp({station}) {
 
     return (
-        <div className="narrow-card-container">
+        !station.name.includes("Playlist") && <div className="narrow-card-container">
             <div className="narrow-card-img" style={{ background:`url(${station.stationImg}) center center/cover` }} />
             <h3>{station.name}</h3>
             <div className="play-btn-narrow-card">

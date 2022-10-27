@@ -1,6 +1,6 @@
 .homepage-container {
     grid-area: main-content;
-    padding: 24px 24px 0;
+    padding: 32px 24px 0;
     color: $clr-white-F;
     display: flex;
     flex-direction: column;
@@ -17,6 +17,10 @@
     .homepage-greet {
         // background-color: aqua;
         font-size: 1.4rem;
+
+        h2{
+            padding-bottom: 24px;
+        }
 
         .narrow-card-grid{
             display: grid;

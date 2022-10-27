@@ -1,5 +1,6 @@
 import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
+import { userService } from './user.service'
 // const gStation = require('../data/station.json')
 // console.log(gStation);
 // const gStation
@@ -10,7 +11,8 @@ const PAGE_SIZE = 5
 export const stationService = {
     query,
     getById,
-    loadUserStations
+    loadUserStations,
+    createNewStation
     // remove,
     // save
 }
@@ -35,13 +37,30 @@ async function getById(stationId) {
     return Promise.resolve(station);
 }
 
-async function loadUserStations(stationsId){
+async function loadUserStations(stationsId) {
     var stations = await httpService.get(STORAGE_KEY)
-    return Promise.resolve(stations);
+    var userStations = stationsId.map(async (id) => {
+        const station =  await getById(id)
+        return station
+    })
+    return Promise.resolve(userStations);
 }
 
-
-
+async function createNewStation() {
+    let user = await userService.getLoggedinUser()
+    console.log(user);
+    let num = user.stations.length + 1
+    let stationToAdd = {
+        name: `Playlist #${num}`,
+        songs: [],
+        stationImg: ''
+    }
+    if (Object.keys(user).length) {
+        const newUser = await httpService.post(STORAGE_KEY, stationToAdd)
+        userService.saveLocalUser(newUser)
+        return newUser
+    }
+}
 // function query(filterBy = { txt: '' }) {
 //     // const regex = new RegExp(filterBy)
 //     return Promise.resolve(gStation);

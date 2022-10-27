@@ -43,7 +43,7 @@ export function SearchPage() {
             {Object.keys(stationList).length ? 
             <div className="search-page-grid">
                 {stationList.map(station => {
-                    return <GanereCmp ganere={station.name} />
+                    return <GanereCmp station={station} />
                 })}
             </div> :<></>
             } 
