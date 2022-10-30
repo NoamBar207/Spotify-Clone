@@ -1,0 +1,51 @@
+.search-result {
+
+    // width: 100%;
+    // display: flex;
+    @include flex-center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 16px;
+    height: 56px;
+    font-size: 16px;
+    border-radius: 4px;
+    // padding-inline-start: 22px;
+
+    &:hover {
+        background-color: hsla(0, 0%, 100%, .1);
+    }
+
+    .search-result-img {
+        height: 100%;
+        border-radius: 3px;
+    }
+    .title-autor{
+        min-width: 50%;
+        .title {
+            font-size: 16px;
+            color: $clr-white-F;
+        }
+    
+        .autor {
+            font-size: 14px;
+        }
+    }
+
+
+    // @include flex-center;
+
+    // align-self: flex-start;
+
+    .actions {
+        width: 100%;
+        justify-self: flex-end;
+        text-align: end;
+        padding-inline-end: 8px;
+    }
+
+    .added-at {
+        font-size: 14px;
+    }
+
+}

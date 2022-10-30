@@ -38,7 +38,6 @@ async function getById(stationId) {
 }
 
 async function loadUserStations(stationsId) {
-    var stations = await httpService.get(STORAGE_KEY)
     var userStations = stationsId.map(async (id) => {
         const station =  await getById(id)
         return station

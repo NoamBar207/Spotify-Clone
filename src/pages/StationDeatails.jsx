@@ -71,17 +71,6 @@ export function StationDeatails() {
     //     return authorSong
     // }
 
-    const getSongName = (song) => {
-        let fullTitle = song.snippet.title
-        let idxToSplitStart
-        let idxToSplitEnd
-        let songName
-        if (fullTitle.includes('-')) idxToSplitStart = fullTitle.indexOf('-')
-        if (fullTitle.includes('(')) idxToSplitEnd = fullTitle.indexOf('(')
-        songName = fullTitle.slice(idxToSplitStart + 1, idxToSplitEnd)
-        return songName
-    }
-
 
     const onPlay = () => {
         if (!Object.keys(currSong).length) {
@@ -121,12 +110,12 @@ export function StationDeatails() {
                                 <div className="song-img-title" >
                                     <img src={song.snippet.thumbnails.default.url} style={{ width: '50px', height: '50px' }} />
                                     <div className="station-details-song">
-                                        {utilService.getAutorName(song) !== getSongName(song) ?
+                                        {utilService.getAutorName(song) !== utilService.getSongName(song) ?
                                             <>
-                                                <div>{getSongName(song)}</div>
+                                                <div>{utilService.getSongName(song)}</div>
                                                 <div style={{ fontSize: '14px', color: '#B3B3B3' }}>{utilService.getAutorName(song)}</div>
                                             </>
-                                            : <div>{getSongName(song)}</div>}
+                                            : <div>{utilService.getSongName(song)}</div>}
                                     </div>
                                     {/* {song.snippet.title.includes('(') ? <h3>{cutExtraTitle(song.snippet.title)}</h3> : <h3>{song.snippet.title}</h3>} */}
                                 </div>

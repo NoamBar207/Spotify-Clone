@@ -1,11 +1,14 @@
-import { width } from '@mui/system';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { importService } from '../services/import-img-service';
+import { songService } from '../services/song.service';
 import { stationService } from '../services/station.service';
 import { userService } from '../services/user.service';
 import { YTService } from '../services/youtube.service';
+import { LoaderSearch } from './util.cmps/LoaderSearch';
+import { SearchResults } from './util.cmps/SearchResults';
+
 
 
 
@@ -15,19 +18,37 @@ export const AppHeader = () => {
     const { currUser } = useSelector((state) => state.userModule)
 
     const searchRef = useRef()
-    const [searchString, setSearchString] = useState('')
+    const [isOnMellofy, setIsOnMellofy] = useState(true)
+    const [isSearchYotube, setIsSearchYoutube] = useState(false)
+    const [data, setData] = useState([])
 
-    const onSubmitYoutube = (ev) => {
+    const onSearch = (ev) => {
         ev.preventDefault()
-        console.log(ev.target[0].value);
+        console.log(ev.target[0].value)
+        if (data.length) setData([])
         let value = ev.target[0].value
-        YTService.getSongSearch(value)
+        isSearchYotube ? onSubmitYoutube(value) : onSubmitMellofy(value)
     }
 
-    const handleChange = async (ev) => {
-        let value
-        value = ev.target.value
-        setSearchString(value)
+    const onSubmitMellofy = async (value) => {
+        let songs = await songService.query(value)
+        if (songs.length) {
+            setData(songs)
+        } else {
+            setIsOnMellofy(false)
+        }
+    }
+
+    const onSubmitYoutube = async (value) => {
+        // let value = ev.target[0].value
+        const data = await YTService.getSongSearch(value)
+        const songs = editData(data.items)
+        setData(songs)
+    }
+
+    const onSearchYoutube = () => {
+        setIsOnMellofy(true)
+        setIsSearchYoutube(true)
     }
 
     useEffect(() => {
@@ -45,14 +66,15 @@ export const AppHeader = () => {
         })
     }
 
-    const toggleModal = async (refType) => {
-        try {
-            refType.current.classList.toggle('hide')
-            // const templates = await boardService.queryTemplates()
-            // setTemplates(templates)
-        } catch (err) {
-            console.log('cannot get templates', err);
-        }
+    const editData = (items) => {
+        let songs = items.map(song => {
+            return songService.songEditor(song)
+        })
+        return songs
+    }
+
+    const toggleModal = (refType) => {
+        refType.current.classList.toggle('hide')
     }
 
     const onHomeClick = () => {
@@ -80,17 +102,19 @@ export const AppHeader = () => {
                 <div className='header-search-container' onClick={() => toggleModal(searchRef)}>
                     <label className="label-search flex">
                         <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
-                        <form className='header-search-form'>
+                        <form className='header-search-form' onSubmit={onSearch}>
                             <input
                                 className="header-search"
-                                // onChange={onSearchBoard}
-                                onClick={onSearchClick}
+                                // onChange={handleChange}
                                 placeholder="What do you want to listen to?"
                             />
                         </form>
                         <section className='header-search-results hide' ref={searchRef}>
-                            Hey From Modal
-
+                            {isSearchYotube ? <h1>Add to Mellofy</h1> : <h1>Search in Mellofy</h1>}
+                            {data.length ? <SearchResults items={data} isSearchYotube={isSearchYotube} /> : <LoaderSearch />}
+                            {!isOnMellofy | data.length && <div>
+                                <button onClick={onSearchYoutube}>Could not find your song? Add it to Mellofy!</button>
+                            </div>}
                         </section>
                     </label>
                 </div>

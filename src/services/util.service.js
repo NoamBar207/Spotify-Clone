@@ -5,7 +5,9 @@ export const utilService = {
     getSongDurationToMin,
     getFormatedDate,
     shuffleFunc,
-    getAutorName
+    titleEditor,
+    getAutorName,
+    getSongName
 }
 
 
@@ -27,6 +29,17 @@ function getAutorName(song) {
     }
     let authorSong = fullTitle.slice(0, idxToSplit)
     return authorSong
+}
+
+function getSongName(song) {
+    let fullTitle = song.snippet.title
+    let idxToSplitStart
+    let idxToSplitEnd
+    let songName
+    if (fullTitle.includes('-')) idxToSplitStart = fullTitle.indexOf('-')
+    if (fullTitle.includes('(')) idxToSplitEnd = fullTitle.indexOf('(')
+    songName = fullTitle.slice(idxToSplitStart + 1, idxToSplitEnd)
+    return songName
 }
 
 
@@ -110,3 +123,14 @@ function shuffleFunc(songs, currSong) {
     // return songs;
 }
 
+function titleEditor(title) {
+    let idx = title.indexOf('&')
+    console.log(idx);
+    let titleToReturn = idx ? title.slice(0, idx) + title.slice(idx + 5) : title
+    console.log(titleToReturn);
+    return titleToReturn
+}
+
+function _unescape(str) {
+    // return str.replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
+}

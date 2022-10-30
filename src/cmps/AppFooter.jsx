@@ -53,6 +53,7 @@ export const AppFooter = () => {
 
     const playerReady = (event) => {
         //cleaning
+        console.log('OnPlayer Ready', event.target);
         clearInterval(intervalId.current)
         setSongDuration(0)
 
@@ -173,7 +174,7 @@ export const AppFooter = () => {
                 {Object.keys(currSong).length ?
                     <div className='curr-song-container'>
                         <div className='curr-song-img'>
-                            <img src={currSong.snippet.thumbnails.default.url} style={{ height: '70px', width: '70px' }} />
+                            <img src={currSong.snippet.thumbnails.high.url} style={{ height: '70px', width: '70px' }} />
                             {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
                             <YouTube
                                 videoId={currSong?.videoId}
