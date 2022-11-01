@@ -8,6 +8,7 @@ export const userService = {
     logout,
     saveLocalUser,
 	getLoggedinUser,
+	updateUser,
 	login
 }
 
@@ -35,6 +36,11 @@ async function login(userCred) {
 		console.log('NEED TO SIGN IN !')
 		throw new Error('service')
 	}
+}
+
+async function updateUser(user){
+	const userToSave = await httpService.put(`user/${user._id}`, user)
+	return saveLocalUser(userToSave)
 }
 
 function saveLocalUser(user) {

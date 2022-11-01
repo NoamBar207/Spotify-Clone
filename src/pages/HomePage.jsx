@@ -5,36 +5,41 @@ import { CardCmp } from "../cmps/util.cmps/CardCmp";
 import { useNavigate } from "react-router-dom";
 import { NarrowCardCmp } from "../cmps/util.cmps/NarrowCardCmp";
 import { YTService } from "../services/youtube.service";
+import { useSelector } from "react-redux";
 
 const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 const YOUTUBE_ID = 'XXYlFuWEuKI'
 
 export function HomePage() {
 
+    const { currUser } = useSelector((state) => state.userModule)
     const [stations, setStation] = useState([])
+    const [likedSongsStation, setLikedSongsStation] = useState({})
     const navigate = useNavigate()
+    const [searchString, setSearchString] = useState('')
 
     useEffect(() => {
         loadStations()
         getGreetingTitle()
     }, [])
 
-    const [searchString, setSearchString] = useState('')
+    useEffect(() => {
+        getLikedSongsUser()
+    }, [currUser])
 
-    const onSubmitYoutube = (ev) => {
-        ev.preventDefault()
-        console.log(ev.target[0].value);
-        let value = ev.target[0].value
-        YTService.getSongSearch(value)
+
+
+
+
+    const getLikedSongsUser = () => {
+        const likedSongsStation = {
+            songs: currUser.likedSongs,
+            stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
+            name: "Liked Songs"
+        }
+        setLikedSongsStation(likedSongsStation)
+        console.log(likedSongsStation);
     }
-
-    const handleChange = async (ev) => {
-        let value
-        value = ev.target.value
-        setSearchString(value)
-    }
-
-
 
     const loadStations = async () => {
         try {
@@ -62,7 +67,7 @@ export function HomePage() {
         <section className="homepage-container">
             <div className="homepage-greet">
                 <h2>{getGreetingTitle()}</h2>
-                <div className='home-search-container'>
+                {/* <div className='home-search-container'>
                     <label className="label-search flex">
                         <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
                         <form onSubmit={onSubmitYoutube}>
@@ -74,9 +79,12 @@ export function HomePage() {
                             />
                         </form>
                     </label>
-                </div>
+                </div> */}
                 <div className="narrow-card-grid">
-                    {stations.map(station => <NarrowCardCmp station={station} />)}
+                    {Object.keys(currUser).length ? <NarrowCardCmp station={likedSongsStation} />: <></>}
+                    {stations.map((station, idx) => {
+                        if (idx < 5) return <NarrowCardCmp station={station} />
+                    })}
                 </div>
             </div>
             <section className="homepage-playlists">

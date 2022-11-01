@@ -4,7 +4,8 @@ import { utilService } from "./util.service"
 export const songService = {
     query,
     songEditor,
-    addSong
+    addSong,
+    addSongToLike
 }
 
 async function query(value) {
@@ -15,8 +16,30 @@ async function query(value) {
     return songs
 }
 
-async function addSong(song){
+async function addSong(song) {
     const songToReturn = await httpService.post('search', song)
+}
+
+function addSongToLike(currSong, user, isSongLiked) {
+    // let isSongLiked = false
+    // user.likedSongs?.forEach(song => {
+    //     if (song.videoId === currSong.videoId) isSongLiked = true
+    // })
+    if (isSongLiked) {
+        let userToReturn = { ...user }
+        const likedSongs= user.likedSongs.filter(song => song.videoId !== currSong.videoId)
+        userToReturn.likedSongs =likedSongs
+        return userToReturn
+    } else {
+        let userToReturn = { ...user }
+        const songToAdd = {
+            createdAt: currSong.createdAt,
+            snippet: currSong.snippet,
+            videoId: currSong.videoId,
+        }
+        userToReturn.likedSongs.push(songToAdd)
+        return userToReturn
+    }
 }
 
 function songEditor(song) {
@@ -24,9 +47,9 @@ function songEditor(song) {
         videoId: song.id.videoId,
         snippet: {
             title: utilService.titleEditor(song.snippet.title),
-            thumbnails:song.snippet.thumbnails
+            thumbnails: song.snippet.thumbnails
         },
-        createdAt:Date.now()
+        createdAt: Date.now()
     }
     // console.log(songToReturn);
     return songToReturn

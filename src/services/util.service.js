@@ -7,7 +7,8 @@ export const utilService = {
     shuffleFunc,
     titleEditor,
     getAutorName,
-    getSongName
+    getSongName,
+    toggleModal
 }
 
 
@@ -131,6 +132,6 @@ function titleEditor(title) {
     return titleToReturn
 }
 
-function _unescape(str) {
-    // return str.replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
+function toggleModal(refType) {
+    refType.current.classList.toggle('hide')
 }

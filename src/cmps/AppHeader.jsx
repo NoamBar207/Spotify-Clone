@@ -5,6 +5,7 @@ import { importService } from '../services/import-img-service';
 import { songService } from '../services/song.service';
 import { stationService } from '../services/station.service';
 import { userService } from '../services/user.service';
+import { utilService } from '../services/util.service';
 import { YTService } from '../services/youtube.service';
 import { LoaderSearch } from './util.cmps/LoaderSearch';
 import { SearchResults } from './util.cmps/SearchResults';
@@ -73,10 +74,6 @@ export const AppHeader = () => {
         return songs
     }
 
-    const toggleModal = (refType) => {
-        refType.current.classList.toggle('hide')
-    }
-
     const onHomeClick = () => {
         navigate('/')
     }
@@ -99,7 +96,7 @@ export const AppHeader = () => {
             <div className="header-home-search" >
                 {/* <div className='header-home-btn' style={{backgroundImage:`URL(${importService.homePageIcon})`}}></div> */}
                 <div className='header-home-btn' onClick={onHomeClick} ><i class="fa-solid fa-house" style={{ height: '24px', width: '24px' }}></i></div>
-                <div className='header-search-container' onClick={() => toggleModal(searchRef)}>
+                <div className='header-search-container' onClick={() => utilService.toggleModal(searchRef)}>
                     <label className="label-search flex">
                         <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
                         <form className='header-search-form' onSubmit={onSearch}>
@@ -112,7 +109,7 @@ export const AppHeader = () => {
                         <section className='header-search-results hide' ref={searchRef}>
                             {isSearchYotube ? <h1>Add to Mellofy</h1> : <h1>Search in Mellofy</h1>}
                             {data.length ? <SearchResults items={data} isSearchYotube={isSearchYotube} /> : <LoaderSearch />}
-                            {!isOnMellofy | data.length && <div>
+                            {!isOnMellofy | data.length && <div className='add-to-btn'>
                                 <button onClick={onSearchYoutube}>Could not find your song? Add it to Mellofy!</button>
                             </div>}
                         </section>

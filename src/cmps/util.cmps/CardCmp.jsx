@@ -38,8 +38,8 @@ export function CardCmp({ station }) {
         })
     }
 
-    const onGanerePick = async () => {
-        await dispatch(setCurrStation(station))
+    const onGanerePick = () => {
+        dispatch(setCurrStation(station))
         navigate(`/station/${station._id}`)
     }
 

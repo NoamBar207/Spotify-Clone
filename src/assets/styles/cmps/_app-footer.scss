@@ -1,10 +1,11 @@
 .app-footer {
 
     color: $clr-white-F;
-    background-color: $clr-black-000 ;
+    background-color: $clr-black-18 ;
     display: flex;
     align-items: center;
     grid-area: app-footer;
+    height: 85px;
     padding: 0 8px;
     z-index: 15;
 

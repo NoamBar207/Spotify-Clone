@@ -15,7 +15,8 @@ export const SignUp = () => {
 		fullname: '',
 		username: '',
 		password: '',
-		stations:[],
+		stations: [],
+		likedSongs: [],
 		imgUrl: ''
 	})
 
@@ -35,7 +36,7 @@ export const SignUp = () => {
 	}
 
 	const onSignUpNewUser = async () => {
-		if(
+		if (
 			!credentials.username.length ||
 			!credentials.password.length ||
 			!credentials.fullname.length
@@ -48,10 +49,11 @@ export const SignUp = () => {
 		// dispatch(setCurrUser(newUser))
 
 		setCredentials({
+			fullname: '',
 			username: '',
 			password: '',
-			fullname: '',
-			stations:[],
+			stations: [],
+			likedSongs: [],
 			imgUrl: ''
 		})
 		navigate(`/`)

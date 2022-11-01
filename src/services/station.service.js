@@ -12,7 +12,8 @@ export const stationService = {
     query,
     getById,
     loadUserStations,
-    createNewStation
+    createNewStation,
+    addSongToStation
     // remove,
     // save
 }
@@ -47,7 +48,6 @@ async function loadUserStations(stationsId) {
 
 async function createNewStation() {
     let user = await userService.getLoggedinUser()
-    console.log(user);
     let num = user.stations.length + 1
     let stationToAdd = {
         name: `Playlist #${num}`,
@@ -59,6 +59,18 @@ async function createNewStation() {
         userService.saveLocalUser(newUser)
         return newUser
     }
+}
+
+async function addSongToStation(song, station) {
+    // let user = await userService.getLoggedinUser()
+     const songToAdd = {
+            createdAt: song.createdAt,
+            snippet: song.snippet,
+            videoId: song.videoId,
+        }
+    station.songs.push(songToAdd)
+    console.log(station);
+    await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
 }
 // function query(filterBy = { txt: '' }) {
 //     // const regex = new RegExp(filterBy)

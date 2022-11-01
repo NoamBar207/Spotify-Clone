@@ -9,11 +9,15 @@ import { useRef } from 'react';
 import { SliderBar } from './util.cmps/SlideBar';
 import { utilService } from '../services/util.service';
 import { height } from '@mui/system';
+import { songService } from '../services/song.service';
+import { userService } from '../services/user.service';
+import { onUpdateUser } from '../store/actions/user.action';
 
 export const AppFooter = () => {
 
 
     const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
+    const { currUser } = useSelector((state) => state.userModule)
     const { player } = useSelector((state) => state.playerModule)
     const [songName, setSongName] = useState('')
     const [songAutor, setSongAutor] = useState('')
@@ -22,6 +26,7 @@ export const AppFooter = () => {
     const [songTotalDurationNum, setSongTotalDurationNum] = useState(0)
     const [volume, setVolume] = useState(0)
     const [reapetInd, setReapetInd] = useState(false)
+    const [isLiked, setIsLiked] = useState(false)
 
 
 
@@ -47,16 +52,30 @@ export const AppFooter = () => {
         else if (Object.keys(player).length && !isPlaying) playerOnPause()
     }, [isPlaying])
 
+    useEffect(() => {
+        let isSongLiked = false
+        currUser.likedSongs?.forEach(song => {
+            if (song.videoId === currSong.videoId) isSongLiked = true
+        })
+        setIsLiked(isSongLiked)
+    }, [currSong])
 
+
+    const toggleLike = async () => {
+        let userReturned = songService.addSongToLike(currSong, currUser, isLiked)
+        setIsLiked(!isLiked)
+        userReturned = await userService.updateUser(userReturned)
+        dispatch(onUpdateUser(userReturned))
+
+        // console.log(userReturned);
+    }
 
 
 
     const playerReady = (event) => {
         //cleaning
-        console.log('OnPlayer Ready', event.target);
         clearInterval(intervalId.current)
         setSongDuration(0)
-
         titleSplitter()
         event.target.playVideo()
 
@@ -163,7 +182,6 @@ export const AppFooter = () => {
         else return
     }
 
-
     // const startStopSong = () => {
     // //     isPlaying = !isPlaying
     // // }
@@ -194,7 +212,8 @@ export const AppFooter = () => {
                             </div>
                         </div>
                         <div className='heart-symbol'>
-
+                            {isLiked ? <span onClick={toggleLike} style={{ color: 'green' }}><i class="fa-solid fa-heart"></i></span>
+                                : <span onClick={toggleLike}><i class="fa-regular fa-heart"></i></span>}
                         </div>
                     </div> : <></>
                 }
@@ -223,7 +242,7 @@ export const AppFooter = () => {
                             {/* <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} /> */}
                         </div>
                         <div onClick={onReapet}>
-                            <i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i>
+                            <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i></span>
                         </div>
                     </div>
                 </div>
@@ -252,7 +271,7 @@ export const AppFooter = () => {
                     {volume >= 50 ? <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i> : <></>} */}
 
 
-                    <i class="fa-solid fa-volume-high" style={{color:'white'}}></i>
+                    <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i>
 
 
                     {/* <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} /> */}

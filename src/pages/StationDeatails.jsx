@@ -6,7 +6,8 @@ import { setCurrSong, setCurrStation, setIsPlaying } from "../store/actions/stat
 import { MainMenu } from '../cmps/MainMenu'
 import { useDispatch, useSelector } from "react-redux"
 import { utilService } from "../services/util.service"
-
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
+import { StationSong } from "../cmps/util.cmps/StationSong"
 
 
 export function StationDeatails() {
@@ -15,6 +16,7 @@ export function StationDeatails() {
     const dispatch = useDispatch()
     const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
     const [station, setStation] = useState({})
+    const [songsOrder, setSongsOreder] = useState(currStation.songs)
     const { stationId } = useParams()
 
 
@@ -30,6 +32,7 @@ export function StationDeatails() {
                 const station = await stationService.getById(stationId)
                 dispatch(setCurrStation(station))
             }
+
             // // const stateStation = station[0]
             // console.log(station);
             // dispatch(setCurrStation(station))
@@ -49,6 +52,15 @@ export function StationDeatails() {
             songTitle = songTitle.slice(0, idx)
         }
         return songTitle
+    }
+
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return
+        const newSongOreder = Array.from(songsOrder)
+        const [movedSong] = newSongOreder.splice(result.source.index, 1)
+        newSongOreder.splice(result.destination.index, 0, movedSong)
+        setSongsOreder(newSongOreder)
+        console.log(newSongOreder);
     }
 
 
@@ -91,40 +103,38 @@ export function StationDeatails() {
         <section className="station-deatils">
             <StationHeader />
             <div className="color-container">
-
                 <div className="play-btn-station">
                     <span onClick={onPlay}><i className="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>
                 </div>
-                <ul className="station-details-container">
-                    <li className="details-header">
-                        <div style={{ width: '12px' }}>#</div>
-                        <div style={{ width: '30vw' }}>TITLE</div>
-                        {/* <div>Album</div> */}
-                        <div style={{ width: '15vw' }}>DATE ADDED</div>
-                        <div style={{ width: '200px', display: 'flex', justifyContent: 'flex-end' }}>🕞</div>
-                    </li>
-                    {
-                        currStation.songs.map((song, idx) => {
-                            return <li className="song-container" id={song.videoId} onDoubleClick={() => dispatch(setCurrSong(song))}>
-                                <div style={{ width: '14px' }}>{idx + 1}</div>
-                                <div className="song-img-title" >
-                                    <img src={song.snippet.thumbnails.default.url} style={{ width: '50px', height: '50px' }} />
-                                    <div className="station-details-song">
-                                        {utilService.getAutorName(song) !== utilService.getSongName(song) ?
-                                            <>
-                                                <div>{utilService.getSongName(song)}</div>
-                                                <div style={{ fontSize: '14px', color: '#B3B3B3' }}>{utilService.getAutorName(song)}</div>
-                                            </>
-                                            : <div>{utilService.getSongName(song)}</div>}
-                                    </div>
-                                    {/* {song.snippet.title.includes('(') ? <h3>{cutExtraTitle(song.snippet.title)}</h3> : <h3>{song.snippet.title}</h3>} */}
-                                </div>
-                                {/* {console.log(song.createdAt)} */}
-                                <div className="added-at">{utilService.getFormatedDate(new Date(song.createdAt))}</div>
-                            </li>
-                        })
-                    }
-                </ul>
+
+                <DragDropContext onDragEnd={handleOnDragEnd}>
+                    <Droppable droppableId="station-details-container">
+                        {provided => (
+                            <ul className="station-details-container"  {...provided.droppableProps} ref={provided.innerRef}>
+                                <li className="details-header">
+                                    <div style={{ width: '12px' }}>#</div>
+                                    <div style={{ width: '30vw' }}>TITLE</div>
+                                    <div style={{ width: '15vw' }}>DATE ADDED</div>
+                                    <div style={{ width: '200px', display: 'flex', justifyContent: 'flex-end' }}>🕞</div>
+                                </li>
+                                {/* <div>Album</div> */}
+                                {songsOrder.map((song, idx) => {
+                                    return (
+                                        <Draggable key={song.videoId} draggableId={song.videoId} index={idx}>
+                                            {(provided) => (
+                                                <li {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                                    <StationSong key={song.videoId} song={song} idx={idx}></StationSong>
+                                                    {/* {song.snippet.title.includes('(') ? <h3>{cutExtraTitle(song.snippet.title)}</h3> : <h3>{song.snippet.title}</h3>} */}
+                                                </li>
+                                            )}
+                                        </Draggable>
+                                    )
+                                })}
+                                {provided.placeholder}
+                            </ul>
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </div>
         </section>
     )
