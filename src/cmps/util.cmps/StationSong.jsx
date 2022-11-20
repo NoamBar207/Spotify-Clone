@@ -6,6 +6,7 @@ import { utilService } from "../../services/util.service"
 import { setCurrSong } from "../../store/actions/station.actions"
 import { LikeButton } from "./LikeButton"
 import { YTService } from "../../services/youtube.service"
+import { songService } from "../../services/song.service"
 
 
 
@@ -13,14 +14,20 @@ export const StationSong = ({ song, idx }) => {
 
     const { userStations } = useSelector((state) => state.stationModule)
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     durationCheck(song.videoId)
-    // }, [])
+    useEffect(() => {
+        if (!song.duration) {
+            const songWithDuration = durationCheck(song.videoId)
+        }
+    }, [])
     
-    const durationCheck = async (videoId) =>{
-        // const duration = await YTService.getSongDuration(videoId)
+    const durationCheck = async (videoId) => {
+        const duration = await YTService.getSongDuration(videoId)
+        let songWithDuration = { ...song, duration }
+        songWithDuration =  await songService.updateSong(songWithDuration)
+        console.log(songWithDuration);
+        return songWithDuration
         // console.log(duration);
-        
+
     }
 
 
@@ -41,7 +48,8 @@ export const StationSong = ({ song, idx }) => {
             </div>
             {/* {console.log(song.createdAt)} */}
             <div className="added-at">{utilService.getFormatedDate(new Date(song.createdAt))}</div>
-            <LikeButton songProp={song}/>
+            <LikeButton songProp={song} />
+            <div className="song-duration">{song.duration}</div>
             <ThreeDots song={song} userStations={userStations} />
         </div>
     )

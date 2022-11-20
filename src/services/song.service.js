@@ -6,7 +6,8 @@ export const songService = {
     query,
     songEditor,
     addSong,
-    addSongToLike
+    addSongToLike,
+    updateSong
 }
 
 async function query(value) {
@@ -18,9 +19,14 @@ async function query(value) {
 }
 
 async function addSong(song) {
-    const duration = await YTService.getSongDuration(song.videoIdvideoId)
+    const duration = await YTService.getSongDuration(song.videoId)
     song = {...song, duration}
     const songToReturn = await httpService.post('search', song)
+}
+
+async function updateSong(song) {
+    const songToReturn = await httpService.put('search', song)
+    return songToReturn
 }
 
 function addSongToLike(currSong, user, isSongLiked) {

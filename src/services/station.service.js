@@ -69,6 +69,7 @@ async function addSongToStation(song, station) {
         createdAt: song.createdAt,
         snippet: song.snippet,
         videoId: song.videoId,
+        duration:song.duration
     }
     let isInclude = !!station.songs.find(song => song.videoId === songToAdd.videoId)
     if (!isInclude) {

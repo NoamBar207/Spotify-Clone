@@ -23,13 +23,6 @@ export function StationHeader() {
         dispatch(onSaveStation({ ...currStation, name: value }))
     }
 
-    // const handleChange = (ev) =>{
-    //     const handler = setTimeout(() => {
-    //         console.log(ev.target.value);
-    //         setStationName(ev.target.value)
-    //     }, 1000)
-    // }
-
     return (
         <section className="station-header-container">
             <div className="station-header-img">
