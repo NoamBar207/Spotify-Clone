@@ -115,13 +115,14 @@
                     width: 100%;
                     height: fit-content;
                     box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);
-
+                    border-radius: 3px;
+                    
                     // min-height: 15rem;
                     // padding-right: 8px;
                     gap: 8px;
                     background-color: $clr-black-18;
                     padding: 8px 4px;
-
+                    
                     .search-results-container {
                         // @include flex-center;
                         display: flex;
@@ -129,8 +130,9 @@
                         width: 100%;
                         flex-direction: column;
                         gap: 8px;
+                        
                     }
-
+                    
                     .add-to-btn {
                         justify-self: flex-end
                     }
@@ -138,7 +140,7 @@
             }
         }
     }
-
+    
     .no-user-header {
         @include flex-center;
         gap: 8px;
@@ -153,5 +155,24 @@
         padding: 1px 8px 1px 2px;
         background-color: $clr-opacity-user;
         border-radius: 15px;
+        position: relative;
+        
+        .search-result-container {
+            position: absolute;
+            @include flex-center;
+            flex-direction: column;
+            top: 40px;
+            right: 0;
+            background-color: $clr-black-18;
+            border-radius: 3px;
+            
+            .search-result {
+                @include flex-center;
+                padding: 4px 8px 0 8px;
+                font-size: 14px;
+                height: 44px;
+                gap: 8px;
+            }
+        }
     }
 }

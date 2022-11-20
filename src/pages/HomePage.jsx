@@ -4,8 +4,8 @@ import React from 'react';
 import { CardCmp } from "../cmps/util.cmps/CardCmp";
 import { useNavigate } from "react-router-dom";
 import { NarrowCardCmp } from "../cmps/util.cmps/NarrowCardCmp";
-import { YTService } from "../services/youtube.service";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { setCurrStation, setLikedSongsUser } from "../store/actions/station.actions";
 
 const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 const YOUTUBE_ID = 'XXYlFuWEuKI'
@@ -13,32 +13,28 @@ const YOUTUBE_ID = 'XXYlFuWEuKI'
 export function HomePage() {
 
     const { currUser } = useSelector((state) => state.userModule)
+    const { likedStation } = useSelector((state) => state.stationModule)
     const [stations, setStation] = useState([])
-    const [likedSongsStation, setLikedSongsStation] = useState({})
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [searchString, setSearchString] = useState('')
 
     useEffect(() => {
         loadStations()
         getGreetingTitle()
     }, [])
-
+    
     useEffect(() => {
         getLikedSongsUser()
     }, [currUser])
-
-
-
-
-
-    const getLikedSongsUser = () => {
-        const likedSongsStation = {
-            songs: currUser.likedSongs,
-            stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
-            name: "Liked Songs"
-        }
-        setLikedSongsStation(likedSongsStation)
-        console.log(likedSongsStation);
+    
+    const getLikedSongsUser = async () => {
+        await dispatch(setLikedSongsUser(currUser))
+        // setLikedSongsStation(station)
+        // const likedSongsStation = {
+        //     songs: currUser.likedSongs,
+        //     stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
+        //     name: "Liked Songs"
+        // }
     }
 
     const loadStations = async () => {
@@ -81,7 +77,7 @@ export function HomePage() {
                     </label>
                 </div> */}
                 <div className="narrow-card-grid">
-                    {Object.keys(currUser).length ? <NarrowCardCmp station={likedSongsStation} />: <></>}
+                    {Object.keys(currUser).length ? <NarrowCardCmp station={likedStation} /> : <></>}
                     {stations.map((station, idx) => {
                         if (idx < 5) return <NarrowCardCmp station={station} />
                     })}

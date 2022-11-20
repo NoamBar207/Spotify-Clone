@@ -1,15 +1,19 @@
-import {httpService} from './http.service'
+import { httpService } from './http.service'
+import { socketService, SOCKET_EMIT_UPDATE_USER } from './socket.service'
+import { utilService } from './util.service'
 
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
 export const userService = {
-    signup,
-    logout,
-    saveLocalUser,
+	signup,
+	logout,
+	saveLocalUser,
 	getLoggedinUser,
 	updateUser,
-	login
+	login,
+	getUsers,
+	toggleStationToUser
 }
 
 async function getLoggedinUser() {
@@ -24,7 +28,7 @@ async function signup(userCred) {
 async function logout() {
 	sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 	return await httpService.post('auth/logout')
-	
+
 }
 
 async function login(userCred) {
@@ -38,9 +42,24 @@ async function login(userCred) {
 	}
 }
 
-async function updateUser(user){
+async function updateUser(user) {
 	const userToSave = await httpService.put(`user/${user._id}`, user)
 	return saveLocalUser(userToSave)
+}
+
+async function getUsers() {
+	const users = await httpService.get('user/users')
+	const loggedinUser = await getLoggedinUser()
+	const res = users.filter(u => u._id !== loggedinUser._id)
+	return res
+}
+
+async function toggleStationToUser(user, stationId) {
+	const isInclude = !!user.followedStations.find(id => id == stationId)
+	const newArr = utilService.removeOrAdd(user.followedStations, stationId, isInclude)
+	user.followedStations = newArr
+	await httpService.put(`user/${user._id}`, user)
+	socketService.emit(SOCKET_EMIT_UPDATE_USER, user)
 }
 
 function saveLocalUser(user) {

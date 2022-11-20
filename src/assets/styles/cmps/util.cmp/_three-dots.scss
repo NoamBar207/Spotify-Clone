@@ -1,0 +1,65 @@
+
+
+.three-dots-container {
+    position: relative;
+
+    .three-dots-modal {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        position: absolute;
+        // top:0;
+        left: 100px;
+        min-width: 220px;
+        background-color: $clr-black-28;
+        box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);
+        border-radius: 4px;
+        overflow-y: auto;
+        z-index: 20;
+        padding: 4px;
+
+        .three-dots-btn {
+            font-size: 14px;
+            width: 100%;
+            background: transparent;
+            border: 0;
+            border-radius: 2px;
+            color: $clr-white-F;
+            cursor: pointer;
+            padding: 12px 8px;
+
+            &:hover {
+                background-color: hsla(0, 0%, 100%, .1);
+            }
+        }
+
+        // .add-to-playlist-container {
+        //     width: 100%;
+        //     height: 100%;
+        //     position: relative;
+
+        //     .playlist-modal {
+        //         position: absolute;
+        //         top: 0;
+        //         left: 100%;
+        //     }
+        // }
+
+    }
+
+    .playlist-modal {
+        position: absolute;
+        top: 63px;
+        left:  290px;
+        min-width: 120px;
+
+        .three-dots-btn {
+            font-size: 14px;
+            width: fit-content;
+            padding: 8px ;
+            width: 100%;
+
+        }
+    }
+
+}

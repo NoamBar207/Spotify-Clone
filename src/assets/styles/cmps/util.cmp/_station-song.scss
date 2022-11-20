@@ -1,0 +1,66 @@
+.song-container {
+    // width: 100%;
+    // display: flex;
+    @include flex-center;
+    justify-content: flex-start;
+    gap: 16px;
+    height: 56px;
+    font-size: 16px;
+    border-radius: 4px;
+    padding-inline-start: 22px;
+
+    &:hover {
+        background-color: hsla(0, 0%, 100%, .1);
+    }
+
+    .song-img-title {
+        // @include flex-center;
+        display: flex;
+        align-items: center;
+        width: 30vw;
+        gap: 12px;
+
+        img {
+            display: flex;
+            // align-self: flex-start;
+            justify-self: flex-start;
+        }
+
+    }
+
+    .added-at {
+        font-size: 14px;
+        flex: 1;
+    }
+
+
+    .three-dots-container {
+        // background-color: green;
+        justify-self: flex-end;
+        padding-right: 25px;
+        // justify-content: flex-end;
+        // flex: 1;
+
+        .three-dots-modal{
+            left: -11rem;
+            
+        }
+
+        .playlist-modal {
+            position: absolute;
+            left:0;
+            // right: 100%;
+            top: 67px;
+            left: -310px;
+            min-width: 120px;
+
+            .three-dots-btn {
+                font-size: 14px;
+                width: fit-content;
+                padding: 8px;
+                width: 100%;
+
+            }
+        }
+    }
+}

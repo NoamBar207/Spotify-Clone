@@ -8,12 +8,12 @@
     overflow-y: auto;
     // background-image:linear-gradient(#20173F 1%, $clr-black-12 99%);
 
-    .color-container{
+    .color-container {
         // transform: 90deg;
     }
 
 
-    .play-btn-station{
+    .play-btn-station {
         padding: 24px 32px;
         // margin: 32px 24px 0px 24px;
         // padding-inline-start: 32px;
@@ -25,7 +25,6 @@
         padding: 0 32px;
         list-style-type: none;
 
-
         .details-header {
             font-size: 12px;
             height: 36px;
@@ -36,45 +35,29 @@
             border-bottom: 1px solid hsla(0, 0%, 100%, .1);
             padding-inline-start: 22px;
 
-            .title-number-div {
-                display: flex;
-            }
         }
+    }
+}
 
-        .song-container {
-            // width: 100%;
-            // display: flex;
-            @include flex-center;
-            justify-content: flex-start;
-            gap: 16px;
-            height: 56px;
-            font-size: 16px;
-            border-radius: 4px;
-            padding-inline-start: 22px;
+@include for-laptop-narrow-layout {
+    .station-deatils {
+        .play-btn-station{
+            padding: 24px 16px;
+        }
+        .station-details-container {
+            padding: 0;
+            padding-inline-start: 16px;
+        }
+    }
+}
 
-            &:hover {
-                background-color: hsla(0, 0%, 100%, .1);
+@include for-laptop-layout {
+    .station-header-container {
+        .station-header-img {
+            img {
+                height: 192px;
+                width: 192px;
             }
-
-            .song-img-title {
-                // @include flex-center;
-                display: flex;
-                align-items: center;
-                width: 30vw;
-                gap: 12px;
-
-                img {
-                    display: flex;
-                    // align-self: flex-start;
-                    justify-self: flex-start;
-                }
-
-            }
-
-            .added-at {
-                font-size: 14px;
-            }
-
         }
     }
 }

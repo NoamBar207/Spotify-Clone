@@ -12,6 +12,7 @@ import { height } from '@mui/system';
 import { songService } from '../services/song.service';
 import { userService } from '../services/user.service';
 import { onUpdateUser } from '../store/actions/user.action';
+import { LikeButton } from './util.cmps/LikeButton';
 
 export const AppFooter = () => {
 
@@ -147,21 +148,21 @@ export const AppFooter = () => {
         //     let idxNextSong = Math.Random() * songsAmount
 
         // }
+        clearInterval(intervalId.current)
         if (reapetInd) {
-            console.log(reapetInd);
             player.seekTo(0)
             setSongDuration(0)
         }
         else if (Object.keys(currSong).length) {
-            let idxRem = currStation.songs.findIndex(song => (song.id.videoId === currSong.videoId))
+            let idxRem = currStation.songs.findIndex(song => (song.videoId === currSong.videoId))
             idxRem += diff
             if (idxRem === -1) {
                 idxRem = 0
                 player.seekTo(0)
                 setSongDuration(0)
             }
-            if (idxRem === currStation.songs.length) idxRem = 0
-            dispatch(setCurrSong(currStation.songs[idxRem]))
+            // if (idxRem === currStation.songs.length) idxRem = 0
+            if (idxRem < currStation.songs.length) dispatch(setCurrSong(currStation.songs[idxRem]))
         } else return
     }
 
@@ -178,6 +179,7 @@ export const AppFooter = () => {
     const onReapet = () => {
         if (Object.keys(currSong).length) {
             setReapetInd(!reapetInd)
+            console.log(reapetInd);
         }
         else return
     }
@@ -211,10 +213,11 @@ export const AppFooter = () => {
                                 {songAutor}
                             </div>
                         </div>
-                        <div className='heart-symbol'>
+                        {/* <div className='heart-symbol'>
                             {isLiked ? <span onClick={toggleLike} style={{ color: 'green' }}><i class="fa-solid fa-heart"></i></span>
                                 : <span onClick={toggleLike}><i class="fa-regular fa-heart"></i></span>}
-                        </div>
+                        </div> */}
+                        <LikeButton />
                     </div> : <></>
                 }
             </div>
@@ -232,9 +235,8 @@ export const AppFooter = () => {
                         </div>
                     </div>
                     <div className='song-player-play-pause'>
-                        {!isPlaying ? <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px', color: 'white' }}></i></span> :
-                            <span onClick={togglePlayer}><i class="fa-sharp fa-solid fa-circle-pause" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>
-                        }
+                        {!isPlaying && <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>}
+                        {isPlaying && <span onClick={togglePlayer}><i class="fa-solid fa-circle-pause" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>}
                     </div>
                     <div className='song-player-right'>
                         <div onClick={() => onPrevNextSong(1)}>
@@ -242,7 +244,8 @@ export const AppFooter = () => {
                             {/* <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} /> */}
                         </div>
                         <div onClick={onReapet}>
-                            <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i></span>
+                            {!reapetInd && <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i></span>}
+                            {reapetInd && <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'green' }}></i></span>}
                         </div>
                     </div>
                 </div>
@@ -269,12 +272,10 @@ export const AppFooter = () => {
                     {/* {volume === 0 ? <i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i> : <></>}
                     {volume < 50 && volume !== 0 ? <i class="fa-solid fa-volume-low" style={{ color: 'white' }}></i> : <></>}
                     {volume >= 50 ? <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i> : <></>} */}
+                    {!volume && <span><i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i></span>}
+                    {!!volume && <span><i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i></span>}
 
 
-                    <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i>
-
-
-                    {/* <img src={importService.volumeSvg} style={{ width: '20px', height: '20px' }} /> */}
                 </div>
                 <div style={{ width: '93px' }}>
                     <SliderBar disabled={false} value={volume} maxValue={100} handleChange={(event) => handleChangeVolume(event)} />

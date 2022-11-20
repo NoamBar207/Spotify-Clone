@@ -39,11 +39,28 @@ export function onLogin(credentials) {
 	}
 }
 
+export function onLogout() {
+    return async (dispatch) => {
+        try {
+			console.log('onLogout');
+            await userService.logout()
+            dispatch({
+                type: 'SET_USER',
+                user: null
+            })
+        } catch (err) {
+            // showErrorMsg('Cannot logout')
+            console.log('Cannot logout', err)
+        }
+    }
+}
+
 export function getUser() {
 	return async (dispatch) => {
 		try {
 			let user = await userService.getLoggedinUser()
-			dispatch({
+			console.log(user);
+			await dispatch({
 				type: 'SET_USER',
 				user,
 			})

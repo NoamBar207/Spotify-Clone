@@ -1,68 +1,132 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { importService } from "../services/import-img-service"
 import { userService } from "../services/user.service"
 import { stationService } from "../services/station.service"
-import { onUpdateUser } from "../store/actions/user.action"
-import { setCurrStation, setUserStation } from "../store/actions/station.actions"
+import { getUser, onUpdateUser } from "../store/actions/user.action"
+import { onSetUserStations, setCurrStation, setFollowedStations, setUserStation } from "../store/actions/station.actions"
+import { socketService, SOCKET_EMIT_UPDATE_USER, SOCKET_ON_UPDATE_USER } from "../services/socket.service"
 
 
 export const MainMenu = () => {
-
-
     const { currUser } = useSelector((state) => state.userModule)
-    const { userStations } = useSelector((state) => state.stationModule)
+    const { userStations, currStation, likedStation, followedStations } = useSelector((state) => state.stationModule)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const [userStationState, setUserStationState] = useState([])
+
     // useEffect(() => {
     //     if (!Object.keys(currUser).length) {
-    //         getUser()
+    //         dispatch(getUser())
     //     }
-    // }, [currUser])
+    // }, [])
 
-    // const getUser = async () => {
-    //     const user = await userService.getLoggedinUser()
-    //     if (Object.keys(user).length) dispatch({
-    //         type: 'SET_USER',
-    //         user,
+    // useEffect(() => {
+    //     socketService.off(SOCKET_ON_UPDATE_USER)
+    //     socketService.on(SOCKET_ON_UPDATE_USER, (user) => {
+    //         console.log(user);
+    //         // if (!Object.keys(currUser).length) {
+    //         //     getUserComp()
+    //         //     console.log('no User', currUser);
+    //         // }
+    //         // if (user._id === currUser._id) {
+    //         socketUser(user)
+    //         //     console.log('curr after change', currUser)
+    //         //     onSetFollowedStations()
+    //         // }
     //     })
-    // }
+    //     return () => {
+    //         socketService.off(SOCKET_ON_UPDATE_USER)
+    //     }
+    // }, [])
+
     useEffect(() => {
-        onSetUserStations()
-    }, [currUser])
+        asyncSet()
+    }, [currStation, currUser])
 
+    const asyncSet = async () => {
+        await dispatch(onSetUserStations(currUser))
+        await loadUserStations()
+    }
 
-    const onSetUserStations = async () => {
-        // const userStations = await stationService.loadUserStations(currUser.stations)
-        // var stations = await httpService.get(STORAGE_KEY)
-        if (Object.keys(currUser?.stations).length) {
+    const loadUserStations = async () => {
+        if (currUser.stations?.length) {
             try {
-                console.log(currUser.stations);
                 let userStations = await Promise.all(
                     currUser.stations.map(async (id) => {
                         const station = await stationService.getById(id)
                         return station
                     })
                 )
-                console.log(userStations);
-               dispatch(setUserStation(userStations))
+                setUserStationState(userStations)
             } catch (err) {
                 console.log('Cannot Load user Stations ', err);
             }
         }
+        else return
     }
 
-    const onCreateStation = () => {
-        const newUser = stationService.createNewStation()
-        dispatch(onUpdateUser(newUser))
+
+    const getUserComp = async () => {
+        // const user = await userService.getLoggedinUser()
+        // if (Object.keys(user).length) 
+        // await dispatch({
+        //     type: 'SET_USER',
+        //     user,
+        // })
+        await dispatch(getUser())
+        console.log('get user ', currUser);
     }
 
-    
+    const onSetFollowedStations = async () => {
+        // const userStations = await stationService.loadUserStations(currUser.stations)
+        // var stations = await httpService.get(STORAGE_KEY)
+        if (currUser.followedStations.length) {
+            try {
+                let followedStations = await Promise.all(
+                    currUser.followedStations.map(async (id) => {
+                        const station = await stationService.getById(id)
+                        return station
+                    })
+                )
+                dispatch(setFollowedStations(followedStations))
+            } catch (err) {
+                console.log('Cannot Load shared Stations ', err);
+            }
+        }
+        else return
+    }
+
+
+    const socketUser = async (user) => {
+        // if (!Object.keys(currUser).length) {
+        //     getUserComp()
+        //     console.log('no User', currUser);
+        // }
+        console.log(currUser, 'socket func');
+        if (user._id === currUser._id) {
+            // socketUser(user)
+            console.log('curr after change', currUser)
+            onSetFollowedStations()
+        }
+        await userService.saveLocalUser(user)
+        dispatch(onUpdateUser(user))
+    }
+
+    const onCreateStation = async () => {
+        if (!!currUser) {
+            const newUser = await stationService.createNewStation(currUser)
+            await dispatch(onUpdateUser(newUser))
+        }
+    }
+
     const onPlaylistPick = async (station) => {
         await dispatch(setCurrStation(station))
-        navigate(`/station/${station._id}`)
+        station.name === 'Liked Songs' ?
+            navigate('/station/likedsong') :
+            navigate(`/station/${station._id}`)
     }
 
 
@@ -74,14 +138,32 @@ export const MainMenu = () => {
             {/* <Link className="menu-link"><i className="fa-solid fa-magnifying-glass" style={{height:'22px',width:'22px'}}></i>Search</Link> */}
             <Link className="menu-link"><i className="fa-solid fa-book" style={{ color: 'white', height: '24px', width: '24px' }}></i>Your Library</Link>
             <Link className="menu-link" onClick={onCreateStation}><div className="menu-create-playlist" ><i class="fa-solid fa-plus" style={{ color: 'black' }}></i></div>Create Playlist</Link>
-            <Link className="menu-link"><img src={importService.likedSongs} style={{ height: '24px', width: '24px' }} />Liked Songs</Link>
-            <hr />
+            <Link className="menu-link" onClick={() => onPlaylistPick(likedStation)}><img src={importService.likedSongs} style={{ height: '24px', width: '24px' }} />Liked Songs</Link>
             {/* {Object.keys(currUser?.stations).length && */}
-             <div className="user-stations">
-                {userStations.map(station => {
-                    return <Link className="menu-link" onClick={()=>onPlaylistPick(station)}>{station.name}</Link>
-                })}
-            </div>
+            {!!Object.keys(userStations).length && <>
+                <hr />
+                {/* <div className="user-stations">
+                    {userStations.map(station => {
+                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
+                    })}
+                </div> */}
+                <div className="user-stations">
+                    {!!userStationState?.length && userStationState.map(station => {
+                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
+                    })}
+                </div>
+            </>
+            }
+            {!!Object.keys(followedStations).length && <>
+                <hr />
+                <div className="user-stations">
+                    <h5>Shared Playlist:</h5>
+                    {currUser.followedStations.map(station => {
+                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station}</Link>
+                    })}
+                </div>
+            </>
+            }
             {/* } */}
         </section>
     )

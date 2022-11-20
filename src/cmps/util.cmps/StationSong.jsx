@@ -1,17 +1,27 @@
 import { useEffect } from "react"
+import { ThreeDots } from "./ThreeDots"
+import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { utilService } from "../../services/util.service"
 import { setCurrSong } from "../../store/actions/station.actions"
+import { LikeButton } from "./LikeButton"
+import { YTService } from "../../services/youtube.service"
 
 
 
-export const StationSong = ({song, idx}) => {
+export const StationSong = ({ song, idx }) => {
 
-
+    const { userStations } = useSelector((state) => state.stationModule)
     const dispatch = useDispatch()
-    useEffect(() => {
-        console.log(song);
-    },[])
+    // useEffect(() => {
+    //     durationCheck(song.videoId)
+    // }, [])
+    
+    const durationCheck = async (videoId) =>{
+        // const duration = await YTService.getSongDuration(videoId)
+        // console.log(duration);
+        
+    }
 
 
     return (
@@ -31,6 +41,8 @@ export const StationSong = ({song, idx}) => {
             </div>
             {/* {console.log(song.createdAt)} */}
             <div className="added-at">{utilService.getFormatedDate(new Date(song.createdAt))}</div>
+            <LikeButton songProp={song}/>
+            <ThreeDots song={song} userStations={userStations} />
         </div>
     )
 }

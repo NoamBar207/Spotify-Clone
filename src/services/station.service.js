@@ -13,7 +13,8 @@ export const stationService = {
     getById,
     loadUserStations,
     createNewStation,
-    addSongToStation
+    addSongToStation,
+    updateStation
     // remove,
     // save
 }
@@ -40,21 +41,22 @@ async function getById(stationId) {
 
 async function loadUserStations(stationsId) {
     var userStations = stationsId.map(async (id) => {
-        const station =  await getById(id)
+        const station = await getById(id)
         return station
     })
     return Promise.resolve(userStations);
 }
 
-async function createNewStation() {
-    let user = await userService.getLoggedinUser()
-    let num = user.stations.length + 1
+async function createNewStation(currUser) {
+    // let user = await userService.getLoggedinUser()
+    let num = currUser.stations.length + 1
     let stationToAdd = {
         name: `Playlist #${num}`,
         songs: [],
-        stationImg: ''
+        stationImg: '',
+        createdBy: currUser._id
     }
-    if (Object.keys(user).length) {
+    if (Object.keys(currUser).length) {
         const newUser = await httpService.post(STORAGE_KEY, stationToAdd)
         userService.saveLocalUser(newUser)
         return newUser
@@ -63,19 +65,38 @@ async function createNewStation() {
 
 async function addSongToStation(song, station) {
     // let user = await userService.getLoggedinUser()
-     const songToAdd = {
-            createdAt: song.createdAt,
-            snippet: song.snippet,
-            videoId: song.videoId,
-        }
-    station.songs.push(songToAdd)
-    console.log(station);
-    await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+    const songToAdd = {
+        createdAt: song.createdAt,
+        snippet: song.snippet,
+        videoId: song.videoId,
+    }
+    let isInclude = !!station.songs.find(song => song.videoId === songToAdd.videoId)
+    if (!isInclude) {
+        station.songs.push(songToAdd)
+        const returndVal = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+        return returndVal
+        // console.log(returndVal);
+    }/////Add Remove
 }
-// function query(filterBy = { txt: '' }) {
-//     // const regex = new RegExp(filterBy)
-//     return Promise.resolve(gStation);
-// }
+
+async function updateStation(station) {
+    let user = await userService.getLoggedinUser()
+    // const objToSend = {station,currUser}
+    // const updatedUserOrStation = await httpService.put(STORAGE_KEY, station)
+    if (station.name === "Liked Songs") {
+        let updateUser = {
+            ...user,
+            likedSongs: station.songs
+        }
+        updateUser = await userService.updateUser(updateUser)
+        return updateUser
+    } else {
+        const updatedUserOrStation = await httpService.put(STORAGE_KEY, station)
+        return updatedUserOrStation
+    }
+}
+
+
 
 // function remove(stationId) {
 //     const idx = gStation.findIndex(song => song._id === songId)

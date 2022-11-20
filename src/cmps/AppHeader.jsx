@@ -7,6 +7,8 @@ import { stationService } from '../services/station.service';
 import { userService } from '../services/user.service';
 import { utilService } from '../services/util.service';
 import { YTService } from '../services/youtube.service';
+import { setCurrStation } from '../store/actions/station.actions';
+import { getUser, onLogout } from '../store/actions/user.action';
 import { LoaderSearch } from './util.cmps/LoaderSearch';
 import { SearchResults } from './util.cmps/SearchResults';
 
@@ -19,9 +21,11 @@ export const AppHeader = () => {
     const { currUser } = useSelector((state) => state.userModule)
 
     const searchRef = useRef()
+    const userModalRef = useRef()
     const [isOnMellofy, setIsOnMellofy] = useState(true)
     const [isSearchYotube, setIsSearchYoutube] = useState(false)
     const [data, setData] = useState([])
+
 
     const onSearch = (ev) => {
         ev.preventDefault()
@@ -57,11 +61,11 @@ export const AppHeader = () => {
             getUser()
         }
 
-    }, [currUser])
+    }, [])
 
     const getUser = async () => {
         const user = await userService.getLoggedinUser()
-        if (Object.keys(user).length) dispatch({
+        if (user) dispatch({
             type: 'SET_USER',
             user,
         })
@@ -86,11 +90,16 @@ export const AppHeader = () => {
         bool ? navigate('/signup') : navigate('/login')
     }
 
+    const onLogOutModal = () => {
+        dispatch(onLogout())
+        dispatch(setCurrStation({}))
+        navigate('/')
+    }
 
     return (
         <header className="app-header-container">
             <div className="header-logo" onClick={onHomeClick}>
-                <i class="fa-brands fa-spotify" style={{ height: '33px', width: '33px' }}></i>
+                <i className="fa-brands fa-spotify" style={{ height: '33px', width: '33px' }}></i>
                 Mellofy
             </div>
             <div className="header-home-search" >
@@ -106,7 +115,7 @@ export const AppHeader = () => {
                                 placeholder="What do you want to listen to?"
                             />
                         </form>
-                        <section className='header-search-results hide' ref={searchRef}>
+                        <section className='header-search-results hide' onClick={ev => ev.stopPropagation} ref={searchRef}>
                             {isSearchYotube ? <h1>Add to Mellofy</h1> : <h1>Search in Mellofy</h1>}
                             {data.length ? <SearchResults items={data} isSearchYotube={isSearchYotube} /> : <LoaderSearch />}
                             {!isOnMellofy | data.length && <div className='add-to-btn'>
@@ -116,9 +125,8 @@ export const AppHeader = () => {
                     </label>
                 </div>
             </div>
-            {Object.keys(currUser).length ? <div className='user-logo-container'>
-                <div
-                    className="user-logo"
+            {Object.keys(currUser).length ? <div className='user-logo-container' onClick={() => utilService.toggleModal(userModalRef)}>
+                <div className="user-logo"
                     style={{
                         background: `url(${currUser.imgUrl}) center center/cover`,
                         height: '28px',
@@ -126,6 +134,10 @@ export const AppHeader = () => {
                         width: '28px'
                     }}></div>
                 {currUser.username}
+                <section className='search-result-container hide' ref={userModalRef} onClick={(ev) => ev.stopPropagation()}>
+                    <div className='search-result' onClick={onLogOutModal}><span><i className="fa-solid fa-right-from-bracket"></i></span>Log Out</div>
+                    <div className='search-result'><span><i className="fa-solid fa-envelope"></i></span>Notifications</div>
+                </section>
             </div> :
                 <div className='no-user-header'>
                     <button className='util-btn signup-header' onClick={() => onLoginSignUp(true)}>Sign Up</button>

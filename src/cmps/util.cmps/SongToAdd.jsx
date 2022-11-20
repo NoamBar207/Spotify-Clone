@@ -4,19 +4,17 @@ import { songService } from "../../services/song.service"
 import { stationService } from "../../services/station.service"
 import { utilService } from "../../services/util.service"
 import { setCurrSong, setIsPlaying } from "../../store/actions/station.actions"
+import { ThreeDots } from "./ThreeDots"
 
 
 
 export const SongToAdd = ({ isSearchYotube, song }) => {
 
-    const { currSong, isPlaying, currStation, userStations } = useSelector((state) => state.stationModule)
+    const { userStations } = useSelector((state) => state.stationModule)
     const dispatch = useDispatch()
-    const dotsRef = useRef()
-    const playlistRef = useRef()
 
 
     useEffect(() => {
-        console.log('aaaa', userStations);
     }, [])
 
     const onSelectSong = async () => {
@@ -24,21 +22,12 @@ export const SongToAdd = ({ isSearchYotube, song }) => {
             dispatch(setIsPlaying(false))
             dispatch(setCurrSong(song))
             await songService.addSong(song)
+            
         } else {
             dispatch(setIsPlaying(false))
             dispatch(setCurrSong(song))
         }
     }
-
-    const onThreeDots = (ev, ref) => {
-        ev.stopPropagation()
-        utilService.toggleModal(ref)
-    }
-
-    const onAddSong = (station) => {
-        stationService.addSongToStation(song, station)
-    }
-
 
 
 
@@ -52,7 +41,7 @@ export const SongToAdd = ({ isSearchYotube, song }) => {
                 <div className="autor">{utilService.getAutorName(song)}</div>
             </div>
             <div className="actions">
-                <div className="three-dots-container">
+                {/* <div className="three-dots-container">
                     <span onClick={(ev) => onThreeDots(ev, dotsRef)}><i className="fa-solid fa-ellipsis"></i></span>
                     <section className='three-dots-modal hide' ref={dotsRef}>
                         <button className="three-dots-btn">Save to your Liked Songs</button>
@@ -63,7 +52,8 @@ export const SongToAdd = ({ isSearchYotube, song }) => {
                             return <button className="three-dots-btn" onClick={() => onAddSong(station)}>{station.name}</button>
                         })}
                     </div>
-                </div>
+                </div> */}
+                <ThreeDots song={song} userStations={userStations}/>
                 {/* {isSearchYotube && <div>
                     <button className="add-song-btn">Add Now</button>
                 </div>} */}

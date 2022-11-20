@@ -10,6 +10,12 @@
 	}
 }
 
+@mixin  for-laptop-narrow-layout {
+	@media (max-width: 1000px) {
+		@content;
+	}	
+}
+
 
 @mixin for-tablet-layout {
 	@media (max-width: 767px) {
@@ -23,6 +29,3 @@
 		@content;
 	}
 }
-
-
-

@@ -1,5 +1,6 @@
 import { httpService } from "./http.service"
 import { utilService } from "./util.service"
+import { YTService } from "./youtube.service"
 
 export const songService = {
     query,
@@ -17,6 +18,8 @@ async function query(value) {
 }
 
 async function addSong(song) {
+    const duration = await YTService.getSongDuration(song.videoIdvideoId)
+    song = {...song, duration}
     const songToReturn = await httpService.post('search', song)
 }
 

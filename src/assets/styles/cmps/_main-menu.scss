@@ -25,7 +25,7 @@
 		font-family: font-circ-bold;
 		font-size: 13px;
 
-		.menu-create-playlist{
+		.menu-create-playlist {
 			@include flex-center;
 			background-color: $clr-text-grey;
 			height: 24px;
@@ -42,11 +42,20 @@
 		}
 	}
 
-	hr{
+	hr {
 		width: 80%;
 		border: 0;
 		height: 1px;
 		background-color: $clr-black-grey;
 	}
 
+}
+
+
+@include for-laptop-narrow-layout {
+	.main-menu-container {
+		.menu-link {
+			gap:8px;
+		}
+	}
 }

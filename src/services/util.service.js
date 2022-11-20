@@ -8,7 +8,9 @@ export const utilService = {
     titleEditor,
     getAutorName,
     getSongName,
-    toggleModal
+    toggleModal,
+    closeModal,
+    removeOrAdd
 }
 
 
@@ -134,4 +136,18 @@ function titleEditor(title) {
 
 function toggleModal(refType) {
     refType.current.classList.toggle('hide')
+}
+
+function closeModal(refType) {
+    refType.current.classList.add('hide')
+}
+
+function removeOrAdd(arr, value, isInclude) {
+    if (isInclude) {
+        var index = arr.indexOf(value);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+    } else arr.push(value)
+    return arr;
 }
