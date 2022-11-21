@@ -21,11 +21,20 @@ export const AppHeader = () => {
     const { currUser } = useSelector((state) => state.userModule)
 
     const searchRef = useRef()
+    const searchContainerRef = useRef()
     const userModalRef = useRef()
+    const formRef = useRef()
     const [isOnMellofy, setIsOnMellofy] = useState(true)
     const [isSearchYotube, setIsSearchYoutube] = useState(false)
     const [data, setData] = useState([])
 
+
+    const handleClickOutside = (ev) => {
+        if (!searchContainerRef.current.contains(ev.target)) {
+            onResetInput()
+            document.removeEventListener("click", handleClickOutside, true)
+        }
+    }
 
     const onSearch = (ev) => {
         ev.preventDefault()
@@ -96,6 +105,11 @@ export const AppHeader = () => {
         navigate('/')
     }
 
+    const onResetInput = () => {
+        utilService.toggleModal(searchRef)
+        formRef.current.reset()
+    }
+
     return (
         <header className="app-header-container">
             <div className="header-logo" onClick={onHomeClick}>
@@ -105,10 +119,10 @@ export const AppHeader = () => {
             <div className="header-home-search" >
                 {/* <div className='header-home-btn' style={{backgroundImage:`URL(${importService.homePageIcon})`}}></div> */}
                 <div className='header-home-btn' onClick={onHomeClick} ><i class="fa-solid fa-house" style={{ height: '24px', width: '24px' }}></i></div>
-                <div className='header-search-container' onClick={() => utilService.toggleModal(searchRef)}>
+                <div className='header-search-container' ref={searchContainerRef} onClick={() => { utilService.toggleModal(searchRef); document.addEventListener("click", handleClickOutside, true) }}>
                     <label className="label-search flex">
                         <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
-                        <form className='header-search-form' onSubmit={onSearch}>
+                        <form className='header-search-form' ref={formRef} onSubmit={onSearch}>
                             <input
                                 className="header-search"
                                 // onChange={handleChange}
