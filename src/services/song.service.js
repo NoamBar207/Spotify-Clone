@@ -20,7 +20,7 @@ async function query(value) {
 
 async function addSong(song) {
     const duration = await YTService.getSongDuration(song.videoId)
-    song = {...song, duration}
+    song = { ...song, duration }
     const songToReturn = await httpService.post('search', song)
 }
 
@@ -36,8 +36,8 @@ function addSongToLike(currSong, user, isSongLiked) {
     // })
     if (isSongLiked) {
         let userToReturn = { ...user }
-        const likedSongs= user.likedSongs.filter(song => song.videoId !== currSong.videoId)
-        userToReturn.likedSongs =likedSongs
+        const likedSongs = user.likedSongs.filter(song => song.videoId !== currSong.videoId)
+        userToReturn.likedSongs = likedSongs
         return userToReturn
     } else {
         let userToReturn = { ...user }
@@ -45,6 +45,7 @@ function addSongToLike(currSong, user, isSongLiked) {
             createdAt: currSong.createdAt,
             snippet: currSong.snippet,
             videoId: currSong.videoId,
+            duration:currSong.duration
         }
         userToReturn.likedSongs.push(songToAdd)
         return userToReturn

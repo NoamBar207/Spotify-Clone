@@ -67,7 +67,11 @@ export const ThreeDots = ({ song, userStations }) => {
             </section>
             <div className="playlist-modal three-dots-modal hide" ref={playlistRef}>
                 {userStations.length && userStations.map(station => {
-                    return <button className="three-dots-btn" onClick={() => onAddSong(station)}>{station.name}</button>
+
+                    return <button className="three-dots-btn" onClick={() => onAddSong(station)}>
+                        {station.songs.some(songStation => song.videoId === songStation.videoId) && <div className="song-indication">✔</div>}
+                        {station.name}
+                    </button>
                 })}
             </div>
         </div >

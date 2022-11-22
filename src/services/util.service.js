@@ -10,7 +10,8 @@ export const utilService = {
     getSongName,
     toggleModal,
     closeModal,
-    removeOrAdd
+    removeOrAdd,
+    convertSecsToMinute
 }
 
 
@@ -150,4 +151,9 @@ function removeOrAdd(arr, value, isInclude) {
         }
     } else arr.push(value)
     return arr;
+}
+
+
+function convertSecsToMinute(value) {
+    return Math.floor(value / 60) + ":" + (value % 60 ? value % 60 : '00')
 }

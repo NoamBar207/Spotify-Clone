@@ -19,6 +19,7 @@
         padding: 4px;
 
         .three-dots-btn {
+            @include flex-center;
             font-size: 14px;
             width: 100%;
             background: transparent;
@@ -27,9 +28,15 @@
             color: $clr-white-F;
             cursor: pointer;
             padding: 12px 8px;
-
+            display: flex;
+            gap: 5px;
+            
             &:hover {
                 background-color: hsla(0, 0%, 100%, .1);
+            }
+
+            .song-indication{
+                line-height: 10px;
             }
         }
 
@@ -50,7 +57,7 @@
     .playlist-modal {
         position: absolute;
         top: 63px;
-        left:  290px;
+        left:  330px;
         min-width: 120px;
 
         .three-dots-btn {

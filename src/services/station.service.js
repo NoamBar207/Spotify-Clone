@@ -1,6 +1,7 @@
 import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
 import { userService } from './user.service'
+import { utilService } from './util.service'
 // const gStation = require('../data/station.json')
 // console.log(gStation);
 // const gStation
@@ -14,9 +15,11 @@ export const stationService = {
     loadUserStations,
     createNewStation,
     addSongToStation,
-    updateStation
+    updateStation,
     // remove,
     // save
+
+    getStationDuration
 }
 
 
@@ -65,19 +68,29 @@ async function createNewStation(currUser) {
 
 async function addSongToStation(song, station) {
     // let user = await userService.getLoggedinUser()
+    let returnStation
     const songToAdd = {
         createdAt: song.createdAt,
         snippet: song.snippet,
         videoId: song.videoId,
-        duration:song.duration
+        duration: song.duration
     }
-    let isInclude = !!station.songs.find(song => song.videoId === songToAdd.videoId)
-    if (!isInclude) {
+    let includeIdx = station.songs.findIndex(stationSong => stationSong.videoId === songToAdd.videoId)
+    console.log(includeIdx);
+    if (includeIdx === -1) {
         station.songs.push(songToAdd)
-        const returndVal = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
-        return returndVal
+        station = {...station, duration:getStationDuration(station.songs)}
+        returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+        console.log('afte Change ADD',returnStation);
         // console.log(returndVal);
-    }/////Add Remove
+    } else {
+        station.songs.splice(includeIdx, 1)
+        station = {...station, duration:getStationDuration(station.songs)}
+        returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+        console.log('afte Change remove',returnStation);
+    }
+    return returnStation
+    /////Add Remove
 }
 
 async function updateStation(station) {
@@ -97,7 +110,17 @@ async function updateStation(station) {
     }
 }
 
-
+function getStationDuration(songs) {
+    let mins = 0
+    let secs = 0
+    songs.forEach(song => {
+        const arr = song.duration.split(':')
+        mins += +arr[0]
+        secs += +arr[1]
+    });
+    const total = secs + mins * 60
+    return utilService.convertSecsToMinute(total)
+}
 
 // function remove(stationId) {
 //     const idx = gStation.findIndex(song => song._id === songId)

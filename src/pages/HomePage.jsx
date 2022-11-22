@@ -29,12 +29,6 @@ export function HomePage() {
     
     const getLikedSongsUser = async () => {
         await dispatch(setLikedSongsUser(currUser))
-        // setLikedSongsStation(station)
-        // const likedSongsStation = {
-        //     songs: currUser.likedSongs,
-        //     stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
-        //     name: "Liked Songs"
-        // }
     }
 
     const loadStations = async () => {

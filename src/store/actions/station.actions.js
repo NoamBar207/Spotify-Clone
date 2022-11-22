@@ -111,7 +111,9 @@ export function setLikedSongsUser(currUser) {
             const likedStation = {
                 songs: currUser.likedSongs,
                 stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
-                name: "Liked Songs"
+                name: "Liked Songs",
+                createdBy:currUser.fullname,
+                duration:stationService.getStationDuration(currUser.likedSongs)
             }
             const action = { type: 'SET_LIKED_SONGS', likedStation }
             dispatch(action)

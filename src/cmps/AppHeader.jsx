@@ -108,6 +108,9 @@ export const AppHeader = () => {
     const onResetInput = () => {
         utilService.toggleModal(searchRef)
         formRef.current.reset()
+        setData([])
+        setIsOnMellofy(true)
+        setIsSearchYoutube(false)
     }
 
     return (
@@ -132,7 +135,7 @@ export const AppHeader = () => {
                         <section className='header-search-results hide' onClick={ev => ev.stopPropagation} ref={searchRef}>
                             {isSearchYotube ? <h1>Add to Mellofy</h1> : <h1>Search in Mellofy</h1>}
                             {data.length ? <SearchResults items={data} isSearchYotube={isSearchYotube} /> : <LoaderSearch />}
-                            {!isOnMellofy | data.length && <div className='add-to-btn'>
+                            {(!isOnMellofy || !!data.length) && <div className='add-to-btn'>
                                 <button onClick={onSearchYoutube}>Could not find your song? Add it to Mellofy!</button>
                             </div>}
                         </section>

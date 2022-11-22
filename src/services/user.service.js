@@ -10,10 +10,11 @@ export const userService = {
 	logout,
 	saveLocalUser,
 	getLoggedinUser,
+	getById,
 	updateUser,
 	login,
 	getUsers,
-	toggleStationToUser
+	toggleStationToUser,
 }
 
 async function getLoggedinUser() {
@@ -60,6 +61,11 @@ async function toggleStationToUser(user, stationId) {
 	user.followedStations = newArr
 	await httpService.put(`user/${user._id}`, user)
 	socketService.emit(SOCKET_EMIT_UPDATE_USER, user)
+}
+
+async function getById(userId) {
+	const user = await httpService.get(`user/${userId}`)
+	return user
 }
 
 function saveLocalUser(user) {

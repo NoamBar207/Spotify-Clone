@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { songService } from "../../services/song.service"
 import { userService } from "../../services/user.service"
 import { onUpdateUser } from "../../store/actions/user.action"
+import {  setLikedSongsUser } from "../../store/actions/station.actions";
 
 
 
@@ -37,13 +38,17 @@ export const LikeButton = ({ songProp = null }) => {
         // }
     }, [currUser])
 
+    const getLikedSongsUser = async (userReturned) => {
+        await dispatch(setLikedSongsUser(userReturned))
+    }
 
     const toggleLike = async () => {
         const song = (!songProp) ? currSong : songProp
         let userReturned = await songService.addSongToLike(song, currUser, isLiked)
         setIsLiked(!isLiked)
         userReturned = await userService.updateUser(userReturned)
-        dispatch(onUpdateUser(userReturned))
+        await dispatch(onUpdateUser(userReturned))
+        await getLikedSongsUser(userReturned)
     }
 
     return (
