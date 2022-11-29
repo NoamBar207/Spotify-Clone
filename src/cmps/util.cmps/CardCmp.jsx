@@ -25,6 +25,7 @@ export function CardCmp({ station }) {
     const infoAutorsGetter = () => {
         station.songs.map((song, idx) => {
             let author = utilService.getAutorName(song)
+            // console.log(author);
             if (idx > 3) return
             else if (idx === 0) setAutorsState(author)
             else if (idx < 3 && !authorsState.includes(author)) {
@@ -46,7 +47,9 @@ export function CardCmp({ station }) {
     return (
         !station.name.includes("Playlist") && <section className="card-container" onClick={onGanerePick}>
             <div className="card-img">
-                <img src={station.songs[0]?.snippet.thumbnails.high.url} />
+                {/* {station.stationImg ? :<img src={station.songs[0]?.snippet.thumbnails.high.url} /> } */}
+                {/* <img src={station.songs[0]?.snippet.thumbnails.high.url} /> */}
+                <img src={station.stationImg} />
             </div>
             <div className="card-info">
                 <h2 className="card-title">{station.name}</h2>

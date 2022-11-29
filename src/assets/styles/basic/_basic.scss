@@ -1,6 +1,4 @@
 html {
-    // margin:0;
-    width: 100vw;
 }
 
 *>{
@@ -9,7 +7,7 @@ html {
 
 body {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     margin: 0;
     font-family: font-circ-bold, font-circ-heb;
     
@@ -25,13 +23,14 @@ h2 {
 
 .root-cmp {
     height: 100vh;
+    overflow-y: hidden;
     // height: 100%;
     display: grid;
     grid-gap: 8px;
     background-color: $clr-black-000;
     // grid-column-gap: 8px;
     grid-template-columns: 180px calc(100% - 188px);
-    grid-template-rows: 64px calc(100% - 165px) 80px;
+    grid-template-rows: 64px calc(100% - 160px) 80px;
     grid-template-areas:
         "app-header app-header"
         "menu main-content"
@@ -45,6 +44,11 @@ h2 {
 
 .hide {
     visibility: hidden;
+}
+
+
+.hide-none {
+    display: none;
 }
 
 

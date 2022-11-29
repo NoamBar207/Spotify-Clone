@@ -11,6 +11,8 @@ import { setCurrStation } from '../store/actions/station.actions';
 import { getUser, onLogout } from '../store/actions/user.action';
 import { LoaderSearch } from './util.cmps/LoaderSearch';
 import { SearchResults } from './util.cmps/SearchResults';
+import { AppMenu } from './appForum/AppMenu';
+import { TopicPrev } from './appForum/TopicPrev';
 
 
 
@@ -24,9 +26,11 @@ export const AppHeader = () => {
     const searchContainerRef = useRef()
     const userModalRef = useRef()
     const formRef = useRef()
+    const menuRef = useRef()
     const [isOnMellofy, setIsOnMellofy] = useState(true)
     const [isSearchYotube, setIsSearchYoutube] = useState(false)
     const [data, setData] = useState([])
+
 
 
     const handleClickOutside = (ev) => {
@@ -99,6 +103,10 @@ export const AppHeader = () => {
         bool ? navigate('/signup') : navigate('/login')
     }
 
+    const onMenuClick = () => {
+        utilService.toggleModal(menuRef)
+    }
+
     const onLogOutModal = () => {
         dispatch(onLogout())
         dispatch(setCurrStation({}))
@@ -106,7 +114,7 @@ export const AppHeader = () => {
     }
 
     const onResetInput = () => {
-        utilService.toggleModal(searchRef)
+        utilService.closeModal(searchRef)
         formRef.current.reset()
         setData([])
         setIsOnMellofy(true)
@@ -141,6 +149,7 @@ export const AppHeader = () => {
                         </section>
                     </label>
                 </div>
+                <div className='header-home-btn' onClick={onMenuClick} ><i class="fa-solid fa-comments" style={{ height: '24px', width: '24px' }}></i></div>
             </div>
             {Object.keys(currUser).length ? <div className='user-logo-container' onClick={() => utilService.toggleModal(userModalRef)}>
                 <div className="user-logo"
@@ -164,6 +173,7 @@ export const AppHeader = () => {
             {/* <div className="user-icon"> */}
             {/* user Icon */}
             {/* </div> */}
+            <AppMenu menuRef={menuRef} />
         </header>
     )
 }

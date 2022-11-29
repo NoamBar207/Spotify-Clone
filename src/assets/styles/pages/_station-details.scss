@@ -1,20 +1,42 @@
 .station-deatils {
     grid-area: main-content;
-    background-color: $clr-black-12;
+    // background-color: $clr-black-12;
     // padding-inline-start: 32px;
     margin-right: 8px;
     border-radius: 8px;
-    height: 100%;
-    overflow-y: auto;
+    overflow-y:auto;
     // background-image:linear-gradient(#20173F 1%, $clr-black-12 99%);
+    // background-image: linear-gradient(#20173F,$clr-black-12 100%);
+    // background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+
+
 
     .color-container {
         // transform: 90deg;
+        height: 100%;
+        // flex: 1;
+
     }
 
 
     .play-btn-station {
         padding: 24px 32px;
+        display: flex;
+        align-items: center;
+        gap: 32px;
+
+
+        .three-dots-container {
+            font-size: 24px;
+            color: $clr-text-grey;
+
+            .three-dots-modal {
+                left: 0;
+            }
+        }
+
         // margin: 32px 24px 0px 24px;
         // padding-inline-start: 32px;
         // padding: 24px ;
@@ -41,9 +63,10 @@
 
 @include for-laptop-narrow-layout {
     .station-deatils {
-        .play-btn-station{
+        .play-btn-station {
             padding: 24px 16px;
         }
+
         .station-details-container {
             padding: 0;
             padding-inline-start: 16px;

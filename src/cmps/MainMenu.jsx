@@ -119,6 +119,12 @@ export const MainMenu = () => {
         if (!!currUser) {
             const newUser = await stationService.createNewStation(currUser)
             await dispatch(onUpdateUser(newUser))
+            console.log(newUser);
+            const index = newUser.stations.length-1
+            const station = await stationService.getById(newUser.stations[index])
+            console.log(station);
+            await dispatch(setCurrStation(station))
+            navigate(`/station/${station._id}`)
         }
     }
 

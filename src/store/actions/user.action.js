@@ -74,6 +74,7 @@ export function getUser() {
 export function onUpdateUser(user) {
 	return async (dispatch) => {
 		try {
+			userService.saveLocalUser(user)
 			dispatch({ type: 'SET_USER', user })
 		} catch (err) {
 			console.log('cannot update user', err);

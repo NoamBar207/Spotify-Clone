@@ -16,7 +16,7 @@ export function NarrowCardCmp({station}) {
 
     const onStationClick = ()=>{
         dispatch(setCurrStation(station))
-        navigate(`/station/likedsongs`)
+        station._id ? navigate(`/station/${station._id}`) : navigate(`/station/likedsongs`)
     }
 
     return (

@@ -7,21 +7,27 @@
     gap: 8px;
 
     .card-img {
+        flex: 1;
         img {
             height: 100%;
+            // height: 200px;
             width: 100%;
+            object-fit: cover;
         }
     }
 
-    h4 {
+    .card-autors{
         margin: 0;
         font-size: 0.875rem;
+        color: $clr-text-grey;
     }
 
     .card-info {
         display: flex;
         flex-direction: column;
-
+        height: 30%;
+        padding-bottom: 5px;
+        // text-ove;
         gap: 4px;
 
 

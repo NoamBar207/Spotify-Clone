@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { StationHeader } from "../cmps/StationHeader"
 import { stationService } from "../services/station.service"
 import { onSaveStation, setCurrSong, setCurrStation, setIsPlaying } from "../store/actions/station.actions"
@@ -10,6 +10,10 @@ import { onUpdateUser } from "../store/actions/user.action"
 import { socketService, SOCKET_EMIT_UPDATE_STATION } from "../services/socket.service"
 import { utilService } from "../services/util.service"
 import { userService } from "../services/user.service"
+import getAverageColor from "get-average-color"
+
+
+
 
 
 export function StationDeatails() {
@@ -23,8 +27,14 @@ export function StationDeatails() {
     const { stationId } = useParams()
     const dotsRef = useRef()
     const usersRef = useRef()
+    const navigate = useNavigate()
+    const [bgc, setBgc] = useState('#4A3591')
+
+
 
     useEffect(() => {
+
+
         socketService.off(SOCKET_EMIT_UPDATE_STATION)
         socketService.on(SOCKET_EMIT_UPDATE_STATION, (station) => {
             dispatch({ type: 'SET_CURR_STATION', station })
@@ -38,8 +48,8 @@ export function StationDeatails() {
         loadStation()
         loadUsers()
         setSongsOreder(currStation.songs)
+        getAvgColor()
     }, [currStation])
-
 
 
     const loadStation = async () => {
@@ -48,6 +58,7 @@ export function StationDeatails() {
                 const station = await stationService.getById(stationId)
                 await dispatch(setCurrStation(station))
             }
+
             // const station = await stationService.getById(stationId)
             // await dispatch(setCurrStation(station))
 
@@ -89,6 +100,13 @@ export function StationDeatails() {
         else dispatch(onSaveStation(newUserOrStation))
     }
 
+    const onDeletePlaylist = async () => {
+        const updatedUser = await stationService.deleteStation(stationId)
+        dispatch(onUpdateUser(updatedUser))
+        navigate('/')
+
+    }
+
 
     // const getAutorName = (song) => {
     //     // let fullTitle = currSong.snippet.title
@@ -121,21 +139,28 @@ export function StationDeatails() {
                 dispatch(setIsPlaying(true))
             }
         }
+    }
 
+    const getAvgColor = async () => {
+        let color = await getAverageColor(currStation.stationImg)
+        color = `rgb(${color.r - 10},${color.g - 10}, ${color.b - 10})`
+        await setBgc(color)
     }
 
     if (!Object.keys(currStation).length) return <h1>Hello</h1>
     return (
         <section className="station-deatils">
             <StationHeader />
-            <div className="color-container">
+            <div className="color-container" style={{ background: `linear-gradient(rgba(0,0,0,.6) 0, #121212 60%), ${bgc}`}}>
                 <div className="play-btn-station">
-                    <span onClick={onPlay}><i className="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>
+                    {/* <span onClick={onPlay}><i className="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span> */}
+                    {!isPlaying && <span onClick={onPlay}><i class="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>}
+                    {isPlaying && <span onClick={onPlay}><i class="fa-solid fa-circle-pause" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>}
                     <div className="three-dots-container" onClick={ev => ev.nativeEvent.stopImmediatePropagation()}>
                         <span onClick={() => { utilService.toggleModal(dotsRef); utilService.closeModal(usersRef) }}><i className="fa-solid fa-ellipsis"></i></span>
                         <section className='three-dots-modal hide' ref={dotsRef} onClick={ev => ev.stopPropagation()}>
                             <button className="three-dots-btn" onClick={() => utilService.toggleModal(usersRef)}>Add listeners</button>
-                            <button className="three-dots-btn">Delete playlist</button>
+                            <button className="three-dots-btn" onClick={onDeletePlaylist}>Delete playlist</button>
                         </section>
                         <div className="playlist-modal three-dots-modal hide" ref={usersRef}>
                             {users.length && users.map(user => {
@@ -153,7 +178,7 @@ export function StationDeatails() {
                                     <div style={{ width: '14px' }}>#</div>
                                     <div style={{ width: '30vw' }}>TITLE</div>
                                     <div style={{ flex: '1' }}>DATE ADDED</div>
-                                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>🕞</div>
+                                    <div style={{ display: 'flex', justifyContent: 'center', fontSize: '16px', width: '125px', paddingRight: '9px', }}><i class="fa-regular fa-clock"></i></div>
                                 </li>}
                                 {/* <div>Album</div> */}
                                 {!songsOrder.length && <div><h1>Let's find something for your playlist, use our search bar</h1></div>}

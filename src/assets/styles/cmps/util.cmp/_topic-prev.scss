@@ -1,0 +1,26 @@
+.subject-container {
+
+
+    .subject-name {
+        @include flex-center;
+        gap: 8px;
+        width: 100%;
+        margin: 0;
+        padding: 12px 0;
+        text-decoration: underline 2px ;
+    }
+
+    .cluster-container {
+        gap: 8px;
+        @include flex-center;
+        
+        
+        .cluster-name {
+            width: 100%;
+            margin: 0;
+            padding: 12px;
+        }
+    }
+
+
+}

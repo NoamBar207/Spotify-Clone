@@ -10,13 +10,15 @@ export const utilService = {
     getSongName,
     toggleModal,
     closeModal,
+    openModal,
     removeOrAdd,
+    toggleDisplayNone,
     convertSecsToMinute
 }
 
 
 
-function getAutorName(song) {
+function getAutorName(song, idx) {
     // let fullTitle = currSong.snippet.title
     // let idxToSplit = 0
     // if (fullTitle.includes('-')) {
@@ -25,14 +27,16 @@ function getAutorName(song) {
     // if (fullTitle.includes('(')) {
     //     let idxOfTitleFinish = fullTitle.indexOf('(')
     // } else setSongName(fullTitle.slice(idxToSplit))
-
-    let fullTitle = song.snippet.title
-    let idxToSplit
-    if (fullTitle.includes('-')) {
-        idxToSplit = fullTitle.indexOf('-')
+    if (idx > 3) return
+    else {
+        let fullTitle = song.snippet.title
+        let idxToSplit
+        if (fullTitle.includes('-')) {
+            idxToSplit = fullTitle.indexOf('-')
+        }
+        let authorSong = fullTitle.slice(0, idxToSplit)
+        return authorSong
     }
-    let authorSong = fullTitle.slice(0, idxToSplit)
-    return authorSong
 }
 
 function getSongName(song) {
@@ -135,12 +139,20 @@ function titleEditor(title) {
     return titleToReturn
 }
 
+function toggleDisplayNone(refType) {
+    refType.current.classList.toggle('hide-none')
+}
+
 function toggleModal(refType) {
     refType.current.classList.toggle('hide')
 }
 
 function closeModal(refType) {
     refType.current.classList.add('hide')
+}
+
+function openModal(refType) {
+    refType.current.classList.remove('hide')
 }
 
 function removeOrAdd(arr, value, isInclude) {

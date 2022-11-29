@@ -16,6 +16,7 @@ export const stationService = {
     createNewStation,
     addSongToStation,
     updateStation,
+    deleteStation,
     // remove,
     // save
 
@@ -56,7 +57,7 @@ async function createNewStation(currUser) {
     let stationToAdd = {
         name: `Playlist #${num}`,
         songs: [],
-        stationImg: '',
+        stationImg: 'https://res.cloudinary.com/noambar/image/upload/v1669327809/ifrojzsgy2pxgztg1inn.png',
         createdBy: currUser._id
     }
     if (Object.keys(currUser).length) {
@@ -79,15 +80,15 @@ async function addSongToStation(song, station) {
     console.log(includeIdx);
     if (includeIdx === -1) {
         station.songs.push(songToAdd)
-        station = {...station, duration:getStationDuration(station.songs)}
+        station = { ...station, duration: getStationDuration(station.songs) }
         returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
-        console.log('afte Change ADD',returnStation);
+        console.log('afte Change ADD', returnStation);
         // console.log(returndVal);
     } else {
         station.songs.splice(includeIdx, 1)
-        station = {...station, duration:getStationDuration(station.songs)}
+        station = { ...station, duration: getStationDuration(station.songs) }
         returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
-        console.log('afte Change remove',returnStation);
+        console.log('afte Change remove', returnStation);
     }
     return returnStation
     /////Add Remove
@@ -108,6 +109,11 @@ async function updateStation(station) {
         const updatedUserOrStation = await httpService.put(STORAGE_KEY, station)
         return updatedUserOrStation
     }
+}
+
+async function deleteStation(stationId) {
+    const updatedUser = await httpService.delete(`${STORAGE_KEY}/${stationId}`)
+    return updatedUser
 }
 
 function getStationDuration(songs) {

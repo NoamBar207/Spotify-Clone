@@ -19,11 +19,11 @@ export const StationSong = ({ song, idx }) => {
             const songWithDuration = durationCheck(song.videoId)
         }
     }, [])
-    
+
     const durationCheck = async (videoId) => {
         const duration = await YTService.getSongDuration(videoId)
         let songWithDuration = { ...song, duration }
-        songWithDuration =  await songService.updateSong(songWithDuration)
+        songWithDuration = await songService.updateSong(songWithDuration)
         console.log(songWithDuration);
         return songWithDuration
         // console.log(duration);
@@ -48,9 +48,11 @@ export const StationSong = ({ song, idx }) => {
             </div>
             {/* {console.log(song.createdAt)} */}
             <div className="added-at">{utilService.getFormatedDate(new Date(song.createdAt))}</div>
-            <LikeButton songProp={song} />
-            <div className="song-duration">{song.duration}</div>
-            <ThreeDots song={song} userStations={userStations} />
+            <div className="song-actions">
+                <LikeButton songProp={song} />
+                <div className="song-duration">{song.duration}</div>
+                <ThreeDots song={song} userStations={userStations} />
+            </div>
         </div>
     )
 }
