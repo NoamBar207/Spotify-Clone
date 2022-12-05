@@ -13,6 +13,7 @@
     .cluster-container {
         gap: 8px;
         @include flex-center;
+        flex-direction: column;
         
         
         .cluster-name {

@@ -36,6 +36,7 @@ async function login(userCred) {
 
 	const user = await httpService.post('auth/login', userCred)
 	if (user) {
+		socketService.emit('set-user-socket', user._id)
 		return saveLocalUser(user)
 	} else {
 		console.log('NEED TO SIGN IN !')

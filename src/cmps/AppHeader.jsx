@@ -13,6 +13,7 @@ import { LoaderSearch } from './util.cmps/LoaderSearch';
 import { SearchResults } from './util.cmps/SearchResults';
 import { AppMenu } from './appForum/AppMenu';
 import { TopicPrev } from './appForum/TopicPrev';
+import { socketService } from '../services/socket.service';
 
 
 
@@ -78,11 +79,14 @@ export const AppHeader = () => {
 
     const getUser = async () => {
         const user = await userService.getLoggedinUser()
-        if (user) dispatch({
-            type: 'SET_USER',
-            user,
-        })
-    }
+        if (user){
+            socketService.emit('set-user-socket', user._id)
+            dispatch({
+                type: 'SET_USER',
+                user,
+            })
+        }
+    } 
 
     const editData = (items) => {
         let songs = items.map(song => {
@@ -103,9 +107,9 @@ export const AppHeader = () => {
         bool ? navigate('/signup') : navigate('/login')
     }
 
-    const onMenuClick = () => {
-        utilService.toggleModal(menuRef)
-    }
+    // const onMenuClick = () => {
+    //     utilService.toggleModal(menuRef)
+    // }
 
     const onLogOutModal = () => {
         dispatch(onLogout())
@@ -149,7 +153,7 @@ export const AppHeader = () => {
                         </section>
                     </label>
                 </div>
-                <div className='header-home-btn' onClick={onMenuClick} ><i class="fa-solid fa-comments" style={{ height: '24px', width: '24px' }}></i></div>
+                <div className='header-home-btn' onClick={()=>utilService.toggleModal(menuRef)} ><i class="fa-solid fa-comments" style={{ height: '24px', width: '24px' }}></i></div>
             </div>
             {Object.keys(currUser).length ? <div className='user-logo-container' onClick={() => utilService.toggleModal(userModalRef)}>
                 <div className="user-logo"

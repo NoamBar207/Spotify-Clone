@@ -23,7 +23,6 @@ export function StationHeader() {
     const [duration, setDuration] = useState([])
     const [headerColor, setHeaderColor] = useState(['#4A3591, #2A1F52'])
 
-    console.log(currStation);
 
     useEffect(() => {
         setStationName(currStation.name)
@@ -31,7 +30,6 @@ export function StationHeader() {
         else setStationCreator({ fullname: 'Mellofy', imgUrl: '' })
         loadDuration()
         getAvgColor(currStation.stationImg)
-        console.log('station header');
         // stationService.getStationDuration(currStation.songs)
         //////// ADD IMG URL
     }, [currStation])

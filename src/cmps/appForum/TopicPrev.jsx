@@ -4,7 +4,7 @@ import { utilService } from "../../services/util.service"
 
 
 
-export const TopicPrev = ({ subject, setSelectedSubject }) => {
+export const TopicPrev = ({ subject, setSelectedSubject, setSelectedCluster }) => {
     const clusterRef = useRef()
 
 
@@ -13,7 +13,8 @@ export const TopicPrev = ({ subject, setSelectedSubject }) => {
             <div className='subject-name' onClick={() => utilService.toggleDisplayNone(clusterRef)}>{subject.subjectName} <span><i class="fa-solid fa-chevron-down"></i></span></div>
             <div className='subject-clusters hide-none' ref={clusterRef}>
                 {subject.cluster.map(c => {
-                    return <div className='cluster-container' onClick={() => setSelectedSubject(c)}>
+                    return <div className='cluster-container' onClick={() => { setSelectedCluster(c); setSelectedSubject(subject)}}>
+                        <hr />
                         <h4 className="cluster-name">{c.name}</h4>
                     </div>
                 })}

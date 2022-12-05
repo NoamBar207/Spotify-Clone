@@ -5,14 +5,14 @@
 	display: flex;
 	flex-direction: column;
 	z-index: 10;
-	width: 338px;
+	width: 40vw;
 	background-color: rgba(101, 161, 101, 0.747);
 	position: fixed;
-	height: 100%;
-	transition: 0.4s;
+	height: calc(100% - 82px);
+	// transition: 0.4s;
 	right: 0;
 	top: 0;
-	overflow-y: auto;
+	// overflow-y: auto;
 
 	.menu-hr{
 		width: 314px;
