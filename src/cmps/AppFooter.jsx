@@ -99,8 +99,10 @@ export const AppFooter = () => {
         intervalId.current = setInterval(() => {
             setSongDuration(prevDuration => +prevDuration + 1)
         }, 1000)
-        player.playVideo()
-        player.setVolume(volume)
+        if(player.i){
+            player.playVideo()
+            player.setVolume(volume)
+        }
     }
 
     const playerOnPause = () => {
@@ -194,7 +196,7 @@ export const AppFooter = () => {
                 {Object.keys(currSong).length ?
                     <div className='curr-song-container'>
                         <div className='curr-song-img'>
-                            <img src={currSong.snippet.thumbnails.high.url} style={{ height: '70px', width: '70px' }} />
+                            <img src={currSong.snippet.thumbnails.high.url} style={{ height: '70px', width: '70px' }} alt=''/>
                             {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
                             <YouTube
                                 videoId={currSong?.videoId}

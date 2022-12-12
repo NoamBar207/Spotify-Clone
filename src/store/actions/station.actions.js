@@ -28,6 +28,7 @@ export function setCurrStation(station) {
     // socketService.emit(SOCKET_EMIT_STATION_UPDATE, station)
     return async (dispatch) => {
         try {
+            console.log(station);
             const action = { type: 'SET_CURR_STATION', station }
             dispatch(action)
         } catch (err) {

@@ -11,7 +11,7 @@
     padding-inline-start: 22px;
 
     &:hover {
-        background-color: hsla(0, 0%, 100%, .1);
+        background-color:$clr-hover;
     }
 
     .song-img-title {

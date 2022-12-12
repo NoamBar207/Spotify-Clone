@@ -52,8 +52,9 @@ async function updateUser(user) {
 async function getUsers() {
 	const users = await httpService.get('user/users')
 	const loggedinUser = await getLoggedinUser()
-	const res = users.filter(u => u._id !== loggedinUser._id)
-	return res
+	return loggedinUser ? users.filter(u => u._id !== loggedinUser._id) : users
+	// const res = 
+	// return res
 }
 
 async function toggleStationToUser(user, stationId) {

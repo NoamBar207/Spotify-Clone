@@ -20,14 +20,49 @@
         flex-direction: column;
         
         .questions-container{
+            padding-top: 4px;
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
             flex: 1;
-            
-            .question {
-                padding: 8px 5%
-            }
 
+            
+            .question-container{
+                display: flex;
+                box-sizing: border-box;
+                width: 100%;
+                align-items: center;
+                gap: 12px;
+                padding: 8px 5%;
+                box-shadow: inset 0 -1px 1px 0 $clr-black-grey;
+                
+                &:hover{
+                    background-color:$clr-hover;
+                    cursor: pointer;
+                }
+                .question{
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    flex: 1;
+                    
+                    
+                    .question-main{
+                        flex: 1;
+                        // text-overflow:initial;
+                        // overflow-wrap: break-word;
+                        word-break: break-all;
+                        // max-width: 450px;
+                    }
+                }
+
+                .question-created-add{
+                    font-size: 14px;
+                    justify-self: flex-end;
+                    width: 90px;
+                }
+            }
+            
         }
     }
 

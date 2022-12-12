@@ -4,9 +4,12 @@
     flex-direction: column;
     gap: 12px;
     padding: 12px;
+    box-sizing: border-box;
+
 
     .msg {
         max-width: 55%;
+        overflow-wrap: break-word;
         padding: 6px;
         border-radius: 3px;
         display: flex;
@@ -23,12 +26,20 @@
         align-self: flex-end;
         color: rgba(5, 12, 18, 0.54);
         font-size: 12px;
+        min-width: 80px;
     }
 
-    .selected-qustion {
+    .selected-question {
         background-color: rgba(255, 0, 0, 0.5);
     }
 
+
+    .msg-container {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        overflow-wrap: break-word;
+    }
 
 
     .ans-container {
@@ -37,14 +48,28 @@
         flex-direction: column;
         align-items: flex-end;
         gap: 6px;
+        overflow-y: auto;
+        max-height: 566px;
 
-        .thumbs-up {
-            // display: none;
+        .by-curr-user {
+            align-self: flex-start;
+            width: 100%;
+        }
+
+        .answer-like-div {
+            height: 100%;
             visibility: hidden;
+            @include flex-center;
+            flex-direction: column;
+
+            .likes-length{
+                justify-self: flex-end;
+                font-size: 10px;
+            }
         }
 
         :hover {
-            .thumbs-up {
+            .answer-like-div {
                 visibility: visible;
                 cursor: pointer;
             }
@@ -68,7 +93,18 @@
             background-color: rgba(137, 43, 226, 0.375);
         }
     }
+
+    .filter-by-msg {
+        // padding:  6px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        font-size: 14px;
+        color: $clr-white-F;
+    }
 }
+
 
 
 .msg {}

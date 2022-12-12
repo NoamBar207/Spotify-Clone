@@ -4,6 +4,7 @@ var cloneDeep = require('lodash.clonedeep');
 export const utilService = {
     getSongDurationToMin,
     getFormatedDate,
+    getFormatedDateWithTime,
     shuffleFunc,
     titleEditor,
     getAutorName,
@@ -168,4 +169,13 @@ function removeOrAdd(arr, value, isInclude) {
 
 function convertSecsToMinute(value) {
     return Math.floor(value / 60) + ":" + (value % 60 ? value % 60 : '00')
+}
+
+function getFormatedDateWithTime(date) {
+    const options = { month: 'short', day: 'numeric' };
+    const MM = date.toLocaleString('en-us', options)
+    let time = date.toLocaleTimeString()
+    time = time.slice(0, time.length - 3)
+    const createdAt = `${MM} , ${time}`
+    return createdAt
 }

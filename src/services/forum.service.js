@@ -16,7 +16,8 @@ const STORAGE_KEY = 'forum'
 export const forumService = {
     query,
     sendMsg,
-    addQuestion
+    addQuestion,
+    addLikeToAnswer
     // getById,
     // loadUserStations,
     // createNewStation,
@@ -39,14 +40,31 @@ async function query() {
 }
 
 async function sendMsg(ans, msg, cluster, subject) {
-    msg.ans.push(ans)
+    // msg.ans.push(ans)
     // console.log(msg, 'msg');
     // console.log(cluster, 'cluster');
     // console.log(subject, 'subject');
-    await httpService.put('forum', {msg,subject})
+    if (ans.txt.length > 1)
+        return await httpService.put('forum/answer', { ans, msg, cluster, subject })
 }
 
 async function addQuestion(question, cluster, subject) {
-    cluster.msgs.push(question)
-    await httpService.put('forum', {question,cluster,subject})
+    // cluster.msgs.push(question)
+    return await httpService.put('forum/question', { question, cluster, subject })
+}
+
+async function addLikeToAnswer(ans, userId, question, cluster, subject) {
+    // !ans.likes.includes(userId) ? ans.likes.push(userId) : 
+    if (userId !== 'Guest') {
+        const isInclude = ans.likes.includes(userId)
+        utilService.removeOrAdd(ans.likes, userId, isInclude)
+        console.log(ans);
+        // ans = {...ans ,likes:newAns}
+        // ans.likes = newAns
+        // console.log(cluster);
+        // httpService.put('forum', { ans, cluster, subject })
+        httpService.put('forum/like', { ans, question, cluster, subject })
+        return ans
+    }
+    // await httpService.put('forum', {msg,subject})
 }

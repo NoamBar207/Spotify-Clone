@@ -22,7 +22,7 @@ export function StationDeatails() {
     const dispatch = useDispatch()
     const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
-    const [songsOrder, setSongsOreder] = useState(currStation.songs)
+    const [songsOrder, setSongsOrder] = useState([])
     const [users, setUsers] = useState([])
     const { stationId } = useParams()
     const dotsRef = useRef()
@@ -33,8 +33,6 @@ export function StationDeatails() {
 
 
     useEffect(() => {
-
-
         socketService.off(SOCKET_EMIT_UPDATE_STATION)
         socketService.on(SOCKET_EMIT_UPDATE_STATION, (station) => {
             dispatch({ type: 'SET_CURR_STATION', station })
@@ -43,14 +41,18 @@ export function StationDeatails() {
             socketService.off(SOCKET_EMIT_UPDATE_STATION)
         }
     }, [])
-
+    
     useEffect(() => {
         loadStation()
         loadUsers()
-        setSongsOreder(currStation.songs)
+        setUpFunc()
         getAvgColor()
     }, [currStation])
 
+    const setUpFunc = async () => {
+        if(currStation.songs.length) setSongsOrder(currStation.songs)
+        else setSongsOrder([])
+    }
 
     const loadStation = async () => {
         try {
@@ -93,7 +95,7 @@ export function StationDeatails() {
         const newSongOreder = Array.from(songsOrder)
         const [movedSong] = newSongOreder.splice(result.source.index, 1)
         newSongOreder.splice(result.destination.index, 0, movedSong)
-        setSongsOreder(newSongOreder)
+        setSongsOrder(newSongOreder)
         const updatedStation = { ...currStation, songs: newSongOreder }
         const newUserOrStation = await stationService.updateStation(updatedStation)
         if (currStation.name === "Liked Songs") dispatch(onUpdateUser(newUserOrStation))
@@ -147,11 +149,11 @@ export function StationDeatails() {
         await setBgc(color)
     }
 
-    if (!Object.keys(currStation).length) return <h1>Hello</h1>
+    if (!Object.keys(currStation).length) return <h1 style={{backgorund:'green', color:'white'}}>Hello</h1>
     return (
         <section className="station-deatils">
             <StationHeader />
-            <div className="color-container" style={{ background: `linear-gradient(rgba(0,0,0,.6) 0, #121212 60%), ${bgc}`}}>
+            <div className="color-container" style={{ background: `linear-gradient(rgba(0,0,0,.6) 0, #121212 60%), ${bgc}` }}>
                 <div className="play-btn-station">
                     {/* <span onClick={onPlay}><i className="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span> */}
                     {!isPlaying && <span onClick={onPlay}><i class="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>}

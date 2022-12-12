@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { forumService } from "../../services/forum.service"
 import { socketService } from "../../services/socket.service"
 import { utilService } from "../../services/util.service"
+import { loadSubjects } from "../../store/actions/forum.action"
 import { ChatApp } from "./ChatApp"
 import { TopicPrev } from "./TopicPrev"
 
@@ -16,123 +17,61 @@ export const AppMenu = ({ menuRef }) => {
     const [selectedCluster, setSelectedCluster] = useState({})
 
 
-    useEffect(() => {
-        // socketService.off('add-msg')
-        // socketService.off('add-qustion')
+    // useEffect(() => {
+    //     socketService.off('add-msg')
+    //     // socketService.off('add-qustion')
 
-        socketService.on('add-msg', ({ subject, cluster }) => {
-            console.log('add-msg  ** AppMenu');
-            loadSubjects()
-            if (selectedSubject.subjectName === subject.subjectName) {
-                setSelectedSubject(subject)
-                if (selectedCluster.name === cluster.name) {
-                    setSelectedCluster(cluster)
-                }
-            }
-        })
-
-        socketService.on('add-question', ({ subject, cluster }) => {
-            // console.log('hey');
-            console.log('add-qustion  ** AppMenu');
-            // console.log(cluster);
-            loadSubjects()
-            if (selectedSubject.subjectName === subject.subjectName) setSelectedSubject(subject)
-            if (selectedCluster.name === cluster.name) {
-                setSelectedCluster(cluster)
-            }
-        })
-
-        return () => {
-            socketService.off('add-qustion')
-            socketService.off('add-msg')
-        }
-    }, [])
-
-    //// 40wv
-    // const subjects = [
-    //     {
-    //         "clusterName": "Rock",
-    //         "cluster": [
-    //             {
-    //                 "name": "Song Recommendations",
-    //                 "msgs": [
-    //                     {
-    //                         "createdBy": "Bar",
-    //                         "createdAt": "28.11.2022",
-    //                         "main": "Hello, I am looking for new songs for my playlist, I love Pink Floyd so I hope for somthing like them",
-    //                         "ans": [
-    //                             {
-    //                                 "createdBy": "Noam",
-    //                                 "createdAt": "29.11.2022",
-    //                                 "txt": "Led Zepplin - Wholla lotta love",
-    //                                 "likes": 0
-    //                             },
-    //                             {
-    //                                 "createdBy": "Noam",
-    //                                 "createdAt": "16:55",
-    //                                 "txt": "The Temptations - Papa Was A Rolling Stone",
-    //                                 "likes": 0
-    //                             }
-    //                         ]
-    //                     },
-    //                     {
-    //                         "createdBy": "Bar",
-    //                         "createdAt": "27.11.2022",
-    //                         "main": "Trying to find a song of Drake with future",
-    //                         "ans": [
-    //                             {
-    //                                 "createdBy": "Noam",
-    //                                 "createdAt": "29.11.2022",
-    //                                 "txt": "try Life if good",
-    //                                 "likes": 0
-    //                             }
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 "name": "Song Search",
-    //                 "msgs": [
-    //                     {
-    //                         "createdBy": "Bar",
-    //                         "createdAt": "27.11.2022",
-    //                         "main": "Trying to find a song of Drake with future",
-    //                         "ans": [
-    //                             {
-    //                                 "createdBy": "Noam",
-    //                                 "createdAt": "29.11.2022",
-    //                                 "txt": "try Life if good",
-    //                                 "likes": 0
-    //                             }
-    //                         ]
-    //                     }
-    //                 ]
-    //             },
-    //             {
-    //                 "name": "Upcoming Concerts",
-    //                 "msgs": []
+    //     socketService.on('add-msg', ({ subject, cluster }) => {
+    //         // loadSubjects()
+    //         if (selectedSubject.subjectName === subject.subjectName) {
+    //             // console.log('add-msg  ** AppMenu',subject);
+    //             setSelectedSubject({ ...subject })
+    //             if (selectedCluster.name === cluster.name) {
+    //                 setSelectedCluster({ ...cluster })
     //             }
-    //         ]
-    //     },
-    // {
-    //     "clusterName": "Hip-Hop",
-    //     "cluster": [
-    //         {
-    //             "name": "Song Recommendations"
     //         }
-    //     ]
-    // }
-    // ]
+    //     })
+
+    //     // socketService.on('add-question', ({ subject, cluster }) => {
+    //     //     // console.log('hey');
+    //     //     console.log('add-qustion  ** AppMenu',subject);
+    //     //     console.log(selectedCluster, selectedSubject);
+    //     //     loadSubjects()
+    //     //     if (selectedSubject.subjectName === subject.subjectName) {
+
+    //     //         // setSelectedSubject({ ...subject })
+    //     //         if (selectedCluster.name === cluster.name) {
+    //     //             setSelectedCluster({ ...cluster })
+    //     //         }
+    //     //     }
+    //     // })
+
+    //     return () => {
+    //         socketService.off('add-qustion')
+    //         socketService.off('add-msg')
+    //     }
+    // }, [])
+
 
     useEffect(() => {
         loadSubjects()
     }, [])
 
-    const loadSubjects = async () => {
+    const loadSubjects = async (subjectRecived = null) => {
         // const mellofyUser = await userService.getById('6383387d22d1c6761ceb374a')
-        const subjectsFromDb = await forumService.query()
-        await setSubjects(subjectsFromDb)
+        if (subjectRecived) await setSubjects(subjectRecived)
+        else {
+            const subjectsFromDb = await forumService.query()
+            await setSubjects(subjectsFromDb)
+        }
+
     }
+
+    // const loadSubjects = async () => {
+    //     // const mellofyUser = await userService.getById('6383387d22d1c6761ceb374a')
+    //     const subjectsFromDb = await forumService.query()
+    //     await setSubjects(subjectsFromDb)
+    // }
 
     // const onGetStationsByUser = async (user) => {
     //     try {
@@ -180,12 +119,12 @@ export const AppMenu = ({ menuRef }) => {
             {/* {console.log(Object.keys(selectedSubject).length)} */}
             <header className="menu-header">
                 {!!Object.keys(selectedCluster).length && <button onClick={onGoBack} className="go-back"><i className="fa fa-angle-left" ></i></button>}
-                <h3 className="menu-title">title</h3>
+                <h3 className="menu-title">Mellofy Chat</h3>
                 <button className="closebtn" onClick={onClose}><i className="fa-solid fa-xmark"></i></button>
                 {/* <button className="closebtn" onClick={() => {utilService.toggleModal(menuRef)}}><i className="fa-solid fa-xmark"></i></button> */}
             </header>
-            <hr className="menu-hr" />
-            {!!Object.keys(selectedCluster).length ? <ChatApp subject={selectedSubject} cluster={selectedCluster} /> :
+            {/* <hr className="menu-hr" /> */}
+            {!!Object.keys(selectedCluster).length ? <ChatApp loadSubjects={loadSubjects} selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject} setSelectedCluster={setSelectedCluster} selectedCluster={selectedCluster} /> :
                 <section className="forum-subject">
                     {subjects.map(subject => {
                         return (<div>
