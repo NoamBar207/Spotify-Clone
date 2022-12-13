@@ -15,29 +15,11 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
     const [questionState, setQuestionState] = useState('')
     const imgStyle = selectedMsg.createdBy?.imgUrl ? selectedMsg.createdBy?.imgUrl : 'https://res.cloudinary.com/noambar/image/upload/v1659384875/iwskowuhnzzcn2yjrf6e.png'
 
-
-    // useEffect(()=>{
-    //     setSelectedMsg()
-    // })
-
-    // useEffect(() => {
-    //     socketService.off('add-msg')
-    //     socketService.on('add-msg', ({ msg }) => {
-    //         console.log('add-msg  ** chatapp', msg, selectedMsg);
-    //         if (msg && selectedMsg?.main === msg?.main) {
-    //             console.log('add-msg  ** chatapp', msg);
-    //             setSelectedMsg({...msg})}
-    //     })
-
-    //     return () => {
-    //         socketService.off('add-msg',)
-    //     }
-    // },[])
-
     useEffect(() => {
-        // socketService.off('add-msg')
-        // socketService.off('add-qustion')
-
+        socketService.off('add-msg')
+        socketService.off('add-qustion')
+        socketService.off('add-like')
+        
         socketService.on('add-msg', ({ subject, cluster }) => {
             if (selectedSubject.subjectName === subject.subjectName) {
                 // console.log('add-msg  ** AppMenu',subject);
@@ -47,7 +29,7 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
                 }
             } else loadSubjects()
         })
-
+        
         socketService.on('add-question', (obj) => {
             // console.log('hey');
             console.log('add-qustion  ** AppMenu', obj);
@@ -60,10 +42,21 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
                 }
             } else loadSubjects()
         })
-
+        
+        socketService.on('add-like', (obj) => {
+            // console.log('like-change  ** selected-msg', obj);
+            if (selectedSubject && obj.subject?._id === selectedSubject?._id) {
+                setSelectedSubject({...obj.subject})
+                if (selectedCluster && obj.cluster?._id === selectedCluster?._id) {
+                    setSelectedCluster({ ...obj.cluster })
+                }
+            }else loadSubjects()
+        })
+        
         return () => {
             socketService.off('add-qustion')
             socketService.off('add-msg')
+            socketService.off('add-like')
         }
     }, [])
 
@@ -110,7 +103,6 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
                 {!!Object.keys(selectedMsg).length && <button onClick={onGoBack} className="go-back"><i className="fa fa-angle-left" ></i></button>}
                 <h1 className="cluster-name">{selectedCluster.name}</h1>
             </div>
-            <hr />
             <main className="msgs-container">
                 <div className="questions-container">
                     {!Object.keys(selectedMsg).length ? selectedCluster.msgs.map(msg => {

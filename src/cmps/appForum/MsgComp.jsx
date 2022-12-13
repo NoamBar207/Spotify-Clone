@@ -17,7 +17,7 @@ export const MsgComp = ({ answer, selectedMsg, cluster, subject, isByDate }) => 
         if (Object.keys(currUser).length) {
             const ans = await forumService.addLikeToAnswer(answer, currUser._id, selectedMsg, cluster, subject)
             setLikesState([...ans.likes])
-            // socketService.emit('like-change', { subject, cluster, answer})
+            socketService.emit('like-change', {answer, selectedMsg ,cluster, subject})
         }
         else {
             forumService.addLikeToAnswer(answer, 'Guest')

@@ -120,7 +120,7 @@ export function setLikedSongsUser(currUser) {
             dispatch(action)
             return likedStation
         } catch (err) {
-            console.error('cannot set user Stations', err);
+            console.error('cannot set user LikeStation', err);
         }
     }
 }

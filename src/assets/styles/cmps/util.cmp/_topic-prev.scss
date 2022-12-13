@@ -1,25 +1,53 @@
 .subject-container {
-
-
+    
+    // box-shadow: 0 0.5px 3px $clr-box-shadow-whatup;
+    border-bottom: 0.5px solid lighten($clr-black-28, $amount: 5);
+    
     .subject-name {
-        @include flex-center;
+        // @include flex-center;
+        display: flex;
+        
         gap: 8px;
         width: 100%;
         margin: 0;
         padding: 12px 0;
-        text-decoration: underline 2px ;
-    }
+        // text-decoration: underline 2px ;
+        &:hover{
+            background-color: rgba(255, 255, 255, 0.1);
+    
+        }
+        cursor: pointer;
+        .name{
+            // width: 120px;
+        }
 
-    .cluster-container {
-        gap: 8px;
-        @include flex-center;
-        flex-direction: column;
+    }
+    
+
+    .subject-clusters{
+        box-sizing: border-box;
+        box-shadow: inset 0px 0px 2px rgb(24, 23, 23);
+      
         
-        
-        .cluster-name {
-            width: 100%;
-            margin: 0;
-            padding: 12px;
+        .cluster-container {
+            gap: 8px;
+            @include flex-center;
+            flex-direction: column;
+            cursor: pointer;
+            
+            
+            .cluster-name {
+                // box-sizing: border-box;
+                width: 100%;
+                margin: 0;
+                padding: 12px;
+                padding-left: 50px;
+                &:hover{
+                    // text-decoration: underline;
+                    color: $clr-green-play;
+                }
+                
+            }
         }
     }
 

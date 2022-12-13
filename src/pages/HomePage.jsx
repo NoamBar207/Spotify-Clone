@@ -23,13 +23,6 @@ export function HomePage() {
         getGreetingTitle()
     }, [])
     
-    useEffect(() => {
-        getLikedSongsUser()
-    }, [currUser])
-    
-    const getLikedSongsUser = async () => {
-        await dispatch(setLikedSongsUser(currUser))
-    }
 
     const loadStations = async () => {
         try {

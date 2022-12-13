@@ -119,17 +119,20 @@ export const AppMenu = ({ menuRef }) => {
             {/* {console.log(Object.keys(selectedSubject).length)} */}
             <header className="menu-header">
                 {!!Object.keys(selectedCluster).length && <button onClick={onGoBack} className="go-back"><i className="fa fa-angle-left" ></i></button>}
-                <h3 className="menu-title">Mellofy Chat</h3>
+                <h3 className="menu-title">Mellofy Forum</h3>
                 <button className="closebtn" onClick={onClose}><i className="fa-solid fa-xmark"></i></button>
                 {/* <button className="closebtn" onClick={() => {utilService.toggleModal(menuRef)}}><i className="fa-solid fa-xmark"></i></button> */}
             </header>
             {/* <hr className="menu-hr" /> */}
             {!!Object.keys(selectedCluster).length ? <ChatApp loadSubjects={loadSubjects} selectedSubject={selectedSubject} setSelectedSubject={setSelectedSubject} setSelectedCluster={setSelectedCluster} selectedCluster={selectedCluster} /> :
                 <section className="forum-subject">
+                    <div className="forum-subject-header">
+                        <h5 className="topic-title">Topic</h5>
+                        {/* <button className="ask-question">ask a question ?</button> */}
+                    </div>
                     {subjects.map(subject => {
                         return (<div>
                             <TopicPrev subject={subject} setSelectedSubject={setSelectedSubject} setSelectedCluster={setSelectedCluster} />
-                            <hr />
                         </div>)
                     })}
                 </section>

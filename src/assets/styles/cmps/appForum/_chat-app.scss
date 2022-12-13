@@ -6,9 +6,25 @@
     .chat-app-title {
         @include flex-center;
         width: 100%;
+        border-bottom: 0.5px solid lighten($clr-black-28, $amount: 5);
+		// background-color: darken($clr-search-grey, $amount: 20);
+        // background-color: darken($clr-green-play, $amount: 20);
+        // color: $clr-green-play;
+        color:#169c46;
+
+        height: 43px;
+        // box-shadow: 0 0.5px 3px $clr-box-shadow-whatup;
+        gap:10px;
         
         .go-back {
+            @include flex-center;
             justify-self: flex-start;
+            background-color: transparent;
+            color:white;
+            border: none;
+            cursor: pointer;
+            padding: 15px 0;
+
         }
     }
     

@@ -30,7 +30,8 @@
     }
 
     .selected-question {
-        background-color: rgba(255, 0, 0, 0.5);
+        // background-color: rgba(255, 0, 0, 0.5);
+        background-color: #ef6b32;
     }
 
 
@@ -49,7 +50,7 @@
         align-items: flex-end;
         gap: 6px;
         overflow-y: auto;
-        max-height: 566px;
+        max-height: 560px;
 
         .by-curr-user {
             align-self: flex-start;
@@ -102,6 +103,11 @@
         gap: 12px;
         font-size: 14px;
         color: $clr-white-F;
+
+        .switch-msg{
+            @include flex-center;
+            gap:3px;
+        }
     }
 }
 

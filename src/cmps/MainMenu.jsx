@@ -5,7 +5,7 @@ import { importService } from "../services/import-img-service"
 import { userService } from "../services/user.service"
 import { stationService } from "../services/station.service"
 import { getUser, onUpdateUser } from "../store/actions/user.action"
-import { onSetUserStations, setCurrStation, setFollowedStations, setUserStation } from "../store/actions/station.actions"
+import { onSetUserStations, setCurrStation, setFollowedStations, setLikedSongsUser, setUserStation } from "../store/actions/station.actions"
 import { socketService, SOCKET_EMIT_UPDATE_USER, SOCKET_ON_UPDATE_USER } from "../services/socket.service"
 
 
@@ -49,6 +49,13 @@ export const MainMenu = () => {
     const asyncSet = async () => {
         await dispatch(onSetUserStations(currUser))
         await loadUserStations()
+        onSetFollowedStations()
+        getLikedSongsUser()
+
+    }
+
+    const getLikedSongsUser = async () => {
+        await dispatch(setLikedSongsUser(currUser))
     }
 
     const loadUserStations = async () => {
@@ -91,6 +98,7 @@ export const MainMenu = () => {
                         return station
                     })
                 )
+                console.log(followedStations);
                 dispatch(setFollowedStations(followedStations))
             } catch (err) {
                 console.log('Cannot Load shared Stations ', err);
@@ -120,7 +128,7 @@ export const MainMenu = () => {
             const newUser = await stationService.createNewStation(currUser)
             await dispatch(onUpdateUser(newUser))
             console.log(newUser);
-            const index = newUser.stations.length-1
+            const index = newUser.stations.length - 1
             const station = await stationService.getById(newUser.stations[index])
             console.log(station);
             await dispatch(setCurrStation(station))
@@ -154,18 +162,20 @@ export const MainMenu = () => {
                     })}
                 </div> */}
                 <div className="user-stations">
+                    <div className="menu-stations-title">Your Playlists:</div>
                     {!!userStationState?.length && userStationState.map(station => {
                         return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
                     })}
                 </div>
             </>
             }
-            {!!Object.keys(followedStations).length && <>
+            {!!followedStations.length && <>
+                {console.log('thereIs')}
                 <hr />
                 <div className="user-stations">
-                    <h5>Shared Playlist:</h5>
-                    {currUser.followedStations.map(station => {
-                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station}</Link>
+                    <div className="menu-stations-title">Shared Playlist:</div>
+                    {followedStations.map(station => {
+                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
                     })}
                 </div>
             </>

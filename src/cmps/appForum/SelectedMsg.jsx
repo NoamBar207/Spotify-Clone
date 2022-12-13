@@ -20,27 +20,28 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
 
     useEffect(() => {
         socketService.off('add-msg')
-        socketService.off('like-change')
+        socketService.off('add-like')
 
 
         socketService.on('add-msg', (obj) => {
-            // console.log('add-msg  ** chatapp', selectedMsg, obj);
-            if (selectedMsg && obj.selectedMsg?.main === selectedMsg?.main) {
+            if (selectedMsg && obj.selectedMsg?._id === selectedMsg?._id) {
+                console.log('add-msg  ** chatapp', selectedMsg, obj);
                 // console.log('add-selectedMsg  ** chatapp', selectedMsg);
                 setSelectedMsg({ ...obj.selectedMsg })
             }
         })
 
-        socketService.on('like-change', (obj) => {
-            console.log('like-change  ** selected-msg', obj);
-            if (selectedMsg && obj.selectedMsg?.main === selectedMsg?.main) {
-                // console.log('add-selectedMsg  ** chatapp', selectedMsg);
-                // setSelectedMsg({...obj.selectedMsg})
+        socketService.on('add-like', (obj) => {
+            // console.log('like-change  ** selected-msg', obj);
+            if (selectedMsg && obj.selectedMsg?._id === selectedMsg?._id) {
+                console.log('likeChange-selectedMsg', selectedMsg);
+                setSelectedMsg({...obj.selectedMsg})
             }
         })
 
         return () => {
             socketService.off('add-msg',)
+            socketService.off('add-like')
         }
     }, [])
 
@@ -79,7 +80,7 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
         setSelectedMsg(objectFromBack.question)
         setSelectedCluster({ ...cluster, msgs: objectFromBack.msgsToReturn })
         loadSubjects()
-        socketService.emit('send-msg', { subject, cluster, selectedMsg })
+        socketService.emit('send-msg', { subject, cluster, selectedMsg:objectFromBack.question })
         resetForm()
     }
 
