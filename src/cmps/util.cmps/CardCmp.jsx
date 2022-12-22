@@ -19,7 +19,7 @@ export function CardCmp({ station }) {
     }, [])
 
     // useEffect(() => {
-        // console.log(currStation);
+    // console.log(currStation);
     // }, [currStation])
 
     const infoAutorsGetter = () => {
@@ -53,13 +53,19 @@ export function CardCmp({ station }) {
             </div>
             <div className="card-info">
                 <h2 className="card-title">{station.name}</h2>
-                <h4 className="card-autors">{
-                    authorsState
-                    // station.songs.map((song, idx) => {
-                    //     if (idx === 4) return
-                    //     return idx < 3 ? utilService.getAutorName(song) + ', ' : ' and more...'
-                    // })
-                }</h4>
+                {station.renderType === 'byArtist' ?
+
+                    <h4 className="card-autors">{
+                        station.name
+                    }</h4> :
+                    <h4 className="card-autors">{
+                        authorsState
+                        // station.songs.map((song, idx) => {
+                        //     if (idx === 4) return
+                        //     return idx < 3 ? utilService.getAutorName(song) + ', ' : ' and more...'
+                        // })
+                    }</h4>
+                }
 
             </div>
         </section>

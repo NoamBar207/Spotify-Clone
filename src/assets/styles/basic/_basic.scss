@@ -1,7 +1,6 @@
-html {
-}
+html {}
 
-*>{
+*> {
     font-family: font-circ-bold, font-circ-heb;
 }
 
@@ -10,7 +9,8 @@ body {
     height: 100%;
     margin: 0;
     font-family: font-circ-bold, font-circ-heb;
-    
+    overflow: hidden;
+
 }
 
 button {
@@ -26,17 +26,17 @@ h2 {
     overflow-y: hidden;
     // height: 100%;
     display: grid;
-    grid-gap: 8px;
+    // grid-gap: 8px;
     background-color: $clr-black-000;
     // grid-column-gap: 8px;
-    grid-template-columns: 180px calc(100% - 188px);
-    grid-template-rows: 64px calc(100% - 160px) 80px;
+    grid-template-columns: 180px calc(100% - 180px);
+    grid-template-rows: 64px calc(100% - 144px) 80px;
     grid-template-areas:
         "app-header app-header"
         "menu main-content"
         "app-footer app-footer";
-
-    ul {
+        
+        ul {
         padding: 0;
         margin: 0;
     }
@@ -48,7 +48,7 @@ h2 {
 
 
 .hide-none {
-    display: none;
+    display: none !important;
 }
 
 
@@ -56,5 +56,17 @@ h2 {
     .root-cmp {
         // grid-column-gap: 8px;
         grid-template-columns: 165px calc(100% - 165px);
+    }
+}
+
+@include for-mobile-layout {
+    .root-cmp {
+        overflow-x: hidden;
+        // grid-column-gap: 8px;
+        grid-template-columns: 100%;
+        grid-template-rows: calc(100% - 60px) 60px;
+        grid-template-areas:
+            "main-content"
+            "app-footer";
     }
 }

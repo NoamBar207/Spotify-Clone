@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { onLogin, onSignup } from "../store/actions/user.action"
+import jwt_decode from "jwt-decode"
 
+const googleLoginKey = '191073475183-96e548l2ufak98s6fpsfoh888ftbm7pp.apps.googleusercontent.com'
 
 
 
@@ -16,7 +18,30 @@ export const Login = () => {
 	const [credentials, setCredentials] = useState({
 		username: '',
 		password: '',
+		email:''
 	})
+
+
+	useEffect(() => {
+		/* global google */
+		google.accounts.id.initialize({
+			client_id: googleLoginKey,
+			callback: handleCallbackResponse
+		})
+
+		google.accounts.id.renderButton(
+			document.getElementById('google-login-div'),
+			{theme:'outline', size:'large'}
+		)
+	}, [])
+
+	const handleCallbackResponse = (response) => {
+		console.log("Encoded JWT Id token :  " + response.credential);
+		let decodeInfo = jwt_decode(response.credential)
+		console.log(decodeInfo);
+		dispatch(onLogin({...credentials , username:decodeInfo.name, email:decodeInfo.email}))
+		navigate('/')
+	}
 
 	const handleChange = (ev) => {
 		let field = ev.target.name
@@ -30,24 +55,27 @@ export const Login = () => {
 			!credentials.password.length
 			// !credentials.fullname.length
 		) return console.log('empty fields')
-		await dispatch(onLogin(credentials))
+		dispatch(onLogin(credentials))
 		// let newScrum = await boardService.getBoardForGuest()
 		// let newUser = { ...credentials, boards: [newScrum._id], starred: [newScrum._id] }
 		// newUser = await userService.update(newUser)
 		// await userService.saveLocalUser(newUser)
 		// dispatch(setCurrUser(newUser))
-
-		setCredentials({
-			username: '',
-			password: '',
-			fullname: '',
-		})
+		resetCredentials()
 		navigate(`/`)
 	}
 
 	const handleError = () => {
 		setIsError('show')
 		setTimeout(setIsError, 2000, '')
+	}
+
+	const resetCredentials = () => {
+		setCredentials({
+			username: '',
+			password: '',
+			email: ''
+		})
 	}
 
 	return (
@@ -60,7 +88,8 @@ export const Login = () => {
 				<section className="sign-up-platforms">
 					<button className="util-btn facebook">CONTINUE WITH FACEBOOK</button>
 					{/* <button className="util-btn apple">continue with apple</button> */}
-					<button className="util-btn google">CONTINUE WITH GOOGLE</button>
+					{/* <button className="util-btn google">CONTINUE WITH GOOGLE</button> */}
+					<div id='google-login-div'></div>
 				</section>
 				<span className='sign-up-or'><hr /><span>or</span><hr /></span>
 				{/* <h3>What's your name?</h3>

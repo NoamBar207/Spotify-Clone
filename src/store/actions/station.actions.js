@@ -14,7 +14,7 @@
 //     }
 // }
 
-import { socketService, SOCKET_EMIT_STATION_UPDATE, SOCKET_EMIT_UPDATED_STATION } from "../../services/socket.service";
+import { socketService, } from "../../services/socket.service";
 import { stationService } from "../../services/station.service";
 import { userService } from "../../services/user.service";
 
@@ -28,7 +28,6 @@ export function setCurrStation(station) {
     // socketService.emit(SOCKET_EMIT_STATION_UPDATE, station)
     return async (dispatch) => {
         try {
-            console.log(station);
             const action = { type: 'SET_CURR_STATION', station }
             dispatch(action)
         } catch (err) {
@@ -42,8 +41,11 @@ export function onSaveStation(station) {
     return async (dispatch) => {
         try {
             const loggedInUser = await userService.getLoggedinUser()
-            socketService.emit('station-updated', { station: station, userId: loggedInUser._id })
+            // socketService.emit('station-updated', { station: station, userId: loggedInUser._id })
             const savedStation = await stationService.updateStation(station)
+            socketService.emit('station-updated', { station: savedStation })
+            return savedStation
+
             // const action = { type: 'SAVED_STATION', station: {...savedStation} }
             // dispatch(action)
         } catch (err) {
@@ -113,8 +115,8 @@ export function setLikedSongsUser(currUser) {
                 songs: currUser.likedSongs,
                 stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
                 name: "Liked Songs",
-                createdBy:currUser.fullname,
-                duration:stationService.getStationDuration(currUser.likedSongs)
+                createdBy: currUser.fullname,
+                duration: stationService.getStationDuration(currUser.likedSongs)
             }
             const action = { type: 'SET_LIKED_SONGS', likedStation }
             dispatch(action)
@@ -160,8 +162,19 @@ export function onSetUserStations(currUser) {
             }
         }
         else {
-            const action = { type: 'SET_USER_STATIONS', userStations:[] }
+            const action = { type: 'SET_USER_STATIONS', userStations: [] }
             dispatch(action)
+        }
+    }
+}
+
+export function onSetShuffele(bool) {
+    return async (dispatch) =>{
+        try{
+            const action = { type: 'SET_IS_SHFFUELD', isShuffeld:bool }
+            dispatch(action)
+        }catch(err) {
+            console.log('Cannot set isShuffled', err);
         }
     }
 }

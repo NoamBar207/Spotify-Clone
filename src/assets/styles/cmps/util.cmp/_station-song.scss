@@ -4,6 +4,7 @@
     @include flex-center;
     justify-content: flex-start;
     // justify-content: space-between;
+    box-sizing: border-box;
     gap: 16px;
     height: 56px;
     font-size: 16px;
@@ -71,6 +72,35 @@
                     width: 100%;
 
                 }
+            }
+        }
+    }
+}
+
+
+@include for-mobile-layout {
+    .song-container{
+        padding-inline-start: 5px;
+
+        .song-img-title{
+            flex: 1;
+            
+            .station-details-song{
+                flex: 1;
+            }
+        }
+
+        .added-at,
+        .song-num{
+            display: none;
+        }
+
+        .song-actions{
+            justify-content: center;
+            gap: 24px;
+            width: fit-content;
+            .song-duration{
+                display: none;
             }
         }
     }

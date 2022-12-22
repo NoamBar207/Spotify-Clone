@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
+import { socketService } from "../../services/socket.service"
 import { songService } from "../../services/song.service"
 import { stationService } from "../../services/station.service"
 import { userService } from "../../services/user.service"
 import { utilService } from "../../services/util.service"
-import { setCurrStation } from "../../store/actions/station.actions"
+import { onSetUserStations, setCurrStation } from "../../store/actions/station.actions"
 import { onUpdateUser } from "../../store/actions/user.action"
 
 
@@ -37,8 +38,9 @@ export const ThreeDots = ({ song, userStations }) => {
 
     const onAddSong = async (station) => {
         const newStation = await stationService.addSongToStation(song, station)
-        console.log(newStation);
-        if (currStation._id === newStation._id) dispatch(setCurrStation(newStation))
+        socketService.emit('station-updated', { station: newStation })
+        dispatch(onUpdateUser({...currUser}))
+        if (currStation._id === newStation._id) dispatch(setCurrStation({...newStation}))
         dotsRef.current.classList.toggle('hide')
         playlistRef.current.classList.toggle('hide')
     }
@@ -66,7 +68,7 @@ export const ThreeDots = ({ song, userStations }) => {
                 <button className="three-dots-btn" onClick={toggleModal2}>Add to playlist</button>
             </section>
             <div className="playlist-modal three-dots-modal hide" ref={playlistRef}>
-                {userStations.length && userStations.map(station => {
+                {userStations?.length && userStations.map(station => {
 
                     return <button className="three-dots-btn" onClick={() => onAddSong(station)}>
                         {station.songs.some(songStation => song.videoId === songStation.videoId) && <div className="song-indication">✔</div>}

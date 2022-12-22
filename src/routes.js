@@ -11,6 +11,7 @@ import { StationDeatails } from './pages/StationDeatails';
 import { SearchPage } from './pages/SearchPage';
 import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
+import { SongDeatails } from './pages/SongDeatails';
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
         path: 'station/:stationId',
         component: <StationDeatails />,
         label: 'Station'
+    },
+    {
+        path: 'song/:songId',
+        component: <SongDeatails />,
+        label: 'Song'
     },
     {
         path: 'search',

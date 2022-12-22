@@ -14,3 +14,67 @@
         grid-gap: 24px;
     }
 }
+
+@include for-mobile-layout {
+    .search-page-container {
+        padding: 0;
+
+
+
+        .app-header-container {
+            display: flex;
+            padding: 8px 0;
+
+            .header-logo {
+                display: none;
+            }
+
+            .header-home-search {
+                gap: 0;
+
+                .header-home-btn {
+                    display: none;
+                }
+
+                .header-search-container {
+
+                    .label-search {
+
+                        .header-search-results {
+                            flex: 1;
+                            height: calc(100vh - 184px);
+                            background-color: $clr-black-12;
+                            
+                            .search-results-container{
+                                box-sizing: border-box;
+                                overflow-y: auto;
+                                padding: 0 12px;
+                                overflow-x: hidden;
+                            }
+
+                            h1{
+                                font-size: 24px;
+                            }
+
+                            .loader-search-container{
+                                display: flex;
+                                justify-content: flex-start;
+                                gap: 24px;
+                                font-size: 25px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .user-logo-container {
+                display: none;
+            }
+
+            .no-user-header {
+                display: none;
+            }
+
+        }
+    }
+}

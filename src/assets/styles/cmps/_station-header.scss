@@ -21,6 +21,7 @@
             height: 232px;
             width: 232px;
             box-shadow: 0px 0px 65px -5px rgba(0, 0, 0, 0.69);
+            object-fit: cover;
         }
         
         .station-header-no-pic {
@@ -97,6 +98,17 @@
     }
 }
 
+@include for-laptop-layout {
+    .station-header-container {
+        .station-header-img {
+            img {
+                height: 192px;
+                width: 192px;
+            }
+        }
+    }
+}
+
 @include for-laptop-narrow-layout {
     .station-header-container {
         padding-inline-start: 16px;
@@ -109,12 +121,30 @@
     }
 }
 
-@include for-laptop-layout {
+
+
+
+@include for-mobile-layout {
     .station-header-container {
+        position: relative;
+        padding: 0;
+        padding-inline-start: 0;
         .station-header-img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
             img {
-                height: 192px;
-                width: 192px;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                filter: brightness(75%);
+            }
+        }
+        .station-header-deatails {
+            z-index: 5;
+            padding-inline-start: 16px;
+            padding-block-end: 8px;
+            .station-header {
             }
         }
     }

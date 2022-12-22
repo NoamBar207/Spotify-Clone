@@ -7,7 +7,6 @@ export function onSignup(credentials) {
 		// let newScrum = await boardService.getBoardForGuest()?
 		// let newCred = {...credentials, boards:[newScrum._id], starred:[newScrum._id]}
 		try {
-			// console.log(credentials);
 			const user = await userService.signup(credentials)
 			dispatch({
 				type: 'SET_USER',

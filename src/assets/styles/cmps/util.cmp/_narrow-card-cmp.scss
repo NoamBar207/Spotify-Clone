@@ -3,9 +3,10 @@
     display: flex;
     align-items: center;
     width: 100%;
-    background-color: hsla(0, 0%, 100%, .1);
+    background-color: $clr-hover;
     border-radius: 8px;
     gap: 16px;
+    cursor: pointer;
 
 
     .narrow-card-img {
@@ -36,11 +37,25 @@
     }
 
     &:hover {
+        background-color: hsla(0, 0%, 100%, .2);
+        transition: background-color 500ms;
+
         .play-btn-narrow-card {
             visibility: visible;
         }
     }
 }
+
+
+
+@include for-mobile-layout {
+    .narrow-card-container {
+        .play-btn-narrow-card {
+            display: none;
+        }
+    }
+}
+
 
 
 @include for-laptop-narrow-layout {

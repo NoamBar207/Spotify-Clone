@@ -5,7 +5,13 @@
     background-color: $clr-black-18;
     border-radius: 4px;
     gap: 8px;
-
+    cursor: pointer;
+    
+    &:hover{
+        background-color: $clr-hover;
+        transition: background-color 500ms;
+    }
+    
     .card-img {
         flex: 1;
         img {
@@ -13,15 +19,17 @@
             // height: 200px;
             width: 100%;
             object-fit: cover;
+            aspect-ratio: 1/1;
+            border-radius: 3px;
         }
     }
-
+    
     .card-autors{
         margin: 0;
         font-size: 0.875rem;
         color: $clr-text-grey;
     }
-
+    
     .card-info {
         display: flex;
         flex-direction: column;
@@ -29,7 +37,30 @@
         padding-bottom: 5px;
         // text-ove;
         gap: 4px;
-
-
+        
+        
     }
+}
+
+
+@include for-mobile-layout {
+    
+    
+    .card-container {
+        padding: 0;
+        width: 150px !important;
+        box-sizing: border-box;
+        // padding: 8px 8px 16px 8px;
+        padding: 8px;
+        
+        .card-info{
+            .card-title{
+                font-size: 16px;
+            }
+            .card-autors{
+                font-size: 12px;
+            }
+        }
+    }
+    
 }

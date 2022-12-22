@@ -13,6 +13,7 @@ import { songService } from "../../services/song.service"
 export const StationSong = ({ song, idx }) => {
 
     const { userStations } = useSelector((state) => state.stationModule)
+    const { currUser } = useSelector((state) => state.userModule)
     const dispatch = useDispatch()
     useEffect(() => {
         if (!song.duration) {
@@ -33,7 +34,7 @@ export const StationSong = ({ song, idx }) => {
 
     return (
         <div className="song-container" onDoubleClick={() => dispatch(setCurrSong(song))}>
-            <div style={{ width: '14px' }}>{idx + 1}</div>
+            <div className="song-num" style={{ width: '14px' }}>{idx + 1}</div>
             <div className="song-img-title" >
                 <img src={song.snippet.thumbnails.high.url} style={{ width: '50px', height: '50px' }} />
                 <div className="station-details-song">
@@ -49,8 +50,10 @@ export const StationSong = ({ song, idx }) => {
             {/* {console.log(song.createdAt)} */}
             <div className="added-at">{utilService.getFormatedDate(new Date(song.createdAt))}</div>
             <div className="song-actions">
+                {/* {!!Object.keys(currUser).length && <LikeButton songProp={song} />} */}
                 <LikeButton songProp={song} />
                 <div className="song-duration">{song.duration}</div>
+                {/* {!!Object.keys(currUser).length &&<ThreeDots song={song} userStations={userStations} />} */}
                 <ThreeDots song={song} userStations={userStations} />
             </div>
         </div>

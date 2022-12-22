@@ -25,6 +25,11 @@
 		font-family: font-circ-bold;
 		font-size: 13px;
 
+		&:hover{
+			background-color: $clr-hover;
+			transition: background-color 500ms;
+		}
+
 		.menu-create-playlist {
 			@include flex-center;
 			background-color: $clr-text-grey;

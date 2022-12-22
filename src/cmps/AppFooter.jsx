@@ -1,41 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { playSvg } from '../services/import-img-service';
-import { importService } from '../services/import-img-service';
-import { setCurrSong, setIsPlaying } from '../store/actions/station.actions';
+import { onSetShuffele, setCurrSong, setCurrStation, setIsPlaying } from '../store/actions/station.actions';
 import YouTube from 'react-youtube';
 import { setPlayer } from '../store/actions/player.action';
-import { useRef } from 'react';
 import { SliderBar } from './util.cmps/SlideBar';
 import { utilService } from '../services/util.service';
-import { height } from '@mui/system';
-import { songService } from '../services/song.service';
-import { userService } from '../services/user.service';
-import { onUpdateUser } from '../store/actions/user.action';
 import { LikeButton } from './util.cmps/LikeButton';
+import { stationService } from '../services/station.service';
+import { ResponsiveFooter } from './responsiveLayout/ResponsiveFooter';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 export const AppFooter = () => {
 
 
-    const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
+    const { currSong, isPlaying, currStation, isShuffeld } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
     const { player } = useSelector((state) => state.playerModule)
+
+
     const [songName, setSongName] = useState('')
     const [songAutor, setSongAutor] = useState('')
     const [songDuration, setSongDuration] = useState(0)
     const [songTotalDuration, setSongTotalDuration] = useState('')
     const [songTotalDurationNum, setSongTotalDurationNum] = useState(0)
     const [volume, setVolume] = useState(0)
-    const [reapetInd, setReapetInd] = useState(false)
+    const [reapetInd, setReapetInd] = useState('')
     const [isLiked, setIsLiked] = useState(false)
 
 
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const [shuffle, setShuffle] = useState(false)
-    const [shuffledSongs, setShuffleSongs] = useState(null)
     // let songTimeInterval = useRef(0)
     let intervalId = useRef()
-    let currStationId = useRef(currStation.id)
+    let appFooterRef = useRef()
+
 
 
     const dispatch = useDispatch()
@@ -61,17 +60,9 @@ export const AppFooter = () => {
         setIsLiked(isSongLiked)
     }, [currSong])
 
-
-    const toggleLike = async () => {
-        let userReturned = songService.addSongToLike(currSong, currUser, isLiked)
-        setIsLiked(!isLiked)
-        userReturned = await userService.updateUser(userReturned)
-        dispatch(onUpdateUser(userReturned))
-
-        // console.log(userReturned);
-    }
-
-
+    useEffect(() => {
+        addClassOnSongDeatails()
+    }, [location,currSong])
 
     const playerReady = (event) => {
         //cleaning
@@ -99,7 +90,7 @@ export const AppFooter = () => {
         intervalId.current = setInterval(() => {
             setSongDuration(prevDuration => +prevDuration + 1)
         }, 1000)
-        if(player.i){
+        if (player.i) {
             player.playVideo()
             player.setVolume(volume)
         }
@@ -123,15 +114,15 @@ export const AppFooter = () => {
         if (fullTitle.includes('(')) {
             let idxOfTitleFinish = fullTitle.indexOf('(')
             setSongName(fullTitle.slice(idxToSplit + 1, idxOfTitleFinish))
-        } else setSongName(fullTitle.slice(idxToSplit))
+        } else setSongName(fullTitle.slice(idxToSplit + 1))
     }
 
-    const togglePlayer = () => {
+    const togglePlayer = (ev) => {
+        ev.stopPropagation()
         isPlaying ? dispatch(setIsPlaying(false)) : dispatch(setIsPlaying(true))
     }
 
     const handleChangeVolume = (event) => {
-        // console.log(event.target);
         setVolume(event.target.value)
         player.setVolume(event.target.value)
     }
@@ -139,152 +130,193 @@ export const AppFooter = () => {
     const handleChangeSongMin = (event) => {
         // setVolume(event.target.value)
         // player.setVolume(event.target.value)
+        if (window.innerWidth <= 480 && !location.pathname.includes('song')) return
         setSongDuration(event.target.value)
         player.seekTo(event.target.value)
     }
 
-    const onPrevNextSong = (diff) => {
-        // if(shuffle && Object.keys(currSong).length){
-        //     let idxPrevSong = currStation.songs.findIndex(song => (song.id.videoId === currSong.id.videoId))
-        //     let songsAmount = currStation.songs.length
-        //     let idxNextSong = Math.Random() * songsAmount
-
-        // }
+    const onNextSong = () => {
+        let idxRem = currStation.songs.findIndex(song => (song.videoId === currSong.videoId))
         clearInterval(intervalId.current)
-        if (reapetInd) {
+        if (reapetInd === 'repeat-one') {
             player.seekTo(0)
             setSongDuration(0)
         }
-        else if (Object.keys(currSong).length) {
-            let idxRem = currStation.songs.findIndex(song => (song.videoId === currSong.videoId))
-            idxRem += diff
-            if (idxRem === -1) {
+        else if (reapetInd === 'repeat-all') {
+            if (idxRem + 1 === currStation.songs.length) {
                 idxRem = 0
+                dispatch(setCurrSong(currStation.songs[idxRem]))
+            }
+            else dispatch(setCurrSong(currStation.songs[idxRem + 1]))
+            player.seekTo(0)
+            setSongDuration(0)
+        }
+        else if (idxRem + 1 < currStation.songs.length) {
+            dispatch(setCurrSong(currStation.songs[idxRem + 1]))
+        }
+        else return
+    }
+
+    const onPrevSong = () => {
+        let idxRem = currStation.songs.findIndex(song => (song.videoId === currSong.videoId))
+        clearInterval(intervalId.current)
+        if (reapetInd === 'repeat-one') {
+            player.seekTo(0)
+            setSongDuration(0)
+        }
+        else if (reapetInd === 'repeat-all') {
+            if (!idxRem) {
+                idxRem = currStation.songs.length - 1
+                dispatch(setCurrSong(currStation.songs[idxRem]))
+            }
+            else dispatch(setCurrSong(currStation.songs[idxRem - 1]))
+            player.seekTo(0)
+            setSongDuration(0)
+        }
+        else {
+            if (!idxRem) {
                 player.seekTo(0)
                 setSongDuration(0)
             }
-            // if (idxRem === currStation.songs.length) idxRem = 0
-            if (idxRem < currStation.songs.length) dispatch(setCurrSong(currStation.songs[idxRem]))
-        } else return
+            else dispatch(setCurrSong(currStation.songs[idxRem - 1]))
+        }
     }
 
-    const onShuffle = () => {
-        setShuffle(!shuffle)
-        if (shuffle) {
-            let shuffled = utilService.shuffleFunc(currStation.songs, currSong)
-            console.log(shuffled);
-            console.log(currStation.songs);
-        }
+    const onShuffle = async () => {
+        const shuffeldSongs = stationService.shuffleStation([...currStation.songs], currSong)
+        // console.log('onShuffele', isShuffeld);
+        dispatch(onSetShuffele(!isShuffeld))
+        console.log(shuffeldSongs);
+        dispatch(setCurrStation({ ...currStation, songs: shuffeldSongs }))
+        // setShuffle(!shuffle)
+        // if (shuffle) {
+        //     let shuffled = utilService.shuffleFunc(currStation.songs, currSong)
+        //     console.log(shuffled);
+        //     console.log(currStation.songs);
+        // }
     }
 
 
     const onReapet = () => {
         if (Object.keys(currSong).length) {
-            setReapetInd(!reapetInd)
-            console.log(reapetInd);
+            if (!reapetInd) setReapetInd('repeat-all')
+            else if (reapetInd === 'repeat-all') setReapetInd('repeat-one')
+            else setReapetInd('')
+            // console.log(reapetInd);
         }
         else return
     }
 
-    // const startStopSong = () => {
-    // //     isPlaying = !isPlaying
-    // // }
+    const onAppFooter = () => {
+        if (window.innerWidth <= 480 && Object.keys(currSong).length) navigate(`/song/${currSong.videoId}`)
+    }
+
+    const addClassOnSongDeatails = () => {
+        if (window.innerWidth <= 480 && !Object.keys(currSong).length) appFooterRef.current.classList.add('hide-player-mobile')
+        else appFooterRef.current.classList.remove('hide-player-mobile')
+        if (location.pathname.includes('song')) appFooterRef.current.classList.add('song-deatails-player')
+        else appFooterRef.current.classList.remove('song-deatails-player')
+    }
+
+
+    // {(window.innerWidth <= 480 && !Object.keys(currSong).length) ? <></> :
 
     return (
-        <section className="app-footer" >
-            <div className='curr-song'>
-                {Object.keys(currSong).length ?
-                    <div className='curr-song-container'>
-                        <div className='curr-song-img'>
-                            <img src={currSong.snippet.thumbnails.high.url} style={{ height: '70px', width: '70px' }} alt=''/>
-                            {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
-                            <YouTube
-                                videoId={currSong?.videoId}
-                                opts={opts}
-                                onReady={playerReady}
-                                onPlay={playerOnPlay}
-                                onPause={playerOnPause}
-                                onEnd={() => onPrevNextSong(1)}
-                            />
-                        </div>
-                        <div className='title-author'>
-                            <div className='song-title'>
-                                {songName}
-                            </div>
-                            <div className='song-author'>
-                                {songAutor}
-                            </div>
-                        </div>
-                        {/* <div className='heart-symbol'>
+        <main>
+
+                <section className="app-footer" ref={appFooterRef} onClick={onAppFooter}>
+                    <div className='curr-song'>
+                        {Object.keys(currSong).length ?
+                            <div className='curr-song-container'>
+                                <div className='curr-song-img'>
+                                    <img src={currSong.snippet.thumbnails.high.url} alt='' />
+                                    {/* <YouTube videoId="2g811Eo7K8U" opts={opts} onReady={this._onReady} /> */}
+                                    <YouTube
+                                        videoId={currSong?.videoId}
+                                        opts={opts}
+                                        onReady={playerReady}
+                                        onPlay={playerOnPlay}
+                                        onPause={playerOnPause}
+                                        onEnd={onNextSong}
+                                    />
+                                </div>
+                                <div className='title-author'>
+                                    <div className='song-title'>
+                                        {songName}
+                                    </div>
+                                    <div className='song-author'>
+                                        {songAutor}
+                                    </div>
+                                </div>
+                                {/* <div className='heart-symbol'>
                             {isLiked ? <span onClick={toggleLike} style={{ color: 'green' }}><i class="fa-solid fa-heart"></i></span>
-                                : <span onClick={toggleLike}><i class="fa-regular fa-heart"></i></span>}
+                            : <span onClick={toggleLike}><i class="fa-regular fa-heart"></i></span>}
                         </div> */}
-                        <LikeButton />
-                    </div> : <></>
-                }
-            </div>
+                                <LikeButton />
+                            </div> : <></>
+                        }
+                    </div>
 
 
-            <div className="song-player-container">
-                <div className="song-player-controls">
-                    <div className='song-player-left'>
-                        <div onClick={onShuffle}>
-                            <i class="fa-solid fa-shuffle" style={{ width: '20px', height: '20px', color: 'white' }}></i>
+                    <div className="song-player-container">
+                        <div className="song-player-controls">
+                            <div className='song-player-left'>
+                                <div onClick={onShuffle} className='footer-shuffele-repeat'>
+                                    {!isShuffeld && <span><i class="fa-solid fa-shuffle" style={{ color: 'white' }}></i></span>}
+                                    {isShuffeld && <span><i class="fa-solid fa-shuffle" style={{ color: 'green' }}></i></span>}
+                                </div>
+                                <div onClick={onPrevSong} className='footer-next-prev'>
+                                    <span><i class="fa-solid fa-backward-step" style={{ color: 'white' }}></i></span>
+                                </div>
+                            </div>
+                            <div className='song-player-play-pause'>
+                                {!isPlaying && <span onClick={(ev) => togglePlayer(ev)}><i class="fa-solid fa-circle-play" style={{ color: 'white' }}></i></span>}
+                                {isPlaying && <span onClick={(ev) => togglePlayer(ev)}><i class="fa-solid fa-circle-pause" style={{ color: 'white' }}></i></span>}
+                            </div>
+                            <div className='song-player-right'>
+                                <div onClick={onNextSong} className='footer-next-prev'>
+                                    <span><i class="fa-solid fa-forward-step" style={{ color: 'white' }}></i></span>
+                                </div>
+                                <div onClick={onReapet} className='footer-shuffele-repeat'>
+                                    {!reapetInd && <span><i class="fa-solid fa-repeat" style={{ color: 'white' }}></i></span>}
+                                    {reapetInd === 'repeat-all' && <span><i class="fa-solid fa-repeat" style={{ color: 'green' }}></i></span>}
+                                    {reapetInd === 'repeat-one' && <span className='repeat-one-span'><i class="fa-solid fa-repeat" style={{ color: 'green' }}></i><span className='repeat-one'>1</span></span>}
+                                </div>
+                            </div>
                         </div>
-                        <div onClick={() => onPrevNextSong(-1)}>
-                            <span><i class="fa-solid fa-backward-step" style={{ width: '24px', height: '24px', color: 'white' }}></i></span>
-                            {/* <img src={importService.prevSvg} style={{ width: '20px', height: '20px' }} /> */}
+                        <div className='song-time-slider'>
+                            <h1>{utilService.getSongDurationToMin(songDuration)}</h1>
+                            <SliderBar disabled={false} value={+songDuration} maxValue={songTotalDurationNum} handleChange={handleChangeSongMin} />
+                            {Object.keys(currSong).length ? <h1>{songTotalDuration}</h1> : <></>}
                         </div>
                     </div>
-                    <div className='song-player-play-pause'>
-                        {!isPlaying && <span onClick={togglePlayer}><i class="fa-solid fa-circle-play" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>}
-                        {isPlaying && <span onClick={togglePlayer}><i class="fa-solid fa-circle-pause" style={{ width: '36px', height: '36px', color: 'white' }}></i></span>}
-                    </div>
-                    <div className='song-player-right'>
-                        <div onClick={() => onPrevNextSong(1)}>
-                            <span><i class="fa-solid fa-forward-step" style={{ width: '24px', height: '24px', color: 'white' }}></i></span>
-                            {/* <img src={importService.nextSvg} style={{ width: '20px', height: '20px' }} /> */}
-                        </div>
-                        <div onClick={onReapet}>
-                            {!reapetInd && <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'white' }}></i></span>}
-                            {reapetInd && <span><i class="fa-solid fa-repeat" style={{ width: '20px', height: '20px', color: 'green' }}></i></span>}
-                        </div>
-                    </div>
-                </div>
-                <div className='song-time-slider'>
-                    <h1>{utilService.getSongDurationToMin(songDuration)}</h1>
-                    <SliderBar disabled={false} value={+songDuration} maxValue={songTotalDurationNum} handleChange={handleChangeSongMin} />
-                    {Object.keys(currSong).length ? <h1>{songTotalDuration}</h1> : <></>}
-
-                </div>
-            </div>
 
 
-            <div className='app-footer-volume'>
-                {/* <div>
+                    <div className='app-footer-volume'>
+                        {/* <div>
                     <img src={importService.speakerSvg} style={{ width: '20px', height: '20px' }} />
-                </div>
-                <div>
+                    </div>
+                    <div>
                     <img src={importService.queueSvg} style={{ width: '20px', height: '20px' }} />
                 </div>
                 <div>
-                    <img src={importService.micSvg} style={{ width: '20px', height: '20px' }} />
-                </div> */}
-                <div className='volume-container'>
-                    {/* {volume === 0 ? <i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i> : <></>}
+                <img src={importService.micSvg} style={{ width: '20px', height: '20px' }} />
+            </div> */}
+                        <div className='volume-container'>
+                            {/* {volume === 0 ? <i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i> : <></>}
                     {volume < 50 && volume !== 0 ? <i class="fa-solid fa-volume-low" style={{ color: 'white' }}></i> : <></>}
-                    {volume >= 50 ? <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i> : <></>} */}
-                    {!volume && <span><i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i></span>}
-                    {!!volume && <span><i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i></span>}
+                {volume >= 50 ? <i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i> : <></>} */}
+                            {!volume && <span><i class="fa-solid fa-volume-off" style={{ color: 'white' }}></i></span>}
+                            {!!volume && <span><i class="fa-solid fa-volume-high" style={{ color: 'white' }}></i></span>}
 
 
-                </div>
-                <div style={{ width: '93px' }}>
-                    <SliderBar disabled={false} value={volume} maxValue={100} handleChange={(event) => handleChangeVolume(event)} />
-                </div>
-            </div>
-
-
-        </section >
+                        </div>
+                        <div style={{ width: '93px' }}>
+                            <SliderBar disabled={false} value={volume} maxValue={100} handleChange={(event) => handleChangeVolume(event)} />
+                        </div>
+                    </div>
+                </section >
+            {window.innerWidth <= 480 ? <ResponsiveFooter /> : <></>}
+        </main>
     )
 }

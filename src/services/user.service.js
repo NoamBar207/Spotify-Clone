@@ -18,10 +18,11 @@ export const userService = {
 }
 
 async function getLoggedinUser() {
-	return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+	return await JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 
 async function signup(userCred) {
+	console.log(userCred);
 	const user = await httpService.post('auth/signup', userCred)
 	return saveLocalUser(user)
 }
@@ -58,11 +59,12 @@ async function getUsers() {
 }
 
 async function toggleStationToUser(user, stationId) {
+	console.log('here');
 	const isInclude = !!user.followedStations.find(id => id == stationId)
 	const newArr = utilService.removeOrAdd(user.followedStations, stationId, isInclude)
 	user.followedStations = newArr
 	await httpService.put(`user/${user._id}`, user)
-	socketService.emit(SOCKET_EMIT_UPDATE_USER, user)
+	socketService.emit('user-update', user)
 }
 
 async function getById(userId) {

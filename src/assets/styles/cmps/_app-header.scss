@@ -13,7 +13,8 @@
         @include flex-center;
         gap: 8px;
         width: 180px;
-        font-size: 20px
+        font-size: 20px;
+        cursor: pointer
     }
 
     .header-home-search {
@@ -22,6 +23,7 @@
         width: 100%;
 
         .header-home-btn {
+            cursor: pointer;
             padding: 10px;
             // height: 28px;
             // width: 28px;
@@ -116,6 +118,7 @@
                     height: fit-content;
                     box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);
                     border-radius: 3px;
+                    z-index: 40;
                     
                     // min-height: 15rem;
                     // padding-right: 8px;
@@ -149,6 +152,7 @@
     }
 
     .user-logo-container {
+        cursor: pointer;
         @include flex-center;
         gap: 16px;
         margin-right: 32px;
@@ -174,5 +178,13 @@
                 gap: 8px;
             }
         }
+    }
+}
+
+
+
+@include for-mobile-layout {
+    .app-header-container{
+        display: none;
     }
 }

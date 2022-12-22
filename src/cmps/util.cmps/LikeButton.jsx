@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { songService } from "../../services/song.service"
 import { userService } from "../../services/user.service"
 import { onUpdateUser } from "../../store/actions/user.action"
-import {  setLikedSongsUser } from "../../store/actions/station.actions";
+import { setLikedSongsUser } from "../../store/actions/station.actions";
 
 
 
@@ -42,7 +42,8 @@ export const LikeButton = ({ songProp = null }) => {
         await dispatch(setLikedSongsUser(userReturned))
     }
 
-    const toggleLike = async () => {
+    const toggleLike = async (ev) => {
+        ev.stopPropagation()
         const song = (!songProp) ? currSong : songProp
         let userReturned = await songService.addSongToLike(song, currUser, isLiked)
         setIsLiked(!isLiked)
@@ -53,8 +54,8 @@ export const LikeButton = ({ songProp = null }) => {
 
     return (
         <div className='heart-symbol'>
-            {isLiked && <span onClick={toggleLike} style={{ color: 'green' }}><i class="fa-solid fa-heart"></i></span>}
-            {!isLiked && <span onClick={toggleLike}><i class="fa-regular fa-heart"></i></span>}
+            {isLiked && <span onClick={(ev) => { toggleLike(ev) }} style={{ color: 'green' }}><i class="fa-solid fa-heart"></i></span>}
+            {!isLiked && <span onClick={(ev) => { toggleLike(ev) }}><i class="fa-regular fa-heart"></i></span>}
         </div>
     )
 }

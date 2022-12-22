@@ -20,9 +20,10 @@ export function StationDeatails() {
 
 
     const dispatch = useDispatch()
-    const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
+    const { currSong, isPlaying, currStation, isShuffeld } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
     const [songsOrder, setSongsOrder] = useState([])
+    const stationRef = useRef()
     const [users, setUsers] = useState([])
     const { stationId } = useParams()
     const dotsRef = useRef()
@@ -31,17 +32,18 @@ export function StationDeatails() {
     const [bgc, setBgc] = useState('#4A3591')
 
 
-
     useEffect(() => {
-        socketService.off(SOCKET_EMIT_UPDATE_STATION)
-        socketService.on(SOCKET_EMIT_UPDATE_STATION, (station) => {
-            dispatch({ type: 'SET_CURR_STATION', station })
+        socketService.off('update-station')
+        socketService.on('update-station', (station) => {
+            // if (currStation._id === station._id) dispatch({ type: 'SET_CURR_STATION', station })
+            console.log(stationId, station._id);
+            if (stationId === station._id) setSongsOrder([...station.songs])
         })
         return () => {
             socketService.off(SOCKET_EMIT_UPDATE_STATION)
         }
     }, [])
-    
+
     useEffect(() => {
         loadStation()
         loadUsers()
@@ -50,7 +52,11 @@ export function StationDeatails() {
     }, [currStation])
 
     const setUpFunc = async () => {
-        if(currStation.songs.length) setSongsOrder(currStation.songs)
+        if (currStation.songs.length && isShuffeld) setSongsOrder(currStation.songs)
+        else if (!isShuffeld) {
+            const station = await stationService.getById(stationId)
+            setSongsOrder(station.songs)
+        }
         else setSongsOrder([])
     }
 
@@ -58,14 +64,13 @@ export function StationDeatails() {
         try {
             if (!Object.keys(currStation).length) {
                 const station = await stationService.getById(stationId)
-                await dispatch(setCurrStation(station))
+                await dispatch(setCurrStation({ ...station }))
             }
 
             // const station = await stationService.getById(stationId)
             // await dispatch(setCurrStation(station))
 
             // // const stateStation = station[0]
-            // console.log(station);
             // dispatch(setCurrStation(station))
         } catch {
             console.error('cannot load Stations')
@@ -97,9 +102,12 @@ export function StationDeatails() {
         newSongOreder.splice(result.destination.index, 0, movedSong)
         setSongsOrder(newSongOreder)
         const updatedStation = { ...currStation, songs: newSongOreder }
-        const newUserOrStation = await stationService.updateStation(updatedStation)
-        if (currStation.name === "Liked Songs") dispatch(onUpdateUser(newUserOrStation))
-        else dispatch(onSaveStation(newUserOrStation))
+        if (isShuffeld) dispatch(setCurrStation(updatedStation)) 
+        else {
+            const newUserOrStation = await stationService.updateStation(updatedStation)
+            if (currStation.name === "Liked Songs") dispatch(onUpdateUser(newUserOrStation))
+            else dispatch(onSaveStation(newUserOrStation))
+        }
     }
 
     const onDeletePlaylist = async () => {
@@ -149,7 +157,7 @@ export function StationDeatails() {
         await setBgc(color)
     }
 
-    if (!Object.keys(currStation).length) return <h1 style={{backgorund:'green', color:'white'}}>Hello</h1>
+    if (!Object.keys(currStation).length) return <h1 style={{ backgorund: 'green', color: 'white' }}>Hello</h1>
     return (
         <section className="station-deatils">
             <StationHeader />

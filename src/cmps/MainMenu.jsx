@@ -16,31 +16,34 @@ export const MainMenu = () => {
     const navigate = useNavigate()
 
     const [userStationState, setUserStationState] = useState([])
-
     // useEffect(() => {
     //     if (!Object.keys(currUser).length) {
     //         dispatch(getUser())
     //     }
     // }, [])
 
-    // useEffect(() => {
-    //     socketService.off(SOCKET_ON_UPDATE_USER)
-    //     socketService.on(SOCKET_ON_UPDATE_USER, (user) => {
-    //         console.log(user);
-    //         // if (!Object.keys(currUser).length) {
-    //         //     getUserComp()
-    //         //     console.log('no User', currUser);
-    //         // }
-    //         // if (user._id === currUser._id) {
-    //         socketUser(user)
-    //         //     console.log('curr after change', currUser)
-    //         //     onSetFollowedStations()
-    //         // }
-    //     })
-    //     return () => {
-    //         socketService.off(SOCKET_ON_UPDATE_USER)
-    //     }
-    // }, [])
+    useEffect(() => {
+        socketService.off('update-user')
+        socketService.off('update-station')
+
+        socketService.on('update-user', (user) => {
+            dispatch(onUpdateUser(user))
+        })
+
+        socketService.on('update-station', station => {
+            getUserOnMenu() .then((res)=>{
+                console.log(res);
+                res.followedStations.forEach(stationId => {
+                    if (stationId === station._id) dispatch(onUpdateUser({...res}))
+                })
+            })
+        })
+
+        return () => {
+            socketService.off('update-user')
+            socketService.off('update-station')
+        }
+    }, [])
 
     useEffect(() => {
         asyncSet()
@@ -49,9 +52,13 @@ export const MainMenu = () => {
     const asyncSet = async () => {
         await dispatch(onSetUserStations(currUser))
         await loadUserStations()
+        await getLikedSongsUser()
         onSetFollowedStations()
-        getLikedSongsUser()
+    }
 
+    const getUserOnMenu = async () => {
+        const res = await userService.getLoggedinUser()
+        return res
     }
 
     const getLikedSongsUser = async () => {
@@ -98,13 +105,12 @@ export const MainMenu = () => {
                         return station
                     })
                 )
-                console.log(followedStations);
-                dispatch(setFollowedStations(followedStations))
+                dispatch(setFollowedStations([...followedStations]))
             } catch (err) {
                 console.log('Cannot Load shared Stations ', err);
             }
         }
-        else return
+        else dispatch(setFollowedStations([]))
     }
 
 
@@ -170,11 +176,10 @@ export const MainMenu = () => {
             </>
             }
             {!!followedStations.length && <>
-                {console.log('thereIs')}
                 <hr />
                 <div className="user-stations">
                     <div className="menu-stations-title">Shared Playlist:</div>
-                    {followedStations.map(station => {
+                    {!!followedStations?.length && followedStations.map(station => {
                         return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
                     })}
                 </div>

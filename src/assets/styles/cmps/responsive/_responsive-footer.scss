@@ -1,0 +1,25 @@
+.responsive-footer-container {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: $clr-text-grey;
+    background-color: $clr-hover;
+    width: 100%;
+    height: 100%;
+    // padding: 8px 0;
+
+    .responsive-footer-button {
+        span{
+            @include flex-center;
+            gap: 3px;
+            flex-direction: column;
+            font-size: 11px;
+            font-weight: 200; 
+            >* {
+                height: 28px;
+                width: 28px;
+            }
+        }
+    }
+}

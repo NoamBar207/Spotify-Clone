@@ -10,8 +10,7 @@
 @import './pages/station-details';
 @import './pages/search-page';
 @import './pages/sign-up';
-
-
+@import './pages/song-deatils';
 
 
 ///Cmps
@@ -32,10 +31,14 @@
 @import './cmps/util.cmp/song_to-add';
 @import './cmps/util.cmp/three-dots';
 @import './cmps/util.cmp/topic-prev';
+@import './cmps/util.cmp/login-signup-modal';
 
 //App Forum
 @import './cmps/appForum/chat-app';
 @import './cmps/appForum/selected-msg';
+
+//Responsive 
+@import './cmps/responsive/responsive-footer';
 
 //Basic 
 @import './basic/basic';

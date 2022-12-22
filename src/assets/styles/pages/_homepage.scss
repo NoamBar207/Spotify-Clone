@@ -8,9 +8,9 @@
     overflow-y: auto;
     // background:linear-gradient(#2A1F52 10%, #121212 90%);
     // background-attachment:fixed;
-    background:linear-gradient( #2A1F52 1%, #121212, #000000 );
+    background: linear-gradient(#2A1F52 1%, #121212, #000000);
     background-repeat: no-repeat;
-    
+
 
 
 
@@ -18,16 +18,16 @@
         // background-color: aqua;
         font-size: 1.4rem;
 
-        h2{
+        h2 {
             padding-bottom: 24px;
         }
 
-        .narrow-card-grid{
+        .narrow-card-grid {
             display: grid;
             grid-template-rows: 1fr 1fr;
             grid-template-columns: 1fr 1fr 1fr;
             grid-row-gap: 16px;
-            grid-column-gap:24px;
+            grid-column-gap: 24px;
         }
 
     }
@@ -44,7 +44,7 @@
 
 
     .homepage-playlists {
-        .homepage-playlists-title{
+        .homepage-playlists-title {
             height: 46px;
         }
 
@@ -54,6 +54,61 @@
             grid-auto-rows: auto;
             // grid-template-rows:  repeat(auto-fit, minmax(180px, 250px));
             grid-gap: 24px;
+        }
+    }
+}
+
+
+@include for-mobile-layout {
+    .homepage-container {
+        overflow-x: hidden;
+        padding: 20px 16px;
+
+        .homepage-greet {
+
+            .homepage-greet-settings{
+                display: flex;
+                align-items: center;
+                padding-bottom: 12px;
+                width: 100%;
+
+                h2 {
+                    padding: 0;
+                }
+
+                .login-signup-container{
+                    display: flex;
+                    flex: 1;
+                    align-items: flex-end;
+                    padding-right: 3px;
+                }
+
+                .search-result-container {
+                    right: 10px;
+                    top: 30px;
+                }
+            }
+
+            .narrow-card-grid {
+                display: grid;
+                grid-template-rows: 1fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr;
+                grid-row-gap: 16px;
+                grid-column-gap: 24px;
+            }
+        }
+
+        .homepage-playlists {
+            display: flex;
+            flex-direction: column;
+            .homepage-playlists-grid {
+                flex: 1;
+                // width: 100%;
+                width: fit-content;
+                display: flex;
+                overflow-x: auto;
+                gap: 12px;
+            }
         }
     }
 }

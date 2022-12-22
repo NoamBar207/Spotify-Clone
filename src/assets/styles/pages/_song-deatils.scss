@@ -1,0 +1,37 @@
+.song-deatails-container {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+
+    .song-deatails-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 45px;
+        font-size: 25px;
+        padding: 12px 12px;
+        color: $clr-white-F;
+
+        .song-deatails-station{
+            font-size: 16px;
+        }
+
+        .three-dots-container{
+
+            .three-dots-modal{
+                left: 0;
+            }
+        }
+    }
+
+    .song-deatails-img {
+        height: calc(100% - 345px);
+        @include flex-center;
+
+        img {
+            object-fit: cover;
+            height:85%;
+            width: 85%;
+        }
+    }
+}

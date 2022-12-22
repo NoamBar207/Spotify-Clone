@@ -4,8 +4,12 @@ import React from 'react';
 import { CardCmp } from "../cmps/util.cmps/CardCmp";
 import { useNavigate } from "react-router-dom";
 import { NarrowCardCmp } from "../cmps/util.cmps/NarrowCardCmp";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setCurrStation, setLikedSongsUser } from "../store/actions/station.actions";
+import { useRef } from "react";
+import { utilService } from "../services/util.service";
+import { onLogout } from "../store/actions/user.action";
+import { LoginSignUpModal } from "../cmps/util.cmps/LoginSignUpModal";
 
 const YOTUBE_SOURCE = 'https://www.youtube.com/embed/'
 const YOUTUBE_ID = 'XXYlFuWEuKI'
@@ -17,12 +21,14 @@ export function HomePage() {
     const [stations, setStation] = useState([])
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const settingsRef = useRef()
+
 
     useEffect(() => {
         loadStations()
         getGreetingTitle()
     }, [])
-    
+
 
     const loadStations = async () => {
         try {
@@ -32,6 +38,8 @@ export function HomePage() {
             console.error('cannot load Stations')
         }
     }
+
+
 
     const getGreetingTitle = () => {
         let time = new Date()
@@ -49,34 +57,36 @@ export function HomePage() {
     return (
         <section className="homepage-container">
             <div className="homepage-greet">
-                <h2>{getGreetingTitle()}</h2>
-                {/* <div className='home-search-container'>
-                    <label className="label-search flex">
-                        <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
-                        <form onSubmit={onSubmitYoutube}>
-                            <input
-                                onChange={handleChange}
-                                // onClick={}
-                                className="header-search"
-                                placeholder="What do you want to listen to?"
-                            />
-                        </form>
-                    </label>
-                </div> */}
+                <div className="homepage-greet-settings">
+                    <h2>{getGreetingTitle()}</h2>
+
+                    {window.innerWidth <= 480 && <LoginSignUpModal modalRef={settingsRef} />}
+                </div>
                 <div className="narrow-card-grid">
                     {Object.keys(currUser).length ? <NarrowCardCmp station={likedStation} /> : <></>}
-                    {stations.map((station, idx) => {
-                        if (idx < 5) return <NarrowCardCmp station={station} />
+                    {stations.map((station) => {
+                        if (station.renderType === 'byGanere') return <NarrowCardCmp station={station} />
                     })}
                 </div>
             </div>
             <section className="homepage-playlists">
                 <div className="homepage-playlists-title">
-                    <h2>Playlist you might like</h2>
+                    <h2>Playlist By Ganere</h2>
                 </div>
                 <div className="homepage-playlists-grid">
                     {Object.keys(stations).length ? stations.map(station => {
-                        return <CardCmp station={station} />
+                        if (station.renderType === 'byGanere') return <CardCmp station={station} />
+                    })
+                        : <></>}
+                </div>
+            </section>
+            <section className="homepage-playlists">
+                <div className="homepage-playlists-title">
+                    <h2>Playlist By Artists</h2>
+                </div>
+                <div className="homepage-playlists-grid">
+                    {Object.keys(stations).length ? stations.map(station => {
+                        if (station.renderType === 'byArtist') return <CardCmp station={station} />
                     })
                         : <></>}
                 </div>

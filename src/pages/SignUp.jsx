@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { uploadService } from "../services/upload.service"
 import { onSignup } from "../store/actions/user.action"
 import { importService } from "../services/import-img-service"
 import { useNavigate } from "react-router-dom"
+import jwt_decode from "jwt-decode"
+
+
+const googleLoginKey = '191073475183-96e548l2ufak98s6fpsfoh888ftbm7pp.apps.googleusercontent.com'
 
 export const SignUp = () => {
 
@@ -17,8 +21,33 @@ export const SignUp = () => {
 		password: '',
 		stations: [],
 		likedSongs: [],
-		imgUrl: ''
+		imgUrl: '',
+		email: ''
 	})
+
+
+	useEffect(() => {
+		/* global google */
+		google.accounts.id.initialize({
+			client_id: googleLoginKey,
+			callback: handleCallbackResponse
+		})
+
+		google.accounts.id.renderButton(
+			document.getElementById('google-login-div'),
+			{ theme: 'outline', size: 'large' }
+		)
+	}, [])
+
+	const handleCallbackResponse = async (response) => {
+		// console.log("Encoded JWT Id token :  " + response.credential);
+		let decodeInfo = jwt_decode(response.credential)
+		console.log(decodeInfo);
+		// await setCredentials({ ...credentials, fullname: decodeInfo.name, username: decodeInfo.name, email: decodeInfo.email, imgUrl: decodeInfo.picture})
+		dispatch(onSignup({ ...credentials, fullname: decodeInfo.name, username: decodeInfo.name, email: decodeInfo.email, imgUrl: decodeInfo.picture}))
+		// resetCredentials()
+		navigate(`/`)
+	}
 
 	const handleChange = async (ev) => {
 		let field
@@ -47,16 +76,20 @@ export const SignUp = () => {
 		// newUser = await userService.update(newUser)
 		// await userService.saveLocalUser(newUser)
 		// dispatch(setCurrUser(newUser))
+		resetCredentials()
+		navigate(`/`)
+	}
 
+	const resetCredentials = () => {
 		setCredentials({
 			fullname: '',
 			username: '',
 			password: '',
 			stations: [],
 			likedSongs: [],
-			imgUrl: ''
+			imgUrl: '',
+			email: ''
 		})
-		navigate(`/`)
 	}
 
 	return (
@@ -69,10 +102,11 @@ export const SignUp = () => {
 				<section className="sign-up-platforms">
 					<button className="util-btn facebook">CONTINUE WITH FACEBOOK</button>
 					{/* <button className="util-btn apple">continue with apple</button> */}
-					<button className="util-btn google">CONTINUE WITH GOOGLE</button>
+					{/* <button className="util-btn google">CONTINUE WITH GOOGLE</button> */}
+					<div id='google-login-div'></div>
 				</section>
 				<span className='sign-up-or'><hr /><span>or</span><hr /></span>
-				<h1 className="sign-up-title">Sign up with your email address</h1>
+				<h1 className="sign-up-title">Sign up with your info</h1>
 				<h3>What's your name?</h3>
 				<input
 					type="text"

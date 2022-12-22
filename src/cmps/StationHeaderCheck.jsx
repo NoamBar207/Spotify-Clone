@@ -11,10 +11,13 @@ import getAverageColor from "get-average-color"
 import { useParams } from "react-router-dom"
 
 
-export function StationHeader() {
+
+
+export function StationHeaderCheck() {
 
 
     const { currStation } = useSelector((state) => state.stationModule)
+    const [stationState, setStationState] = useState({})
     const { currUser } = useSelector((state) => state.userModule)
     const [stationName, setStationName] = useState(currStation.name)
     const dispatch = useDispatch()
@@ -25,14 +28,26 @@ export function StationHeader() {
 
 
     useEffect(() => {
-        setStationName(currStation.name)
-        if (currStation.createdBy) getCreator()
-        else setStationCreator({ fullname: 'Mellofy', imgUrl: '' })
+        // setStationName(currStation.name)
+        // if (currStation.createdBy) getCreator()
+        // else setStationCreator({ fullname: 'Mellofy', imgUrl: '' })
+        loadState()
         loadDuration()
-        getAvgColor(currStation.stationImg)
+        getAvgColor()
         // stationService.getStationDuration(currStation.songs)
         //////// ADD IMG URL
-    }, [currStation])
+    }, [stationId])
+
+    const loadState = async () => {
+        try {
+            const station = await stationService.getById(stationId)
+            console.log(station);
+            setStationState(station)
+            // await dispatch(setCurrStation({ ...station }))
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const handleChange = (ev) => {
         const value = ev.target.value
@@ -62,7 +77,7 @@ export function StationHeader() {
     }
 
     const getAvgColor = async () => {
-        let color = await getAverageColor(currStation.stationImg)
+        let color = await getAverageColor(stationState.stationImg)
         // const darkerColor =`rgb(${color.r-20},${color.g-20}, ${color.b-20})` 
         color = `rgb(${color.r},${color.g}, ${color.b})`
         await setHeaderColor([color])
@@ -70,13 +85,14 @@ export function StationHeader() {
 
 
     // linear-gradient(${headerColor[0]},${headerColor[1]})
+    if(!Object.keys(stationState).length) return <h1>loading...</h1>
     return (
         <section className="station-header-container" style={{ background: `linear-gradient(transparent 0,rgba(0,0,0,.5) 100%),${headerColor[0]}` }}>
             <div className="station-header-img">
-                {currStation.stationImg ?
-                    <img src={currStation.stationImg} alt="" />
+                {stationState.stationImg ?
+                    <img src={stationState.stationImg} alt="" />
                     : <div className="station-header-no-pic"><i class="fa-solid fa-music"></i></div>}
-                {currStation.createdBy === currUser._id &&
+                {stationState.createdBy === currUser._id &&
                     <label className="station-header-choose-pic"><i class="fa-solid fa-pencil"></i>Choose photo
                         <input
                             className="file-input"
@@ -90,15 +106,12 @@ export function StationHeader() {
                 }
             </div>
             <div className="station-header-deatails">
-                {currStation.renderType === 'byGanere' && <h1 className="playlist">Ganere</h1>}
-                {currStation.renderType === 'byArtist' && <h1 className="playlist">✅Artist</h1>}
-                {currStation.renderType === '' && <h1 className="playlist">Playlist</h1>}
-                {/* <h1 className="playlist">PLAYLIST</h1> */}
-                {currUser._id === currStation.createdBy ?
+                <h1 className="playlist">PLAYLIST</h1>
+                {currUser._id === stationState.createdBy ?
                     <DebounceInput
                         className="station-header"
                         value={stationName}
-                        // value={currStation.name}
+                        // value={stationState.name}
                         name="title"
                         minLength={5}
                         type="text"
@@ -106,7 +119,7 @@ export function StationHeader() {
                         onChange={handleChange}
                     /> :
                     <h1 className="station-header">
-                        {currStation.name}
+                        {stationState.name}
                     </h1>
                 }
                 <div className="station-info">

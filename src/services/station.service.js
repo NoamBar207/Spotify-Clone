@@ -17,6 +17,7 @@ export const stationService = {
     addSongToStation,
     updateStation,
     deleteStation,
+    shuffleStation,
     // remove,
     // save
 
@@ -58,7 +59,8 @@ async function createNewStation(currUser) {
         name: `Playlist #${num}`,
         songs: [],
         stationImg: 'https://res.cloudinary.com/noambar/image/upload/v1669327809/ifrojzsgy2pxgztg1inn.png',
-        createdBy: currUser._id
+        createdBy: currUser._id,
+        renderType:''
     }
     if (Object.keys(currUser).length) {
         const newUser = await httpService.post(STORAGE_KEY, stationToAdd)
@@ -77,21 +79,16 @@ async function addSongToStation(song, station) {
         duration: song.duration
     }
     let includeIdx = station.songs.findIndex(stationSong => stationSong.videoId === songToAdd.videoId)
-    console.log(includeIdx);
     if (includeIdx === -1) {
         station.songs.push(songToAdd)
         station = { ...station, duration: getStationDuration(station.songs) }
         returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
-        console.log('afte Change ADD', returnStation);
-        // console.log(returndVal);
     } else {
         station.songs.splice(includeIdx, 1)
         station = { ...station, duration: getStationDuration(station.songs) }
         returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
-        console.log('afte Change remove', returnStation);
     }
     return returnStation
-    /////Add Remove
 }
 
 async function updateStation(station) {
@@ -127,6 +124,28 @@ function getStationDuration(songs) {
     const total = secs + mins * 60
     return utilService.convertSecsToMinute(total)
 }
+
+
+function shuffleStation(array, currSong) {
+    let currentIndex = array.length - 1
+    let randomIndex;
+    const newArr = array.filter(song => song.videoId !== currSong.videoId)
+    // console.log(currentIndex);
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [newArr[currentIndex], newArr[randomIndex]] = [
+            newArr[randomIndex], newArr[currentIndex]];
+    }
+    newArr.unshift(currSong)
+    return newArr;
+}
+
 
 // function remove(stationId) {
 //     const idx = gStation.findIndex(song => song._id === songId)

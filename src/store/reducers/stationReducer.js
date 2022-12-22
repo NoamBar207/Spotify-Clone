@@ -7,6 +7,7 @@ const initialState = {
     userStations: [],
     followedStations: [],
     isPlaying: false,
+    isShuffeld:false
 }
 
 
@@ -23,6 +24,9 @@ export function stationReducer(state = initialState, action) {
             return (newState = { ...state, userStations: action.userStations })
         case 'SET_SHARED_STATIONS': {
             return (newState = { ...state, followedStations: action.followedStations })
+        }
+        case 'SET_IS_SHFFUELD': {
+            return (newState = { ...state, isShuffeld: action.isShuffeld })
         }
         case 'SET_LIKED_SONGS':
             return (newState = { ...state, likedStation: action.likedStation })

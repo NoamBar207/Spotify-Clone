@@ -1,19 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { importService } from '../services/import-img-service';
 import { songService } from '../services/song.service';
-import { stationService } from '../services/station.service';
 import { userService } from '../services/user.service';
 import { utilService } from '../services/util.service';
 import { YTService } from '../services/youtube.service';
-import { setCurrStation } from '../store/actions/station.actions';
-import { getUser, onLogout } from '../store/actions/user.action';
 import { LoaderSearch } from './util.cmps/LoaderSearch';
 import { SearchResults } from './util.cmps/SearchResults';
 import { AppMenu } from './appForum/AppMenu';
-import { TopicPrev } from './appForum/TopicPrev';
 import { socketService } from '../services/socket.service';
+import { LoginSignUpModal } from './util.cmps/LoginSignUpModal';
 
 
 
@@ -28,11 +25,15 @@ export const AppHeader = () => {
     const userModalRef = useRef()
     const formRef = useRef()
     const menuRef = useRef()
+    const location = useLocation()
     const [isOnMellofy, setIsOnMellofy] = useState(true)
     const [isSearchYotube, setIsSearchYoutube] = useState(false)
     const [data, setData] = useState([])
 
 
+    useEffect(() => {
+        addClassOnSearch()
+    }, [location])
 
     const handleClickOutside = (ev) => {
         if (!searchContainerRef.current.contains(ev.target)) {
@@ -79,14 +80,14 @@ export const AppHeader = () => {
 
     const getUser = async () => {
         const user = await userService.getLoggedinUser()
-        if (user){
+        if (user) {
             socketService.emit('set-user-socket', user._id)
             dispatch({
                 type: 'SET_USER',
                 user,
             })
         }
-    } 
+    }
 
     const editData = (items) => {
         let songs = items.map(song => {
@@ -99,23 +100,24 @@ export const AppHeader = () => {
         navigate('/')
     }
 
-    const onSearchClick = () => {
-        navigate('/search')
-    }
-
+    
     const onLoginSignUp = (bool) => {
         bool ? navigate('/signup') : navigate('/login')
     }
+
+    // const onSearchClick = () => {
+    //     navigate('/search')
+    // }
 
     // const onMenuClick = () => {
     //     utilService.toggleModal(menuRef)
     // }
 
-    const onLogOutModal = () => {
-        dispatch(onLogout())
-        dispatch(setCurrStation({}))
-        navigate('/')
-    }
+    // const onLogOutModal = () => {
+    //     dispatch(onLogout())
+    //     dispatch(setCurrStation({}))
+    //     navigate('/')
+    // }
 
     const onResetInput = () => {
         utilService.closeModal(searchRef)
@@ -124,6 +126,18 @@ export const AppHeader = () => {
         setIsOnMellofy(true)
         setIsSearchYoutube(false)
     }
+
+    const addClassOnSearch = () => {
+        if (location.pathname.includes('search')) searchRef.current.classList.remove('hide')
+        else searchRef.current.classList.add('hide')
+    }
+
+    const toggleSearchRef = () => {
+        if (window.innerWidth > 480) utilService.toggleModal(searchRef)
+
+    }
+
+
 
     return (
         <header className="app-header-container">
@@ -134,7 +148,7 @@ export const AppHeader = () => {
             <div className="header-home-search" >
                 {/* <div className='header-home-btn' style={{backgroundImage:`URL(${importService.homePageIcon})`}}></div> */}
                 <div className='header-home-btn' onClick={onHomeClick} ><i class="fa-solid fa-house" style={{ height: '24px', width: '24px' }}></i></div>
-                <div className='header-search-container' ref={searchContainerRef} onClick={() => { utilService.toggleModal(searchRef); document.addEventListener("click", handleClickOutside, true) }}>
+                <div className='header-search-container' ref={searchContainerRef} onClick={() => { toggleSearchRef(); document.addEventListener("click", handleClickOutside, true) }}>
                     <label className="label-search flex">
                         <i className="fa-solid fa-magnifying-glass" style={{ height: '22px', width: '22px' }}></i>
                         <form className='header-search-form' ref={formRef} onSubmit={onSearch}>
@@ -153,31 +167,16 @@ export const AppHeader = () => {
                         </section>
                     </label>
                 </div>
-                <div className='header-home-btn' onClick={()=>utilService.toggleModal(menuRef)} ><i class="fa-solid fa-comments" style={{ height: '24px', width: '24px' }}></i></div>
+                <div className='header-home-btn' onClick={() => utilService.toggleModal(menuRef)} ><i class="fa-solid fa-comments" style={{ height: '24px', width: '24px' }}></i></div>
             </div>
-            {Object.keys(currUser).length ? <div className='user-logo-container' onClick={() => utilService.toggleModal(userModalRef)}>
-                <div className="user-logo"
-                    style={{
-                        background: `url(${currUser.imgUrl}) center center/cover`,
-                        height: '28px',
-                        borderRadius: '15px',
-                        width: '28px'
-                    }}></div>
-                {currUser.username}
-                <section className='search-result-container hide' ref={userModalRef} onClick={(ev) => ev.stopPropagation()}>
-                    <div className='search-result' onClick={onLogOutModal}><span><i className="fa-solid fa-right-from-bracket"></i></span>Log Out</div>
-                    <div className='search-result'><span><i className="fa-solid fa-envelope"></i></span>Notifications</div>
-                </section>
-            </div> :
-                <div className='no-user-header'>
-                    <button className='util-btn signup-header' onClick={() => onLoginSignUp(true)}>Sign Up</button>
-                    <button className='util-btn login-header' onClick={() => onLoginSignUp(false)}>Log in</button>
-                </div>
-            }
-            {/* <div className="user-icon"> */}
-            {/* user Icon */}
-            {/* </div> */}
-            <AppMenu menuRef={menuRef} />
+                {Object.keys(currUser).length ?
+                    < LoginSignUpModal modalRef={userModalRef} /> :
+                    <div className='no-user-header'>
+                        <button className='util-btn signup-header' onClick={() => onLoginSignUp(true)}>Sign Up</button>
+                        <button className='util-btn login-header' onClick={() => onLoginSignUp(false)}>Log in</button>
+                    </div>
+                }
+                <AppMenu menuRef={menuRef} />
         </header>
     )
 }

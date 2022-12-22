@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter, HashRouter as Router, Route, Routes } from 'react-router-dom'
 import { AppFooter } from './cmps/AppFooter'
 import { MainMenu } from './cmps/MainMenu';
@@ -6,7 +6,6 @@ import { HomePage } from './pages/HomePage'
 import { StationDeatails } from './pages/StationDeatails';
 import { AppHeader } from './cmps/AppHeader';
 import { SearchPage } from './pages/SearchPage';
-
 
 function App() {
 
