@@ -10,6 +10,10 @@ export const storageService = {
 	post,
 	put,
 	remove,
+
+
+
+	// save
 }
 
 function query(entityType, delay = 200) {
@@ -64,13 +68,13 @@ function put(entityType, updatedEntity) {
 	})
 }
 
-function remove(entityType, entityId) {
-	return query(entityType).then((entities) => {
-		const idx = entities.findIndex((entity) => entity._id === entityId)
-		entities.splice(idx, 1)
-		_save(entityType, entities)
-	})
-}
+// function remove(entityType, entityId) {
+// 	return query(entityType).then((entities) => {
+// 		const idx = entities.findIndex((entity) => entity._id === entityId)
+// 		entities.splice(idx, 1)
+// 		_save(entityType, entities)
+// 	})
+// }
 
 function _save(entityType, entities) {
 	localStorage.setItem(entityType, JSON.stringify(entities))
@@ -95,3 +99,36 @@ function _makeId(length = 5) {
 //             return entities
 //         })
 // }
+
+
+function load(key) {
+	return JSON.parse(localStorage.getItem(key));
+}
+
+// function save(entityType, entity) {
+// 	let arrStation = []
+// 	let stations = JSON.parse(localStorage.getItem(entityType));
+// 	// console.log(stations);
+// 	if (stations) {
+// 		let isExsit = stations.forEach(stat => {
+// 			if(stat._id === entity._id) return true
+// 			else return false
+// 		});
+// 		console.log(isExsit);
+// 		if (!isExsit) arrStation = [...stations, entity]
+// 	}
+// 	else arrStation.push(entity)
+// 	// console.log(arrStation);
+// 	// const isSavedAlready = stations.find(entity)
+// 	// console.log(isSavedAlready);
+// 	localStorage.setItem(entityType, JSON.stringify(arrStation));
+// }
+
+function isExist(key) {
+	return !!localStorage.getItem(key)
+}
+
+function remove(key) {
+	// return localStorage.removeItem(key);
+	return localStorage.removeItem('homepageStation');
+}

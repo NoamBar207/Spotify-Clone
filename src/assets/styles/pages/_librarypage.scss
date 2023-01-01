@@ -1,0 +1,112 @@
+.library-page-container {
+    color: $clr-white-F;
+    grid-area: main-content;
+    padding: 0 24px 32px 24px;
+    overflow-y: auto;
+
+    h1 {
+        margin: 0;
+        padding: 16px 0;
+    }
+
+
+    .library-grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        // grid-auto-rows: auto;
+        grid-template-rows: repeat(auto-fill, minmax(180px, 1fr));
+        grid-gap: 24px;
+
+
+
+
+        .library-liked-card {
+            grid-column: span 2;
+
+            .card-img {
+                img {
+                    aspect-ratio: 2.3/1;
+                }
+            }
+        }
+
+        .card-container {
+            background-color: $clr-black-18;
+
+            &:hover{
+                background-color: $clr-hover;
+                transition: background-color 500ms;
+            }
+
+            .card-info {
+                .card-title {
+                    height: 30px;
+                    // overflow: hidden
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+
+                .card-autors {
+                    flex: 1;
+                    display: flex;
+                    align-items: flex-end;
+                }
+            }
+        }
+    }
+}
+
+
+
+@include for-mobile-layout {
+    .library-page-container {
+        overflow-x: hidden;
+        padding: 20px 16px;
+
+        .library-grid-container {
+            gap: 8px;
+            display: flex;
+            flex-direction: column;
+            // flex-wrap: wrap;
+
+            
+            .card-container {
+                display: flex;
+                align-items: center;
+                flex: 1;
+                flex-direction: row;
+                width: 100% !important;
+                max-width: 100%;
+                gap: 24px;
+
+                .card-img {
+                    flex: 0.3;
+                }
+                
+                .card-info {
+                    .card-title {
+                        height: 30px;
+                        // overflow: hidden
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                    }
+
+                    .card-autors {
+                        flex: 1;
+                        display: flex;
+                        align-items: flex-end;
+                    }
+                }
+            }
+            .library-liked-card{
+                .card-img{
+                    img{
+                        aspect-ratio: 1/1;
+                    }
+                }
+            }
+        }
+    }
+}

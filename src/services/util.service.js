@@ -14,7 +14,8 @@ export const utilService = {
     openModal,
     removeOrAdd,
     toggleDisplayNone,
-    convertSecsToMinute
+    convertSecsToMinute,
+    onLoadPopUp
 }
 
 
@@ -164,6 +165,13 @@ function removeOrAdd(arr, value, isInclude) {
         }
     } else arr.push(value)
     return arr;
+}
+
+function onLoadPopUp(popUpRef) {
+    popUpRef.current.classList.add('show')
+    setTimeout(() => {
+        popUpRef.current.classList.remove('show')
+    }, 5000);
 }
 
 

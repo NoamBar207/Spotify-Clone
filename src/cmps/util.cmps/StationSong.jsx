@@ -7,6 +7,9 @@ import { setCurrSong } from "../../store/actions/station.actions"
 import { LikeButton } from "./LikeButton"
 import { YTService } from "../../services/youtube.service"
 import { songService } from "../../services/song.service"
+import { uploadService } from "../../services/upload.service"
+import { useState } from "react"
+import { useParams } from "react-router-dom"
 
 
 
@@ -15,11 +18,33 @@ export const StationSong = ({ song, idx }) => {
     const { userStations } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
     const dispatch = useDispatch()
+    const songId = useParams()
+    const [songState, setSongState] = useState(song)
+
     useEffect(() => {
-        if (!song.duration) {
-            const songWithDuration = durationCheck(song.videoId)
+        if (!songState.duration) {
+            const songStateWithDuration = durationCheck(songState.videoId)
         }
+        // if(!song.snippet.thumbnails.high.url.includes('cloudinary')) fixImgs()
+
     }, [])
+
+    const fixImgs = async () => {
+        console.log('amount ');
+        const resUpload = await uploadService.uploadImg(song.snippet.thumbnails.high.url)
+        await songService.updateSong({
+            ...song,
+            snippet: {
+                thumbnails: {
+                    high: {
+                        url: resUpload.url
+                    }
+                },
+                title: song.snippet.title
+            }
+        })
+
+    }
 
     const durationCheck = async (videoId) => {
         const duration = await YTService.getSongDuration(videoId)

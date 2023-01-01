@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
+import { localStorageService } from "../../services/local.storage.service"
 import { socketService } from "../../services/socket.service"
 import { songService } from "../../services/song.service"
 import { stationService } from "../../services/station.service"
@@ -11,25 +12,39 @@ import { onUpdateUser } from "../../store/actions/user.action"
 
 
 
-export const ThreeDots = ({ song, userStations }) => {
+export const ThreeDots = ({ song }) => {
 
     const [isLiked, setIsLiked] = useState(false)
     const dotsRef = useRef()
     const playlistRef = useRef()
     const dispatch = useDispatch()
-    const { currStation } = useSelector((state) => state.stationModule)
+    const { currStation, userStations } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
     const [renderLine, setRenderLine] = useState('Save to your Liked Songs')
 
 
     useEffect(() => {
+        // let isSongLiked = false
+        // currUser.likedSongs?.forEach(songLiked => {
+        //     if (song.videoId === songLiked.videoId) isSongLiked = true
+        // })
+        // setIsLiked(isSongLiked)
+        // isSongLiked ? setRenderLine('Remove from your Liked Songs') : setRenderLine('Save to your Liked Songs')
+        const user = Object.keys(currUser).length ? currUser : localStorageService.getUser();
+        onLoad(user)
+    }, [currUser])
+
+    const onLoad = async (user) => {
+        console.log(user);
+        console.log(song);
         let isSongLiked = false
-        currUser.likedSongs?.forEach(songLiked => {
+        user.likedSongs?.forEach(songLiked => {
             if (song.videoId === songLiked.videoId) isSongLiked = true
         })
         setIsLiked(isSongLiked)
         isSongLiked ? setRenderLine('Remove from your Liked Songs') : setRenderLine('Save to your Liked Songs')
-    }, [currUser])
+
+    }
 
     const onThreeDots = (ev, ref) => {
         ev.stopPropagation()
@@ -37,10 +52,16 @@ export const ThreeDots = ({ song, userStations }) => {
     }
 
     const onAddSong = async (station) => {
-        const newStation = await stationService.addSongToStation(song, station)
-        socketService.emit('station-updated', { station: newStation })
-        dispatch(onUpdateUser({...currUser}))
-        if (currStation._id === newStation._id) dispatch(setCurrStation({...newStation}))
+        let newStation = await stationService.addSongToStation(song, station, currUser)
+        if (Object.keys(currUser).length) {
+            socketService.emit('station-updated', { station: newStation })
+            dispatch(onUpdateUser({ ...currUser }))
+            // if (currStation._id === newStation._id) dispatch(setCurrStation({...newStation}))
+            // dotsRef.current.classList.toggle('hide')
+            // playlistRef.current.classList.toggle('hide')
+        }
+        console.log(newStation);
+        if (currStation._id === newStation._id) dispatch(setCurrStation({ ...newStation }))
         dotsRef.current.classList.toggle('hide')
         playlistRef.current.classList.toggle('hide')
     }
@@ -56,8 +77,10 @@ export const ThreeDots = ({ song, userStations }) => {
         // const song = (!songProp) ? currSong : songProp
         let userReturned = await songService.addSongToLike(song, currUser, isLiked)
         setIsLiked(!isLiked)
-        userReturned = await userService.updateUser(userReturned)
-        dispatch(onUpdateUser(userReturned))
+        if (Object.keys(currUser).length) {
+            userReturned = await userService.updateUser(userReturned)
+            dispatch(onUpdateUser(userReturned))
+        }
     }
 
     return (

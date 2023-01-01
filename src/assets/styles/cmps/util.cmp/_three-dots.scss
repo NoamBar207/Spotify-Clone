@@ -1,15 +1,19 @@
 
 
 .three-dots-container {
-    position: relative;
+    // position: relative;
+    @include flex-center;
+    // width: 10px;
 
     .three-dots-modal {
         display: flex;
         align-items: center;
         flex-direction: column;
+        // position: relative;
         position: absolute;
-        // top:0;
-        left: 100px;
+        // top:110px;
+        // left: 400px;
+        // left: 100px;
         min-width: 220px;
         background-color: $clr-black-28;
         box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);

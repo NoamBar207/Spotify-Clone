@@ -15,7 +15,7 @@
     padding-top: 53px;
 
     .station-header-img {
-        position: relative;
+        // position: relative;
         img {
 
             height: 232px;
@@ -37,7 +37,7 @@
             position: absolute;
             @include flex-center;
             flex-direction: column;
-            top: 0;
+            top: 117px;
             height: 232px;
             width: 232px;
             background-color:rgba(0,0,0,.7);
@@ -101,7 +101,7 @@
 @include for-laptop-layout {
     .station-header-container {
         .station-header-img {
-            img {
+            img ,.station-header-choose-pic{
                 height: 192px;
                 width: 192px;
             }

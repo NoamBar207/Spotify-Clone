@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { StationHeader } from "../cmps/StationHeader"
 import { stationService } from "../services/station.service"
 import { onSaveStation, setCurrSong, setCurrStation, setIsPlaying } from "../store/actions/station.actions"
@@ -11,6 +11,7 @@ import { socketService, SOCKET_EMIT_UPDATE_STATION } from "../services/socket.se
 import { utilService } from "../services/util.service"
 import { userService } from "../services/user.service"
 import getAverageColor from "get-average-color"
+import { localStorageService } from "../services/local.storage.service"
 
 
 
@@ -20,7 +21,7 @@ export function StationDeatails() {
 
 
     const dispatch = useDispatch()
-    const { currSong, isPlaying, currStation, isShuffeld } = useSelector((state) => state.stationModule)
+    const { currSong, isPlaying, currStation, isShuffeld, likedStation } = useSelector((state) => state.stationModule)
     const { currUser } = useSelector((state) => state.userModule)
     const [songsOrder, setSongsOrder] = useState([])
     const stationRef = useRef()
@@ -30,6 +31,7 @@ export function StationDeatails() {
     const usersRef = useRef()
     const navigate = useNavigate()
     const [bgc, setBgc] = useState('#4A3591')
+    const location = useLocation()
 
 
     useEffect(() => {
@@ -45,28 +47,35 @@ export function StationDeatails() {
     }, [])
 
     useEffect(() => {
+        console.log('cuur station changed');
         loadStation()
-        loadUsers()
         setUpFunc()
+        loadUsers()
         getAvgColor()
     }, [currStation])
 
     const setUpFunc = async () => {
         if (currStation.songs.length && isShuffeld) setSongsOrder(currStation.songs)
         else if (!isShuffeld) {
-            const station = await stationService.getById(stationId)
+            console.log(location.pathname);
+            // console.log(stationId);
+            let station
+            // if (!location.pathname.includes('likedsongs')) station = await stationService.getById(currStation._id)
+            if (!currStation.name.includes('Liked Songs')) station = await stationService.getById(currStation._id)
+            else station = likedStation
+            console.log(station);
             setSongsOrder(station.songs)
         }
         else setSongsOrder([])
     }
-
+    
     const loadStation = async () => {
         try {
             if (!Object.keys(currStation).length) {
                 const station = await stationService.getById(stationId)
+                // Object.keys(currUser).length ? await stationService.getById(stationId) : localStorageService.getById(stationId)
                 await dispatch(setCurrStation({ ...station }))
             }
-
             // const station = await stationService.getById(stationId)
             // await dispatch(setCurrStation(station))
 
@@ -102,11 +111,15 @@ export function StationDeatails() {
         newSongOreder.splice(result.destination.index, 0, movedSong)
         setSongsOrder(newSongOreder)
         const updatedStation = { ...currStation, songs: newSongOreder }
-        if (isShuffeld) dispatch(setCurrStation(updatedStation)) 
-        else {
+        if (isShuffeld) dispatch(setCurrStation(updatedStation))
+        else if (Object.keys(currUser).length) {
             const newUserOrStation = await stationService.updateStation(updatedStation)
             if (currStation.name === "Liked Songs") dispatch(onUpdateUser(newUserOrStation))
             else dispatch(onSaveStation(newUserOrStation))
+        }
+        else {
+            localStorageService.updateStation(updatedStation)
+            dispatch(setCurrStation(updatedStation))
         }
     }
 
@@ -163,6 +176,7 @@ export function StationDeatails() {
             <StationHeader />
             <div className="color-container" style={{ background: `linear-gradient(rgba(0,0,0,.6) 0, #121212 60%), ${bgc}` }}>
                 <div className="play-btn-station">
+                    {/* <h1 style={{color: 'white'}}> { stationId } </h1> */}
                     {/* <span onClick={onPlay}><i className="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span> */}
                     {!isPlaying && <span onClick={onPlay}><i class="fa-solid fa-circle-play" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>}
                     {isPlaying && <span onClick={onPlay}><i class="fa-solid fa-circle-pause" style={{ width: '56px', height: '56px', color: '#1fdf64' }}></i></span>}

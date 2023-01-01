@@ -24,7 +24,7 @@
     }
 
     .title-autor {
-        min-width: 50%;
+        width: 100%;
 
         .title {
             font-size: 16px;
@@ -42,10 +42,21 @@
     // align-self: flex-start;
 
     .actions {
-        width: 100%;
+        margin-right: 15px;
+        width: 10px;
         justify-self: flex-end;
         text-align: end;
         padding-inline-end: 8px;
+
+        .three-dots-container{
+            position: relative;
+            
+            .three-dots-modal{
+                position: absolute;
+                top: 15px;
+                left: 5px;
+            }
+        }
 
 
         

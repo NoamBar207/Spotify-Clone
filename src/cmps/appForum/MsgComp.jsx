@@ -3,13 +3,15 @@ import { useSelector } from "react-redux"
 import { forumService } from "../../services/forum.service"
 import { socketService } from "../../services/socket.service"
 import { utilService } from "../../services/util.service"
+import { PopUpMsg } from "../util.cmps/PopUp"
 
 
 
-export const MsgComp = ({ answer, selectedMsg, cluster, subject, isByDate }) => {
+export const MsgComp = ({ answer, selectedMsg, cluster, subject, isByDate, popUpRef }) => {
 
     const { currUser } = useSelector((state) => state.userModule)
-    const [likesState, setLikesState] = useState(answer.likes)
+    const [likesState, setLikesState] = useState([...answer.likes])
+
 
     const imgStyle = answer.createdBy?.imgUrl ? answer.createdBy?.imgUrl : 'https://res.cloudinary.com/noambar/image/upload/v1659384875/iwskowuhnzzcn2yjrf6e.png'
 
@@ -17,11 +19,9 @@ export const MsgComp = ({ answer, selectedMsg, cluster, subject, isByDate }) => 
         if (Object.keys(currUser).length) {
             const ans = await forumService.addLikeToAnswer(answer, currUser._id, selectedMsg, cluster, subject)
             setLikesState([...ans.likes])
-            socketService.emit('like-change', {answer, selectedMsg ,cluster, subject})
+            socketService.emit('like-change', { answer, selectedMsg, cluster, subject })
         }
-        else {
-            forumService.addLikeToAnswer(answer, 'Guest')
-        }
+        else utilService.onLoadPopUp(popUpRef)
     }
 
     useEffect(() => {
@@ -66,6 +66,7 @@ export const MsgComp = ({ answer, selectedMsg, cluster, subject, isByDate }) => 
                             width: '35px',
                             borderRadius: '20px',
                         }}></div>
+                    <div className="pop-up-container"></div>
                 </div>
             }
         </>

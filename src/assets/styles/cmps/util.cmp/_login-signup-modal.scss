@@ -11,6 +11,7 @@
     
     .search-result {
         @include flex-center;
+        min-width: fit-content;
         padding: 4px 8px 0 8px;
         font-size: 14px;
         height: 44px;

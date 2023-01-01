@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { forumService } from "../../services/forum.service";
 import { socketService } from "../../services/socket.service";
 import { utilService } from "../../services/util.service";
+import { PopUpMsg } from "../util.cmps/PopUp";
 import { MsgComp } from "./MsgComp";
 
 
@@ -12,11 +13,17 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
     const { currUser } = useSelector((state) => state.userModule)
     const [msgState, setMsgState] = useState('')
     const formRef = useRef()
-    const [ansArr, setAnsArr] = useState([...selectedMsg.ans])
-    const [isByDate, setIsByDate] = useState(true)
+    const popUpRef = useRef()
+    const [ansArr, setAnsArr] = useState([])
+    const [isByDate, setIsByDate] = useState(false)
     const imgStyle = selectedMsg.createdBy?.imgUrl ? selectedMsg.createdBy?.imgUrl : 'https://res.cloudinary.com/noambar/image/upload/v1659384875/iwskowuhnzzcn2yjrf6e.png'
 
 
+    useEffect(() => {
+        // setAnsArr([...selectedMsg.ans])
+        sortArr([...selectedMsg.ans])
+        // utilService.onLoadPopUp(popUpRef)
+    }, [selectedMsg])
 
     useEffect(() => {
         socketService.off('add-msg')
@@ -35,7 +42,7 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
             // console.log('like-change  ** selected-msg', obj);
             if (selectedMsg && obj.selectedMsg?._id === selectedMsg?._id) {
                 console.log('likeChange-selectedMsg', selectedMsg);
-                setSelectedMsg({...obj.selectedMsg})
+                setSelectedMsg({ ...obj.selectedMsg })
             }
         })
 
@@ -46,9 +53,6 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
     }, [])
 
 
-    useEffect(() => {
-        setAnsArr([...selectedMsg.ans])
-    }, [selectedMsg])
 
     const sortArr = (arr) => {
         const sortedAns = arr.sort((firstItem, secondItem) => secondItem.likes.length - firstItem.likes.length)
@@ -80,7 +84,7 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
         setSelectedMsg(objectFromBack.question)
         setSelectedCluster({ ...cluster, msgs: objectFromBack.msgsToReturn })
         loadSubjects()
-        socketService.emit('send-msg', { subject, cluster, selectedMsg:objectFromBack.question })
+        socketService.emit('send-msg', { subject, cluster, selectedMsg: objectFromBack.question })
         resetForm()
     }
 
@@ -104,9 +108,9 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
                 <div className="filter-by-msg">
                     <span>Select Filter:</span>
                     <div className="switch-msg">
-                        <span className="thumbs-up"><i class="fa-solid fa-thumbs-up"></i></span>
-                        <Switch size="small" defaultChecked onClick={() => { setIsByDate(!isByDate); onFilterBy() }} />
                         <span><i class="fa-solid fa-calendar-days"></i></span>
+                        <Switch size="small" defaultChecked onClick={() => { setIsByDate(!isByDate); onFilterBy() }} />
+                        <span className="thumbs-up"><i class="fa-solid fa-thumbs-up"></i></span>
                     </div>
                 </div>
                 {/* {isByDate ? <button onClick={onFilterBy}>Sort By Like</button> : <button onClick={onFilterBy}>Sort By Date</button>} */}
@@ -125,7 +129,7 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
                     </div>
                 </div>
                 <div className="ans-container">
-                    {ansArr.map(answer => <MsgComp answer={answer} selectedMsg={selectedMsg} cluster={cluster} subject={subject} isByDate={isByDate} />)}
+                    {ansArr.map(answer => <MsgComp answer={answer} selectedMsg={selectedMsg} cluster={cluster} subject={subject} isByDate={isByDate} popUpRef={popUpRef} />)}
                 </div>
             </section>
             <div className="form-container">
@@ -133,6 +137,7 @@ export const SelectedMsg = ({ selectedMsg, cluster, setSelectedCluster, subject,
                     <input onChange={handleChange} placeholder='Add answer' />
                     <button className="send-form"><i class="fa-solid fa-arrow-right"></i></button>
                 </form>
+                <div className="pop-up-container" ref={popUpRef} style={{zIndex:'50'}}><PopUpMsg txt={'Login or Sign-up to Like a Msg'} /></div>
             </div>
         </>
     )

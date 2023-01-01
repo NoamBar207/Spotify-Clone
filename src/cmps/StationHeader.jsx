@@ -7,8 +7,9 @@ import { stationService } from "../services/station.service"
 import { uploadService } from "../services/upload.service"
 import { userService } from "../services/user.service"
 import { onSaveStation, setCurrStation } from "../store/actions/station.actions"
-import getAverageColor from "get-average-color"
+import getAverageColor from 'get-average-color'
 import { useParams } from "react-router-dom"
+import { localStorageService } from "../services/local.storage.service"
 
 
 export function StationHeader() {
@@ -29,17 +30,20 @@ export function StationHeader() {
         if (currStation.createdBy) getCreator()
         else setStationCreator({ fullname: 'Mellofy', imgUrl: '' })
         loadDuration()
-        getAvgColor(currStation.stationImg)
+        getAvgColor()
         // stationService.getStationDuration(currStation.songs)
         //////// ADD IMG URL
     }, [currStation])
 
-    const handleChange = (ev) => {
-        const value = ev.target.value
-        dispatch(onSaveStation({ ...currStation, name: value }))
+    const handleChange = async (ev) => {
+        const value = ev.target.value;
+        (Object.keys(currUser).length) ?
+            await dispatch(onSaveStation({ ...currStation, name: value })) : localStorageService.updateStation({ ...currStation, name: value })
+        dispatch(setCurrStation({ ...currStation, name: value }))
     }
 
     const getCreator = async () => {
+        console.log(currStation.createdBy)
         const creatorStation = await userService.getById(currStation.createdBy)
         setStationCreator(creatorStation)
     }
@@ -52,20 +56,24 @@ export function StationHeader() {
     }
 
     const handleUpload = async (ev) => {
-        console.log(ev);
-        let tempVal = await uploadService.uploadImg(ev)
-        console.log(tempVal.url);
+        let tempVal = await uploadService.uploadImg(ev);
+        console.log(tempVal);
         if (tempVal.url) {
-            dispatch(onSaveStation({ ...currStation, stationImg: tempVal.url }))
-            dispatch(setCurrStation({ ...currStation, stationImg: tempVal.url }))
+            (Object.keys(currUser).length) ?
+                await dispatch(onSaveStation({ ...currStation, stationImg: tempVal.url })) : localStorageService.updateStation({ ...currStation, stationImg: tempVal.url })
+            await dispatch(setCurrStation({ ...currStation, stationImg: tempVal.url }))
         }
     }
 
     const getAvgColor = async () => {
-        let color = await getAverageColor(currStation.stationImg)
-        // const darkerColor =`rgb(${color.r-20},${color.g-20}, ${color.b-20})` 
-        color = `rgb(${color.r},${color.g}, ${color.b})`
-        await setHeaderColor([color])
+        try {
+            let color = await getAverageColor(currStation.stationImg)
+            // const darkerColor =`rgb(${color.r-20},${color.g-20}, ${color.b-20})` 
+            color = `rgb(${color.r},${color.g}, ${color.b})`
+            await setHeaderColor([color])
+        } catch (err) {
+            await setHeaderColor(['#4A3591, #2A1F52'])
+        }
     }
 
 

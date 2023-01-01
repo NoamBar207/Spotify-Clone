@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 import { forumService } from "../../services/forum.service"
 import { socketService } from "../../services/socket.service"
 import { utilService } from "../../services/util.service"
+import { PopUpMsg } from "../util.cmps/PopUp"
 import { SelectedMsg } from "./SelectedMsg"
 
 
@@ -14,6 +15,7 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
     const { currUser } = useSelector((state) => state.userModule)
     const [questionState, setQuestionState] = useState('')
     const imgStyle = selectedMsg.createdBy?.imgUrl ? selectedMsg.createdBy?.imgUrl : 'https://res.cloudinary.com/noambar/image/upload/v1659384875/iwskowuhnzzcn2yjrf6e.png'
+    const popUpRef = useRef()
 
     useEffect(() => {
         socketService.off('add-msg')
@@ -59,6 +61,14 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
             socketService.off('add-like')
         }
     }, [])
+
+    
+
+    useEffect(()=>{
+        console.log(popUpRef);
+        utilService.onLoadPopUp(popUpRef)
+    },[])
+
 
     const onGoBack = async () => {
         setSelectedMsg({})
@@ -132,12 +142,12 @@ export const ChatApp = ({ selectedSubject, selectedCluster, setSelectedSubject, 
                     }) : <SelectedMsg selectedMsg={selectedMsg} setSelectedMsg={setSelectedMsg} cluster={selectedCluster} setSelectedCluster={setSelectedCluster} subject={selectedSubject} loadSubjects={loadSubjects} />
                     }
                 </div>
-                {!!(!Object.keys(selectedMsg).length && Object.keys(currUser).length) && <div className="form-container">
+                {!!(!Object.keys(selectedMsg).length && Object.keys(currUser).length) ? <div className="form-container">
                     <form className="msg-form" ref={formRef} onSubmit={onSubmit}>
                         <input onChange={handleChange} placeholder='Add question' />
                         <button className="send-form"><i class="fa-solid fa-arrow-right"></i></button>
                     </form>
-                </div>}
+                </div> : <div className="pop-up-container" ref={popUpRef}><PopUpMsg txt={'Login or Sign-up to add question'}/></div>}
 
             </main>
             {/* <pre>{subject}</pre> */}

@@ -91,6 +91,17 @@ export function HomePage() {
                         : <></>}
                 </div>
             </section>
+            <section className="homepage-playlists">
+                <div className="homepage-playlists-title">
+                    <h2>Playlist By Mood</h2>
+                </div>
+                <div className="homepage-playlists-grid">
+                    {Object.keys(stations).length ? stations.map(station => {
+                        if (station.renderType === 'byMood') return <CardCmp station={station} />
+                    })
+                        : <></>}
+                </div>
+            </section>
         </section>
     )
 }

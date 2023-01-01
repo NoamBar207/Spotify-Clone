@@ -131,7 +131,7 @@ export const AppMenu = ({ menuRef }) => {
                         {/* <button className="ask-question">ask a question ?</button> */}
                     </div>
                     {subjects.map(subject => {
-                        return (<div>
+                        return (<div key={subject._id}>
                             <TopicPrev subject={subject} setSelectedSubject={setSelectedSubject} setSelectedCluster={setSelectedCluster} />
                         </div>)
                     })}

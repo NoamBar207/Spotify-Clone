@@ -1,4 +1,6 @@
-html {}
+html {
+    font-family: font-circ-bold, font-circ-heb;
+}
 
 *> {
     font-family: font-circ-bold, font-circ-heb;
@@ -10,7 +12,12 @@ body {
     margin: 0;
     font-family: font-circ-bold, font-circ-heb;
     overflow: hidden;
-
+    
+    
+    ::-webkit-scrollbar {
+        width: 0px;
+        height: 0px;
+    }
 }
 
 button {
@@ -24,6 +31,7 @@ h2 {
 .root-cmp {
     height: 100vh;
     overflow-y: hidden;
+    overflow-x: hidden;
     // height: 100%;
     display: grid;
     // grid-gap: 8px;
@@ -62,6 +70,7 @@ h2 {
 @include for-mobile-layout {
     .root-cmp {
         overflow-x: hidden;
+        font-family: font-circ-bold, font-circ-heb;
         // grid-column-gap: 8px;
         grid-template-columns: 100%;
         grid-template-rows: calc(100% - 60px) 60px;

@@ -12,6 +12,7 @@ import { SearchPage } from './pages/SearchPage';
 import { SignUp } from './pages/SignUp';
 import { Login } from './pages/Login';
 import { SongDeatails } from './pages/SongDeatails';
+import { LibraryPage } from './pages/LibraryPage';
 
 // Routes accesible from the main navigation (in AppHeader)
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
         path: 'login',
         component: <Login />,
         label: 'Login'
+    },
+    {
+        path: 'library',
+        component: <LibraryPage />,
+        label: 'Library'
     },
     // {
     //     path: 'chat',

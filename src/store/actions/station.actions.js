@@ -1,19 +1,6 @@
-// export function setCurrBoard(boardId) {
-//     return async (dispatch) => {
-//         let currBoard
-//         try {
-//             currBoard = await boardService.getById(boardId, true) ///CHECK
-//             if (!currBoard) {
-//                 currBoard = await boardService.getById(boardId)
-//             }
-//         } catch (err) {
-//             console.error('Cannot set board', err)
-//         } finally {
-//             dispatch({ type: 'SET_BOARD', currBoard })
-//         }
-//     }
-// }
 
+import { useNavigate } from "react-router-dom";
+import { localStorageService } from "../../services/local.storage.service";
 import { socketService, } from "../../services/socket.service";
 import { stationService } from "../../services/station.service";
 import { userService } from "../../services/user.service";
@@ -108,15 +95,18 @@ export function setFollowedStations(followedStations) {
 }
 
 
+
+
 export function setLikedSongsUser(currUser) {
     return async (dispatch) => {
         try {
+            const user = (Object.keys(currUser).length) ? currUser : localStorageService.getUser()
             const likedStation = {
-                songs: currUser.likedSongs,
+                songs: user?.likedSongs,
                 stationImg: "https://res.cloudinary.com/noambar/image/upload/v1667305422/Mellofy/liked-songs_jw062w.png",
                 name: "Liked Songs",
-                createdBy: currUser.fullname,
-                duration: stationService.getStationDuration(currUser.likedSongs)
+                createdBy: user?._id,
+                duration: stationService.getStationDuration(user?.likedSongs)
             }
             const action = { type: 'SET_LIKED_SONGS', likedStation }
             dispatch(action)
@@ -161,19 +151,31 @@ export function onSetUserStations(currUser) {
                 console.log('Cannot Load user Stations ', err);
             }
         }
+        // else if(!Object.keys(currUser).length){
+        // }
         else {
-            const action = { type: 'SET_USER_STATIONS', userStations: [] }
-            dispatch(action)
+            const user = localStorageService.loadFromStorage('user')
+            console.log(user);
+            if (user) {
+                const stations = user.stations
+                const action = { type: 'SET_USER_STATIONS', userStations: stations }
+                await dispatch(action)
+                return stations
+            }
+            else {
+                const action = { type: 'SET_USER_STATIONS', userStations: [] }
+                dispatch(action)
+            }
         }
     }
 }
 
 export function onSetShuffele(bool) {
-    return async (dispatch) =>{
-        try{
-            const action = { type: 'SET_IS_SHFFUELD', isShuffeld:bool }
+    return async (dispatch) => {
+        try {
+            const action = { type: 'SET_IS_SHFFUELD', isShuffeld: bool }
             dispatch(action)
-        }catch(err) {
+        } catch (err) {
             console.log('Cannot set isShuffled', err);
         }
     }

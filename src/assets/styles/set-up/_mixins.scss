@@ -37,6 +37,7 @@
         box-sizing: border-box;
         padding: 5px 10px 5px 17px;
         height: 62px;
+        position: relative;
         // padding: 5px 0;
         
         .msg-form{
@@ -78,6 +79,11 @@
                     background-color: $clr-green-play;
                 }
             }
+        }
+
+        .pop-up-container {
+            bottom: 12px;
+            right: -100%;
         }
     }
 	

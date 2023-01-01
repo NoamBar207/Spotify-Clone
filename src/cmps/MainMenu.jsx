@@ -7,6 +7,7 @@ import { stationService } from "../services/station.service"
 import { getUser, onUpdateUser } from "../store/actions/user.action"
 import { onSetUserStations, setCurrStation, setFollowedStations, setLikedSongsUser, setUserStation } from "../store/actions/station.actions"
 import { socketService, SOCKET_EMIT_UPDATE_USER, SOCKET_ON_UPDATE_USER } from "../services/socket.service"
+import { localStorageService } from "../services/local.storage.service"
 
 
 export const MainMenu = () => {
@@ -31,10 +32,10 @@ export const MainMenu = () => {
         })
 
         socketService.on('update-station', station => {
-            getUserOnMenu() .then((res)=>{
+            getUserOnMenu().then((res) => {
                 console.log(res);
                 res.followedStations.forEach(stationId => {
-                    if (stationId === station._id) dispatch(onUpdateUser({...res}))
+                    if (stationId === station._id) dispatch(onUpdateUser({ ...res }))
                 })
             })
         })
@@ -50,8 +51,10 @@ export const MainMenu = () => {
     }, [currStation, currUser])
 
     const asyncSet = async () => {
-        await dispatch(onSetUserStations(currUser))
-        await loadUserStations()
+        const stations = await dispatch(onSetUserStations(currUser))
+        // console.log(stations);
+        setUserStationState(stations)
+        // await loadUserStations()
         await getLikedSongsUser()
         onSetFollowedStations()
     }
@@ -97,7 +100,7 @@ export const MainMenu = () => {
     const onSetFollowedStations = async () => {
         // const userStations = await stationService.loadUserStations(currUser.stations)
         // var stations = await httpService.get(STORAGE_KEY)
-        if (currUser.followedStations.length) {
+        if (currUser.followedStations?.length) {
             try {
                 let followedStations = await Promise.all(
                     currUser.followedStations.map(async (id) => {
@@ -130,52 +133,53 @@ export const MainMenu = () => {
     }
 
     const onCreateStation = async () => {
-        if (!!currUser) {
+        if (Object.keys(currUser).length) {
             const newUser = await stationService.createNewStation(currUser)
             await dispatch(onUpdateUser(newUser))
-            console.log(newUser);
             const index = newUser.stations.length - 1
             const station = await stationService.getById(newUser.stations[index])
-            console.log(station);
             await dispatch(setCurrStation(station))
             navigate(`/station/${station._id}`)
+        }
+        else {
+            const newStation = await localStorageService.createNewStation()
+            dispatch(setCurrStation(newStation))
+            navigate(`/station/${newStation._id}`)
         }
     }
 
     const onPlaylistPick = async (station) => {
         await dispatch(setCurrStation(station))
         station.name === 'Liked Songs' ?
-            navigate('/station/likedsong') :
-            navigate(`/station/${station._id}`)
+            navigate('/station/likedsongs') :
+            navigate(`/station/${station._id}`);
+    }
+
+    const onLibrary = () => {
+        navigate('/library')
     }
 
 
     return (
         <section className="main-menu-container">
-            {/* <h1>Hello From Menu</h1> */}
-            {/* <Link className="menu-link"><img className="menu-pic" src={importService.homePageIcon} style={{ height: '24px', width: '24px' }} />Home</Link> */}
-            {/* <Link className="menu-link"><img src={importService.searchIcon} style={{ height: '24px', width: '24px' }}/>Search</Link> */}
-            {/* <Link className="menu-link"><i className="fa-solid fa-magnifying-glass" style={{height:'22px',width:'22px'}}></i>Search</Link> */}
-            <Link className="menu-link"><i className="fa-solid fa-book" style={{ color: 'white', height: '24px', width: '24px' }}></i>Your Library</Link>
+            <Link className="menu-link" to='/library'><i className="fa-solid fa-book" style={{ color: 'white', height: '24px', width: '24px' }}></i>Your Library</Link>
             <Link className="menu-link" onClick={onCreateStation}><div className="menu-create-playlist" ><i class="fa-solid fa-plus" style={{ color: 'black' }}></i></div>Create Playlist</Link>
             <Link className="menu-link" onClick={() => onPlaylistPick(likedStation)}><img src={importService.likedSongs} style={{ height: '24px', width: '24px' }} />Liked Songs</Link>
             {/* {Object.keys(currUser?.stations).length && */}
-            {!!Object.keys(userStations).length && <>
+            {/* {!!Object.keys(userStationState).length && <> */}
+            {!!userStationState?.length && <>
                 <hr />
-                {/* <div className="user-stations">
-                    {userStations.map(station => {
-                        return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
-                    })}
-                </div> */}
+
                 <div className="user-stations">
                     <div className="menu-stations-title">Your Playlists:</div>
-                    {!!userStationState?.length && userStationState.map(station => {
+                    {userStationState.map(station => {
                         return <Link className="menu-link" onClick={() => onPlaylistPick(station)}>{station.name}</Link>
                     })}
                 </div>
+
             </>
             }
-            {!!followedStations.length && <>
+            {!!followedStations?.length && <>
                 <hr />
                 <div className="user-stations">
                     <div className="menu-stations-title">Shared Playlist:</div>

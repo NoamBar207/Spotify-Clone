@@ -1,5 +1,6 @@
 import { storageService } from './async-storage.service'
 import { httpService } from './http.service'
+import { localStorageService } from './local.storage.service'
 import { userService } from './user.service'
 import { utilService } from './util.service'
 // const gStation = require('../data/station.json')
@@ -40,7 +41,7 @@ async function query() {
 // }
 
 async function getById(stationId) {
-    var station = await httpService.get(`${STORAGE_KEY}/${stationId}`)
+    var station = !stationId.includes('guest') ? await httpService.get(`${STORAGE_KEY}/${stationId}`) : localStorageService.getById(stationId)
     return Promise.resolve(station);
 }
 
@@ -60,7 +61,7 @@ async function createNewStation(currUser) {
         songs: [],
         stationImg: 'https://res.cloudinary.com/noambar/image/upload/v1669327809/ifrojzsgy2pxgztg1inn.png',
         createdBy: currUser._id,
-        renderType:''
+        renderType: ''
     }
     if (Object.keys(currUser).length) {
         const newUser = await httpService.post(STORAGE_KEY, stationToAdd)
@@ -69,7 +70,7 @@ async function createNewStation(currUser) {
     }
 }
 
-async function addSongToStation(song, station) {
+async function addSongToStation(song, station, currUser) {
     // let user = await userService.getLoggedinUser()
     let returnStation
     const songToAdd = {
@@ -82,12 +83,13 @@ async function addSongToStation(song, station) {
     if (includeIdx === -1) {
         station.songs.push(songToAdd)
         station = { ...station, duration: getStationDuration(station.songs) }
-        returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
     } else {
         station.songs.splice(includeIdx, 1)
         station = { ...station, duration: getStationDuration(station.songs) }
-        returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+        // returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
     }
+    if (Object.keys(currUser).length) returnStation = await httpService.post(`${STORAGE_KEY}/${station._id}`, station)
+    else returnStation = localStorageService.addSongToStation(station)
     return returnStation
 }
 
@@ -116,7 +118,7 @@ async function deleteStation(stationId) {
 function getStationDuration(songs) {
     let mins = 0
     let secs = 0
-    songs.forEach(song => {
+    songs?.forEach(song => {
         const arr = song.duration.split(':')
         mins += +arr[0]
         secs += +arr[1]

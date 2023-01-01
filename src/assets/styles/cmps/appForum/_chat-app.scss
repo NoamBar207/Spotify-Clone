@@ -2,48 +2,48 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    
+
     .chat-app-title {
         @include flex-center;
         width: 100%;
         border-bottom: 0.5px solid lighten($clr-black-28, $amount: 5);
-		// background-color: darken($clr-search-grey, $amount: 20);
+        // background-color: darken($clr-search-grey, $amount: 20);
         // background-color: darken($clr-green-play, $amount: 20);
         // color: $clr-green-play;
-        color:#169c46;
+        color: #169c46;
 
         height: 43px;
         // box-shadow: 0 0.5px 3px $clr-box-shadow-whatup;
-        gap:10px;
-        
+        gap: 10px;
+
         .go-back {
             @include flex-center;
             justify-self: flex-start;
             background-color: transparent;
-            color:white;
+            color: white;
             border: none;
             cursor: pointer;
             padding: 15px 0;
 
         }
     }
-    
+
     .msgs-container {
         @include chat-form;
         flex: 1;
         height: 100%;
         display: flex;
         flex-direction: column;
-        
-        .questions-container{
+
+        .questions-container {
             padding-top: 4px;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
             flex: 1;
 
-            
-            .question-container{
+
+            .question-container {
                 display: flex;
                 box-sizing: border-box;
                 width: 100%;
@@ -51,19 +51,20 @@
                 gap: 12px;
                 padding: 8px 5%;
                 box-shadow: inset 0 -1px 1px 0 $clr-black-grey;
-                
-                &:hover{
-                    background-color:$clr-hover;
+
+                &:hover {
+                    background-color: $clr-hover;
                     cursor: pointer;
                 }
-                .question{
+
+                .question {
                     display: flex;
                     align-items: center;
                     gap: 12px;
                     flex: 1;
-                    
-                    
-                    .question-main{
+
+
+                    .question-main {
                         flex: 1;
                         // text-overflow:initial;
                         // overflow-wrap: break-word;
@@ -72,15 +73,16 @@
                     }
                 }
 
-                .question-created-add{
+                .question-created-add {
                     font-size: 14px;
                     justify-self: flex-end;
                     width: 90px;
                 }
             }
-            
+
         }
+
     }
 
-
 }
+

@@ -12,7 +12,7 @@
     padding-inline-start: 22px;
 
     &:hover {
-        background-color:$clr-hover;
+        background-color: $clr-hover;
     }
 
     .song-img-title {
@@ -49,12 +49,12 @@
             // background-color: green;
             justify-self: flex-end;
             padding-right: 25px;
+            position: relative;
             // justify-content: flex-end;
             // flex: 1;
 
             .three-dots-modal {
-                left: -11rem;
-
+                // top: 5px;
             }
 
             .playlist-modal {
@@ -79,29 +79,35 @@
 
 
 @include for-mobile-layout {
-    .song-container{
+    .song-container {
         padding-inline-start: 5px;
 
-        .song-img-title{
+        .song-img-title {
             flex: 1;
-            
-            .station-details-song{
+
+            .station-details-song {
                 flex: 1;
             }
         }
 
         .added-at,
-        .song-num{
+        .song-num {
             display: none;
         }
 
-        .song-actions{
+        .song-actions {
             justify-content: center;
             gap: 24px;
             width: fit-content;
-            .song-duration{
+
+            .song-duration {
                 display: none;
             }
+            .three-dots-container{
+                width: 10px;
+                justify-content: normal;
+            }
+
         }
     }
 }
