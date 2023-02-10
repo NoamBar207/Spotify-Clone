@@ -1,70 +1,71 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Spotify - E2E, pixel perfect, music application and ChatApp inspired by Spotify - but more friendly. (React + Node.js)
 
-In the project directory, you can run:
+A music player application, inspired by Spotify- [Check it our here](https://mellofy-bynoambar.onrender.com/).
+For those of you who are hearing about Spotify for the first time, you can read about it [here](#about-spotify).
+If you are familiar with everything Spotify can do, scroll to our [Showcase](#showcase) of Mellofy.
 
-### `npm start`
+![mellofypreview](https://res.cloudinary.com/noambar/image/upload/v1673889648/Portfolio/Projects/fotor_2023-1-16_19_18_55_qoi3f3.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### About Spotify
 
-### `npm test`
+Spotify is a digital music and podcast streaming service that provides access to millions of songs and podcasts from artists all over the world. The platform allows users to search for and play music, create and share playlists, discover new music based on their listening habits, and more. Everything you see in Spotify, you will certainly see in Mellofy and more!
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Features
 
-### `npm run build`
+* Create playlist, add and remove songs across the playlist using D&D. 
+* Edit your playlist picture, title and followers easyly.
+* Add friend as listerns to your playlist so they can enjoy it to! Every change youll make in your playlist will be updated to your friends in real time using web sockets.
+* Login authentication, including encrypting user information.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Technologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The technnology stack I used is MERN - MongoDB, Express, React, Node.js.
+I used webSockets to enable real-time updates for all users. API calls to the backend are done with REST API method.
+In addition, I have incorporated third-side libraries, such as React beautiful D&D, React-YouTube and more.
+the App's layout was made with Sass (functions, mixins, variables).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### Showcase
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### Homepage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The home page is the main interface of Mellofy, where users can listen to playlists created by Mellofy, sign up or log in, view the forum, and search for desired songs.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![homepage](https://res.cloudinary.com/noambar/image/upload/v1674052809/Portfolio/Projects/Mellofy/MellofyHomePage_ffxv8c.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Playlist Details
 
-## Learn More
+The playlist details page allows the user to rearrange songs using drag-and-drop, change the playlist's name and image, manage listeners, like or unlike songs, and view the playlist's duration and creator..
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![playlistdetails](https://res.cloudinary.com/noambar/image/upload/v1674052799/Portfolio/Projects/Mellofy/MellofyStationDetails_qc8rml.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Library Page
 
-### Code Splitting
+The library page offers a more visual display of all the user's playlists, which are also accessible from the side menu. On this page, playlists are presented in a clear and organized manner.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![librarypage](https://res.cloudinary.com/noambar/image/upload/v1674052801/Portfolio/Projects/Mellofy/MellofyLibraryPage_tfqx1t.png)
 
-### Analyzing the Bundle Size
+#### Chat App / Forum
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+As i tried to make something other then only spotify clone, I have implemented a custom Form/Chat in the app. both registered users and guests can participate in discussions by asking questions, responding to other questions, and liking others' answers, with real-time updates.
 
-### Making a Progressive Web App
+![chatapp](https://res.cloudinary.com/noambar/image/upload/v1674052804/Portfolio/Projects/Mellofy/MellofyForum_ntys4m.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Signup
 
-### Advanced Configuration
+I have created an e2e authentication flow, in which I am encrypting user's information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![signup](https://res.cloudinary.com/noambar/image/upload/v1674052798/Portfolio/Projects/Mellofy/MellofySignUpPage_zplkxd.png)
 
-### Deployment
+#### And on Mobile!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+A taste of the mobile experience. I have used mixins, rem and em units, aspect ratio and more, to make Mellofy responsive with minimun effort.
 
-### `npm run build` fails to minify
+![mobile](https://res.cloudinary.com/noambar/image/upload/v1674053716/Portfolio/Projects/Mellofy/All2_b589hr.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Authors
+
+* Noam Bar
