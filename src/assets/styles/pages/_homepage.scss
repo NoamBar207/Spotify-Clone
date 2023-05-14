@@ -1,113 +1,116 @@
 .homepage-container {
-    grid-area: main-content;
-    padding: 32px 24px;
-    color: $clr-white-F;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    overflow-y: auto;
-    // background:linear-gradient(#2A1F52 10%, #121212 90%);
-    // background-attachment:fixed;
-    background: linear-gradient(#2A1F52 1%, #121212, #000000);
-    background-repeat: no-repeat;
+  grid-area: main-content;
+  padding: 32px 24px;
+  color: $clr-white-F;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  background: linear-gradient(#2a1f52 1%, #121212, #000000);
+  background-repeat: no-repeat;
 
+  .homepage-greet {
+    font-size: 1.4rem;
+    h2 {
+      padding-bottom: 24px;
+    }
 
+    .narrow-card-grid {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-row-gap: 16px;
+      grid-column-gap: 24px;
+    }
+  }
 
+  .homepage-playlists {
+    .homepage-playlists-title {
+      height: 46px;
+    }
+
+    .homepage-playlists-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(156px, 1fr));
+      grid-auto-rows: auto;
+      grid-gap: 24px;
+    }
+  }
+}
+
+@include for-laptop-narrow-layout {
+  .homepage-container {
+    .homepage-greet {
+      .narrow-card-grid {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        grid-row-gap: 16px;
+        grid-column-gap: 24px;
+      }
+    }
+  }
+}
+
+@include for-tablet-layout {
+  .homepage-container {
+    overflow-x: hidden;
+    padding: 20px 16px 60px 16px;
 
     .homepage-greet {
-        // background-color: aqua;
-        font-size: 1.4rem;
+      .narrow-card-grid {
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .homepage-greet-settings {
+        display: flex;
+        align-items: center;
+        padding-bottom: 12px;
+        width: 100%;
 
         h2 {
-            padding-bottom: 24px;
+          padding: 0;
         }
 
-        .narrow-card-grid {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-row-gap: 16px;
-            grid-column-gap: 24px;
+        .login-signup-container {
+          flex: 1;
+          align-items: flex-end;
+          .user-logo-container {
+            @include flex-center;
+            gap: 6px;
+          }
         }
 
+        .search-result-container {
+          right: 10px;
+          top: 30px;
+        }
+      }
     }
-
-
-    // .playlists-homepage-container{
-    //     display: grid;
-    //     // grid-template-columns: auto;
-    //     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    //     // height: 250px;
-    //     grid-gap:24px;
-    //     background-color: green;
-    // }
-
 
     .homepage-playlists {
-        .homepage-playlists-title {
-            height: 46px;
-        }
+      display: flex;
+      flex-direction: column;
 
-        .homepage-playlists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(156px, 1fr));
-            grid-auto-rows: auto;
-            // grid-template-rows:  repeat(auto-fit, minmax(180px, 250px));
-            grid-gap: 24px;
-        }
+      .homepage-playlists-grid {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+      }
     }
+  }
 }
 
-
-@include for-mobile-layout {
-    .homepage-container {
-        overflow-x: hidden;
-        padding: 20px 16px;
-
-        .homepage-greet {
-
-            .homepage-greet-settings{
-                display: flex;
-                align-items: center;
-                padding-bottom: 12px;
-                width: 100%;
-
-                h2 {
-                    padding: 0;
-                }
-
-                .login-signup-container{
-                    display: flex;
-                    flex: 1;
-                    align-items: flex-end;
-                    padding-right: 3px;
-                }
-
-                .search-result-container {
-                    right: 10px;
-                    top: 30px;
-                }
-            }
-
-            .narrow-card-grid {
-                display: grid;
-                grid-template-rows: 1fr 1fr 1fr;
-                grid-template-columns: 1fr 1fr;
-                grid-row-gap: 16px;
-                grid-column-gap: 24px;
-            }
-        }
-
-        .homepage-playlists {
-            display: flex;
-            flex-direction: column;
-            .homepage-playlists-grid {
-                width: 100%;
-                flex: 1;
-                display: flex;
-                overflow-x: auto;
-                gap: 12px;
-            }
-        }
-    }
-}
+// @include for-mobile-layout {
+//   .homepage-container {
+//     .homepage-greet {
+//       .narrow-card-grid {
+//         grid-template-rows: 1fr 1fr 1fr;
+//         grid-template-columns: 1fr 1fr;
+//       }
+//     }
+//   }
+// }

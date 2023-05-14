@@ -1,11 +1,11 @@
 .util-btn {
-    @include flex-center;
-    padding: 13px 31px;
-    border: 1px solid $clr-search-grey;
-    // text-transform: uppercase;
-    border-radius: 25px;
-    margin: 10px 0;
-    font-weight: 700;
-    max-height: 44px;
-
+  @include flex-center;
+  padding: 13px 31px;
+  border: 1px solid $clr-search-grey;
+  // text-transform: uppercase;
+  border-radius: 25px;
+  margin: 10px 0;
+  font-weight: 700;
+  max-height: 44px;
+  cursor: pointer;
 }

@@ -1,68 +1,69 @@
 .card-container {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: $clr-black-18;
+  border-radius: 4px;
+  gap: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $clr-hover;
+    transition: background-color 500ms;
+  }
+
+  .card-img {
+    flex: 1;
+
+    img {
+      height: 100%;
+      // height: 200px;
+      width: 100%;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+      border-radius: 3px;
+    }
+  }
+
+  .card-autors {
+    margin: 0;
+    font-size: 0.875rem;
+    color: $clr-text-grey;
+  }
+
+  .card-info {
     display: flex;
     flex-direction: column;
-    padding: 16px;
-    background-color: $clr-black-18;
-    border-radius: 4px;
-    gap: 8px;
-    cursor: pointer;
-    
-    &:hover{
-        background-color: $clr-hover;
-        transition: background-color 500ms;
-    }
-    
-    .card-img {
-        flex: 1;
-        img {
-            height: 100%;
-            // height: 200px;
-            width: 100%;
-            object-fit: cover;
-            aspect-ratio: 1/1;
-            border-radius: 3px;
-        }
-    }
-    
-    .card-autors{
-        margin: 0;
-        font-size: 0.875rem;
-        color: $clr-text-grey;
-    }
-    
-    .card-info {
-        display: flex;
-        flex-direction: column;
-        height: 30%;
-        padding-bottom: 5px;
-        // text-ove;
-        gap: 4px;
-        
-        
-    }
+    height: 30%;
+    padding-bottom: 5px;
+    // text-ove;
+    gap: 4px;
+  }
 }
 
+@include for-tablet-layout {
+  .card-container {
+    padding: 0;
+    // width: 150px !important;
+    min-width: 150px;
+    height: 100%;
+    box-sizing: border-box;
+    flex: 1;
+    // padding: 8px 8px 16px 8px;
+    padding: 8px;
 
-@include for-mobile-layout {
-    
-    
-    .card-container {
-        padding: 0;
-        width: 150px !important;
-        min-width: 150px;
-        box-sizing: border-box;
-        flex: 1;
-        // padding: 8px 8px 16px 8px;
-        padding: 8px;
-        
-        .card-info{
-            .card-title{
-                font-size: 16px;
-            }
-            .card-autors{
-                font-size: 12px;
-            }
-        }
+    .card-img {
+      flex: 0;
     }
-    
+
+    .card-info {
+      .card-title {
+        font-size: 16px;
+      }
+
+      .card-autors {
+        font-size: 12px;
+      }
+    }
+  }
 }

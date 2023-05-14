@@ -1,151 +1,147 @@
 .station-header-container {
+  display: flex;
+  align-items: flex-end;
+  box-sizing: border-box;
+  height: 315px;
+  // padding: 0 0 25px 32px;
+  // padding-left: 32px;
+  padding-block-end: 25px;
+  padding-inline-start: 32px;
+  color: $clr-white-F;
+  gap: 16px;
+  transform: 90deg;
+  border-radius: 8px 0 0 0;
+  width: 100%;
+  padding-top: 53px;
+
+  .station-header-img {
+    position: relative;
+    img {
+      height: 232px;
+      width: 232px;
+      box-shadow: 0px 0px 65px -5px rgba(0, 0, 0, 0.69);
+      object-fit: cover;
+    }
+
+    .station-header-no-pic {
+      // height: 100%;
+      height: 232px;
+      width: 232px;
+      @include flex-center;
+      font-size: 50px;
+      box-shadow: 0px 0px 65px -5px rgba(0, 0, 0, 0.69);
+    }
+
+    .station-header-choose-pic {
+      position: absolute;
+      @include flex-center;
+      flex-direction: column;
+      top: 0;
+      height: 232px;
+      width: 232px;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 5;
+      opacity: 0;
+      gap: 8px;
+
+      .fa-pencil {
+        font-size: 48px;
+      }
+
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .station-header-deatails {
     display: flex;
-    align-items: flex-end;
-    box-sizing: border-box;
-    height: 315px;
-    // padding: 0 0 25px 32px;
-    // padding-left: 32px;
-    padding-block-end: 25px;
-    padding-inline-start: 32px;
-    color: $clr-white-F;
-    gap: 16px;
-    transform: 90deg;
-    border-radius: 8px 0 0 0;
-    width: 100%;
-    padding-top: 53px;
+    flex-direction: column;
 
-    .station-header-img {
-        // position: relative;
-        img {
-
-            height: 232px;
-            width: 232px;
-            box-shadow: 0px 0px 65px -5px rgba(0, 0, 0, 0.69);
-            object-fit: cover;
-        }
-        
-        .station-header-no-pic {
-            // height: 100%;
-            height: 232px;
-            width: 232px;
-            @include flex-center;
-            font-size: 50px;
-            box-shadow: 0px 0px 65px -5px rgba(0, 0, 0, 0.69);
-        }
-
-        .station-header-choose-pic{
-            position: absolute;
-            @include flex-center;
-            flex-direction: column;
-            top: 117px;
-            height: 232px;
-            width: 232px;
-            background-color:rgba(0,0,0,.7);
-            z-index: 5;
-            opacity: 0;
-            gap: 8px;
-            
-            .fa-pencil{
-                font-size: 48px;
-            }
-            
-            &:hover{
-                opacity: 1;
-                cursor: pointer;
-            }
-        }
+    .station-header {
+      background: transparent;
+      border: 0;
+      color: $clr-white-F;
+      font-family: font-circ-bold, font-circ-heb;
+      font-size: 96px;
+      margin: 0;
+      padding: 8px 0 12px 0;
+      width: 100%;
+      outline: none;
     }
 
-    .station-header-deatails {
-        display: flex;
-        flex-direction: column;
-
-        .station-header {
-            background: transparent;
-            border: 0;
-            color:$clr-white-F;
-            font-family:  font-circ-bold, font-circ-heb;
-            font-size: 96px;
-            margin: 0;
-            padding: 8px 0 12px 0;
-            width: 100%;
-            outline: none;
-        }
-
-        .playlist {
-            font-size: 12px;
-            margin: 0;
-            padding-top: 4px;
-        }
-
-        .station-info{
-            // @include flex-center;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 700;
-
-            .length-duration{
-                font-weight: 400;
-                // font-size: 14px;
-            }
-            .duration-span{
-                color: $clr-text-grey;
-            }
-        }
-
+    .playlist {
+      font-size: 12px;
+      margin: 0;
+      padding-top: 4px;
     }
+
+    .station-info {
+      // @include flex-center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 700;
+
+      .length-duration {
+        font-weight: 400;
+        // font-size: 14px;
+      }
+      .duration-span {
+        color: $clr-text-grey;
+      }
+    }
+  }
 }
 
 @include for-laptop-layout {
-    .station-header-container {
-        .station-header-img {
-            img ,.station-header-choose-pic{
-                height: 192px;
-                width: 192px;
-            }
-        }
+  .station-header-container {
+    .station-header-img {
+      img,
+      .station-header-choose-pic {
+        height: 192px;
+        width: 192px;
+      }
     }
+  }
 }
 
 @include for-laptop-narrow-layout {
-    .station-header-container {
-        padding-inline-start: 16px;
+  .station-header-container {
+    padding-inline-start: 16px;
 
-        .station-header-deatails {
-            .station-header {
-                font-size: 72px;
-            }
-        }
+    .station-header-deatails {
+      .station-header {
+        font-size: 72px;
+      }
     }
+  }
 }
 
-
-
-
-@include for-mobile-layout {
-    .station-header-container {
-        position: relative;
-        padding: 0;
-        padding-inline-start: 0;
-        .station-header-img {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            img {
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-                filter: brightness(75%);
-            }
-        }
-        .station-header-deatails {
-            z-index: 5;
-            padding-inline-start: 16px;
-            padding-block-end: 8px;
-            .station-header {
-            }
-        }
+@include for-tablet-layout {
+  .station-header-container {
+    position: relative;
+    padding: 0;
+    padding-inline-start: 0;
+    .station-header-img {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        filter: brightness(75%);
+      }
     }
+    .station-header-deatails {
+      z-index: 5;
+      padding-inline-start: 16px;
+      padding-block-end: 8px;
+      .station-header {
+      }
+    }
+  }
 }

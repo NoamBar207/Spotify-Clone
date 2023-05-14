@@ -1,118 +1,169 @@
 .app-menu-container {
-	display: flex;
-	flex-direction: column;
-	z-index: 10;
-	width: 40vw;
-	background-color: $clr-black-28;
-	position: fixed;
-	height: calc(100% - 82px);
-	// transition: 0.4s;
-	right: 0;
-	top: 0;
-	box-shadow: 0px -10px 10px #1d1919;
-	// box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);
-	// overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 25;
+  width: 40vw;
+  background-color: $clr-black-28;
+  position: fixed;
+  height: calc(100% - 80px);
+  box-sizing: border-box;
+  // transition: 0.4s;
+  right: 0;
+  top: 0;
+  box-shadow: 0px -10px 10px #1d1919;
+  // box-shadow: 0 16px 24px (0 0 0 / 30%), 0 6px 8px (0 0 0 / 20%);
+  // overflow-y: auto;
 
-	.menu-hr {
-		// width: 314px;
-		width: 100%;
-	}
+  .menu-hr {
+    // width: 314px;
+    width: 100%;
+  }
 
-	.menu-header {
-		height: 48px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		// color: darken($clr-green-play, $amount: 15);
-		color: $clr-white-F;
-		// padding-top: 12px;
-		// box-shadow:  -0.5px 1px 0 #181818;
-		border-bottom:0.5px solid #353535;
-		// background-color: darken($clr-green-play, $amount: 20);
-		// background-color: rgb(13,107,84);
-		// border-bottom: 0.5px solid rgb(187, 174, 174);
-		// box-shadow: 0 0.5px 3px $clr-box-shadow-whatup;
+  .menu-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // color: darken($clr-green-play, $amount: 15);
+    color: $clr-white-F;
+    // padding-top: 12px;
+    // box-shadow:  -0.5px 1px 0 #181818;
+    border-bottom: 0.5px solid #353535;
+    // background-color: darken($clr-green-play, $amount: 20);
+    // background-color: rgb(13,107,84);
+    // border-bottom: 0.5px solid rgb(187, 174, 174);
+    // box-shadow: 0 0.5px 3px $clr-box-shadow-whatup;
 
+    // background-color: darken($clr-search-grey, $amount: 20);\
 
-		// background-color: darken($clr-search-grey, $amount: 20);
+    .forum-spotify-icon {
+      // position: absolute;
+      // left: 0;
+      width: 42px;
+      height: 42px;
+      padding: 12px;
+      @include flex-center;
+      box-sizing: border-box;
 
-		.menu-title {
-			font-size: rem(16px);
-			line-height: em(20px, 16px);
-			font-weight: 500;
-			margin: 0;
-		}
+      .fa-brands {
+        color: $clr-green-play;
+      }
+    }
 
-		.closebtn {
+    .menu-title {
+      font-size: rem(14px);
+      line-height: em(20px, 16px);
+      font-weight: 500;
+      margin: 0;
+    }
 
-			background-color: transparent;
-			width: 42px;
-			height: 42px;
-			padding: 12px;
-			position: absolute;
-			right: 0;
-			font-size: 16px;
-			border: none;
-			color:white;
-			@include flex-center;
-		}
+    .closebtn {
+      background-color: transparent;
+      width: 42px;
+      height: 42px;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      font-size: 16px;
+      border: none;
+      color: white;
+      @include flex-center;
+    }
 
-		.go-back {
-			position: absolute;
-			left: 0px;
-			width: 42px;
-			height: 42px;
-			@include flex-center;
-			background-color: transparent;
-			border: none;
+    .go-back {
+      position: absolute;
+      left: 0px;
+      width: 42px;
+      height: 42px;
+      @include flex-center;
+      background-color: transparent;
+      border: none;
 
-			
-			.fa-angle-left {
-				font-size: 16px;
-				color:white;
-				
-			}
-		}
-	}
+      .fa-angle-left {
+        font-size: 16px;
+        color: white;
+      }
+    }
+  }
 
-	// .forum-subject{
-	// 	@include flex-center;
-	// 	flex-direction: column;
+  // .forum-subject{
+  // 	@include flex-center;
+  // 	flex-direction: column;
 
-	// 	.subject-name{
-	// 		margin: 0;
-	// 		padding: 12px 0;
-	// 	}
-	// }
-	.forum-subject{
-		padding: 15px;
+  // 	.subject-name{
+  // 		margin: 0;
+  // 		padding: 12px 0;
+  // 	}
+  // }
+  .forum-subject {
+    padding: 15px;
 
+    .forum-subject-header {
+      display: flex;
+      justify-content: space-between;
 
-	.forum-subject-header{
-		display: flex;
-		justify-content: space-between;
+      .topic-title {
+        color: #b3b3b3;
+        margin: 0;
+        padding-bottom: 5px;
+      }
 
-		.topic-title{
-			color:#B3B3B3;
-			margin: 0;
-			padding-bottom: 5px;
-		}
+      .ask-question {
+        background-color: transparent;
+        border: 1px solid darken($clr-green-play, $amount: 20);
+        color: #b3b3b3;
+        padding: 4px 10px;
+        font-size: 16px;
+      }
+    }
+  }
 
-		.ask-question{
-			background-color: transparent;
-			border: 1px solid darken($clr-green-play, $amount: 20);
-			color:#B3B3B3;
-			padding: 4px 10px;
-			font-size: 16px;
-		}
-	}
+  hr {
+    width: 100%;
+    margin: 0;
+  }
 
-		
-	}
+  .lets-talk-music-logo {
+    position: absolute;
+    @include flex-center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -10;
 
+    .lets-talk-music {
+      position: absolute;
+      top: 30px;
+      font-family: "tech";
+      @include flex-center;
+      flex-direction: column;
+      gap: 8px;
 
-	hr {
-		width: 100%;
-		margin: 0;
-	}
+      .first {
+        font-size: 24px;
+        color: #6370f4;
+      }
+      .second {
+        font-size: 16px;
+        color: $clr-green-play;
+      }
+      .third {
+        font-size: 24px;
+        color: #6370f4;
+      }
+    }
+  }
+}
+
+@include for-tablet-layout {
+  .app-menu-container {
+    width: 100%;
+    height: calc(100% - 60px);
+  }
+}
+
+@include for-mobile-layout {
+  .app-menu-container {
+    font-size: 16px;
+  }
 }

@@ -1,106 +1,201 @@
 .station-deatils {
-    grid-area: main-content;
-    // background-color: $clr-black-12;
-    // padding-inline-start: 32px;
-    margin-right: 8px;
-    border-radius: 8px;
-    overflow-y:auto;
-    overflow-x: hidden;
-    // background-image:linear-gradient(#20173F 1%, $clr-black-12 99%);
-    // background-image: linear-gradient(#20173F,$clr-black-12 100%);
-    // background-repeat: no-repeat;
+  grid-area: main-content;
+  // background-color: $clr-black-12;
+  // padding-inline-start: 32px;
+  margin-right: 8px;
+  border-radius: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  // background-image:linear-gradient(#20173F 1%, $clr-black-12 99%);
+  // background-image: linear-gradient(#20173F,$clr-black-12 100%);
+  // background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+
+  .color-container {
+    // transform: 90deg;
+    height: 100%;
+    // flex: 1;
+  }
+
+  .no-section-header {
+    background-color: $clr-black-28;
+    padding: 6px 8px 6px 36px;
+    z-index: 10;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    position: sticky;
+    top: 0;
 
+    .play-btn {
+      font-size: 48px;
+      color: $clr-green-play;
+    }
+    .three-dots-container {
+      font-size: 24px;
+      color: $clr-text-grey;
 
+      .three-dots-modal {
+        left: 0;
+      }
+    }
+  }
 
-    .color-container {
-        // transform: 90deg;
-        height: 100%;
-        // flex: 1;
+  .play-btn-station {
+    padding: 24px 55px 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    position: sticky;
+    top: 0;
 
+    .play-btn {
+      font-size: 56px;
+      color: $clr-green-play;
+      cursor: pointer;
+      // padding-left: 22px;
     }
 
+    .three-dots-container {
+      font-size: 24px;
+      color: $clr-text-grey;
+      position: relative;
 
-    .play-btn-station {
-        padding: 24px 32px;
-        display: flex;
-        align-items: center;
-        gap: 32px;
-
-
-        .three-dots-container {
-            font-size: 24px;
-            color: $clr-text-grey;
-
-            .three-dots-modal {
-                left: 0;
-            }
-        }
-
-        // margin: 32px 24px 0px 24px;
-        // padding-inline-start: 32px;
-        // padding: 24px ;
+      .three-dots-modal {
+        left: 30px;
+        top: 10px;
+      }
     }
 
-    .station-details-container {
-        color: $clr-white-F;
-        padding: 0 32px;
-        list-style-type: none;
+    // margin: 32px 24px 0px 24px;
+    // padding-inline-start: 32px;
+    // padding: 24px ;
+  }
 
-        .details-header {
-            font-size: 12px;
-            height: 36px;
-            @include flex-center;
-            justify-content: flex-start;
-            gap: 16px;
-            color: $clr-text-grey;
-            border-bottom: 1px solid hsla(0, 0%, 100%, .1);
-            padding-inline-start: 22px;
+  .station-details-container {
+    color: $clr-white-F;
+    list-style-type: none;
+    box-sizing: border-box;
+    // padding: 0 32px;
 
-        }
+    .draggable-song {
+      box-sizing: border-box;
+      padding: 0 32px;
+      background-color: $clr-black-12;
     }
+
+    .details-header {
+      font-size: 12px;
+      height: 36px;
+      @include flex-center;
+      justify-content: flex-start;
+      gap: 16px;
+      color: $clr-text-grey;
+      border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+      padding-inline-start: 52px;
+      padding-inline-end: 32px;
+      position: sticky;
+      top: 69px;
+      z-index: 20;
+    }
+    div {
+      h1 {
+        padding: 0 36px;
+      }
+    }
+  }
 }
-
-@include for-mobile-layout {
-    .station-deatils {
-        margin: 0;
-        
-        .play-btn-station {
-            justify-content: center;
-            padding: 24px 16px;
-        }
-
-        .station-details-container {
-            padding: 0;
-            padding-inline-start: 16px;
-            .details-header{
-                display: none;
-            }
-        }
+@include for-laptop-layout {
+  .station-header-container {
+    .station-header-img {
+      img {
+        height: 192px;
+        width: 192px;
+      }
     }
+  }
 }
 
 @include for-laptop-narrow-layout {
-    .station-deatils {
-        .play-btn-station {
-            padding: 24px 16px;
-        }
-
-        .station-details-container {
-            padding: 0;
-            padding-inline-start: 16px;
-        }
+  .station-deatils {
+    .play-btn-station {
+      padding: 24px 24px 24px 16px;
     }
+
+    .station-details-container {
+      // padding-inline-start: 16px;
+      .draggable-song {
+        box-sizing: border-box;
+        padding: 0;
+      }
+      .details-header {
+        padding-inline: 0;
+        padding-inline-start: 22px;
+      }
+    }
+  }
 }
 
-@include for-laptop-layout {
-    .station-header-container {
-        .station-header-img {
-            img {
-                height: 192px;
-                width: 192px;
-            }
+@include for-tablet-layout {
+  .station-deatils {
+    margin: 0;
+
+    .color-container {
+      .play-btn-station {
+        justify-content: center;
+        padding: 24px 16px;
+
+        .three-dots-container {
+          .three-dots-modal {
+            left: 0px;
+            top: 20px;
+          }
         }
+      }
     }
+
+    .station-details-container {
+      padding: 0;
+      // padding-inline-start: 16px;
+      .details-header {
+        display: none;
+      }
+    }
+  }
 }
+
+@include for-mobile-layout {
+  .station-deatils {
+    .color-container {
+      .play-btn-station {
+        justify-content: space-around;
+        .three-dots-container {
+          .three-dots-modal {
+            left: -100px;
+            top: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// @include for-tablet-layout {
+//   .station-deatils {
+//     margin: 0;
+//     .station-details-container {
+//       .details-header {
+//         :nth-child(2) {
+//           flex: 1;
+//         }
+//       }
+//       .song-container {
+//         .song-img-title {
+//           flex: 1;
+//         }
+//       }
+//     }
+//   }
+// }

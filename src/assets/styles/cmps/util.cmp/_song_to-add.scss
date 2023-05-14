@@ -1,69 +1,117 @@
 .search-result {
+  // width: 100%;
+  // display: flex;
+  @include flex-center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  // width: 100%;
+  width: 430px;
+  gap: 16px;
+  height: 56px;
+  font-size: 16px;
+  border-radius: 4px;
+  border-bottom: 1px solid $clr-black-28;
+  cursor: pointer;
+  // padding-inline-start: 22px;
 
-    // width: 100%;
-    // display: flex;
-    @include flex-center;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    width: 100%;
-    gap: 16px;
-    height: 56px;
-    font-size: 16px;
-    border-radius: 4px;
-    border-bottom: 1px solid $clr-black-28;
-    // padding-inline-start: 22px;
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    transition: background-color 500ms;
+  }
 
-    &:hover {
-        background-color: hsla(0, 0%, 100%, .1);
-        transition: background-color 500ms;
+  .search-result-img {
+    height: 100%;
+    border-radius: 3px;
+    img {
+      height: 56px;
+      width: 56px;
     }
+  }
+
+  .title-autor {
+    width: 320px;
+    //   white-space: nowrap;
+    //   overflow: visible;
+    //   position: relative;
+
+    //   .title {
+    //     font-size: 16px;
+    //     color: $clr-white-F;
+    //     overflow: hidden;
+    //   }
+
+    //   .autor {
+    //     overflow: hidden;
+    //     font-size: 14px;
+    //   }
+  }
+
+  .actions {
+    margin-right: 15px;
+    width: 10px;
+    justify-self: flex-end;
+    text-align: end;
+    padding-inline-end: 8px;
+
+    .three-dots-container {
+      position: relative;
+
+      .three-dots-modal {
+        position: absolute;
+        top: 15px;
+        // left: 5px;
+        right: 0px;
+      }
+      .playlist-modal {
+        position: absolute;
+        // top: 110px;
+      }
+    }
+  }
+
+  .added-at {
+    font-size: 14px;
+  }
+}
+
+@include for-tablet-layout {
+  .search-result {
+    height: 40px;
+    width: 100%;
+    gap: 24px;
 
     .search-result-img {
-        height: 100%;
-        border-radius: 3px;
+      height: 100%;
+      width: 40px;
+      border-radius: 3px;
+
+      img {
+        height: 40px !important;
+        width: 40px !important;
+      }
     }
 
     .title-autor {
-        width: 100%;
+      flex: 1;
+      .title {
+        font-size: 14px;
+      }
 
-        .title {
-            font-size: 16px;
-            color: $clr-white-F;
-        }
-
-        .autor {
-            font-size: 14px;
-        }
+      .autor {
+        font-size: 12px;
+      }
     }
-
-
-    // @include flex-center;
-
-    // align-self: flex-start;
 
     .actions {
-        margin-right: 15px;
-        width: 10px;
-        justify-self: flex-end;
-        text-align: end;
-        padding-inline-end: 8px;
+      margin-right: 6px;
 
-        .three-dots-container{
-            position: relative;
-            
-            .three-dots-modal{
-                position: absolute;
-                top: 15px;
-                left: 5px;
-            }
+      .three-dots-container {
+        .three-dots-modal {
+          position: absolute;
+          top: 15px;
+          left: 5px;
         }
-
-
-        
+      }
     }
-
-    .added-at {
-        font-size: 14px;
-    }
-
+  }
 }

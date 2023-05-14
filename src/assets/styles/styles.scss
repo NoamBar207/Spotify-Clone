@@ -1,46 +1,44 @@
-
 //Set-up
-@import './set-up/mixins';
-@import './set-up/variables';
-@import './set-up/typography';
-
+@import "./set-up/mixins";
+@import "./set-up/variables";
+@import "./set-up/typography";
 
 ///Pages
-@import './pages/homepage';
-@import './pages/station-details';
-@import './pages/search-page';
-@import './pages/sign-up';
-@import './pages/song-deatils';
-@import './pages/librarypage';
-
-
-///Cmps
-@import './cmps/playlists';
-@import './cmps/app-footer';
-@import './cmps/station-header';
-@import './cmps/main-menu';
-@import './cmps/app-header';
-@import './cmps/app-menu';
+@import "./pages/homepage";
+@import "./pages/station-details";
+@import "./pages/search-page";
+@import "./pages/sign-up";
+@import "./pages/song-deatils";
+@import "./pages/librarypage";
 
 //Util Cmps
-@import './cmps/util.cmp/ganere-cmp';
-@import './cmps/util.cmp/card-cmp';
-@import './cmps/util.cmp/util-btn';
-@import './cmps/util.cmp/narrow-card-cmp';
-@import './cmps/util.cmp/station-song';
-@import './cmps/util.cmp/loader-search';
-@import './cmps/util.cmp/song_to-add';
-@import './cmps/util.cmp/three-dots';
-@import './cmps/util.cmp/topic-prev';
-@import './cmps/util.cmp/login-signup-modal';
-@import './cmps/util.cmp/popup-msg';
+@import "./cmps/util.cmp/ganere-cmp";
+@import "./cmps/util.cmp/card-cmp";
+@import "./cmps/util.cmp/util-btn";
+@import "./cmps/util.cmp/narrow-card-cmp";
+@import "./cmps/util.cmp/station-song";
+@import "./cmps/util.cmp/loader-search";
+@import "./cmps/util.cmp/song_to-add";
+@import "./cmps/util.cmp/three-dots";
+@import "./cmps/util.cmp/topic-prev";
+@import "./cmps/util.cmp/login-signup-modal";
+@import "./cmps/util.cmp/popup-msg";
+@import "./cmps/util.cmp/song-title-author";
+
+///Cmps
+@import "./cmps/playlists";
+@import "./cmps/app-footer";
+@import "./cmps/station-header";
+@import "./cmps/main-menu";
+@import "./cmps/app-header";
+@import "./cmps/app-menu";
 
 //App Forum
-@import './cmps/appForum/chat-app';
-@import './cmps/appForum/selected-msg';
+@import "./cmps/appForum/chat-app";
+@import "./cmps/appForum/selected-msg";
 
-//Responsive 
-@import './cmps/responsive/responsive-footer';
+//Responsive
+@import "./cmps/responsive/responsive-footer";
 
-//Basic 
-@import './basic/basic';
+//Basic
+@import "./basic/basic";

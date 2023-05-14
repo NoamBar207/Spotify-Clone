@@ -1,72 +1,77 @@
 .main-menu-container {
-	grid-area: menu;
-	background-color: $clr-black-000;
-	color: $clr-text-grey;
-	display: flex;
-	flex-direction: column;
-	margin-left: 8px;
-	border-radius: 8px;
-	// margin-top: 16px;
-	// z-index: 10;
-	// width: 200px;
-	// transition: 0.4s;
+  grid-area: menu;
+  background-color: $clr-black-000;
+  color: $clr-text-grey;
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+  border-radius: 8px;
+  overflow-y: auto;
+  // margin-top: 16px;
+  // z-index: 10;
+  // width: 200px;
+  // transition: 0.4s;
 
-	&.show {
-		right: 0;
-	}
+  &.show {
+    right: 0;
+  }
 
-	.menu-link {
-		text-decoration: none;
-		color: $clr-text-grey;
-		height: 40px;
-		padding: 0 16px;
-		display: flex;
-		align-items: center;
-		gap: 16px;
-		font-family: font-circ-bold;
-		font-size: 13px;
+  .menu-actions {
+    height: fit-content;
+  }
 
-		&:hover{
-			background-color: $clr-hover;
-			transition: background-color 500ms;
-		}
+  .menu-link {
+    text-decoration: none;
+    color: $clr-text-grey;
+    height: 40px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: font-circ-bold;
+    font-size: 13px;
 
-		.menu-create-playlist {
-			@include flex-center;
-			background-color: $clr-text-grey;
-			height: 24px;
-			width: 24px;
-			border-radius: 3px;
-			// padding: 6px 6px 4px 6px;
-		}
+    &:hover {
+      background-color: $clr-hover;
+      transition: background-color 500ms;
+    }
 
-	}
+    .menu-create-playlist {
+      @include flex-center;
+      background-color: $clr-text-grey;
+      height: 24px;
+      width: 24px;
+      border-radius: 3px;
+      // padding: 6px 6px 4px 6px;
+    }
+  }
 
-	.menu-pic {
-		svg {
-			fill: $clr-text-grey;
-		}
-	}
+  .menu-pic {
+    svg {
+      fill: $clr-text-grey;
+    }
+  }
 
-	hr {
-		width: 80%;
-		border: 0;
-		height: 1px;
-		background-color: $clr-black-grey;
-	}
+  hr {
+    width: 80%;
+    border: 0;
+    height: 1px;
+    background-color: $clr-black-grey;
+  }
 
-	.menu-stations-title{
-		font-size: 12px;
-		padding: 6px;
-	}
-
+  .menu-stations-title {
+    font-size: 12px;
+    padding: 6px;
+  }
 }
 
-
 @include for-laptop-narrow-layout {
-	.main-menu-container {
-		.menu-link {
-			gap:8px;
-		}
-	}
+  .main-menu-container {
+    .menu-link {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      gap: 6px;
+    }
+  }
 }

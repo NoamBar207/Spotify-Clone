@@ -1,113 +1,173 @@
 .song-container {
-    // width: 100%;
-    // display: flex;
-    @include flex-center;
-    justify-content: flex-start;
-    // justify-content: space-between;
-    box-sizing: border-box;
-    gap: 16px;
-    height: 56px;
-    font-size: 16px;
-    border-radius: 4px;
-    padding-inline-start: 22px;
+  // width: 100%;
+  // display: flex;
+  @include flex-center;
+  justify-content: flex-start;
+  // justify-content: space-between;
+  box-sizing: border-box;
+  gap: 16px;
+  height: 56px;
+  font-size: 16px;
+  border-radius: 4px;
+  padding-inline-start: 22px;
 
-    &:hover {
-        background-color: $clr-hover;
+  &:hover {
+    background-color: $clr-hover;
+  }
+
+  .song-img-title {
+    // @include flex-center;
+    display: flex;
+    align-items: center;
+    width: 30vw;
+    gap: 12px;
+    flex: 1;
+
+    img {
+      display: flex;
+      // align-self: flex-start;
+      justify-self: flex-start;
     }
-
-    .song-img-title {
-        // @include flex-center;
-        display: flex;
-        align-items: center;
-        width: 30vw;
-        gap: 12px;
-
-        img {
-            display: flex;
-            // align-self: flex-start;
-            justify-self: flex-start;
-        }
-
-    }
-
-    .added-at {
-        font-size: 14px;
+    .title-autor {
+      .title {
         flex: 1;
-        // width: 500px;
+      }
+      .autor {
+        color: $clr-search-grey;
+      }
     }
+  }
 
+  .added-at {
+    font-size: 14px;
+    width: 100px;
+    // width: 500px;
+  }
 
-    .song-actions {
-        justify-self: flex-end;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        width: 125px;
-        justify-content: space-between;
+  .song-actions {
+    justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 130px;
+    justify-content: space-between;
 
-        .three-dots-container {
-            // background-color: green;
-            justify-self: flex-end;
-            padding-right: 25px;
-            position: relative;
-            // justify-content: flex-end;
-            // flex: 1;
+    .three-dots-container {
+      // background-color: green;
+      justify-self: flex-end;
+      padding-right: 25px;
+      position: relative;
+      // justify-content: flex-end;
+      // flex: 1;
 
-            .three-dots-modal {
-                // top: 5px;
-            }
+      .three-dots-modal {
+        // top: 5px;
+        position: absolute;
+        right: 40px;
+        top: -85px;
+      }
 
-            .playlist-modal {
-                position: absolute;
-                left: 0;
-                // right: 100%;
-                top: 67px;
-                left: -305px;
-                min-width: 120px;
+      .playlist-modal {
+        // right: 100%;
+        position: absolute;
+        top: 6px;
+        right: 40px;
+        left: auto;
+        // left: -100px;
+        min-width: 120px;
 
-                .three-dots-btn {
-                    font-size: 14px;
-                    width: fit-content;
-                    padding: 8px;
-                    width: 100%;
-
-                }
-            }
+        .three-dots-btn {
+          font-size: 14px;
+          width: fit-content;
+          padding: 8px;
+          width: 100%;
         }
+      }
     }
+  }
 }
 
+@include for-tablet-layout {
+  .song-container {
+    padding-inline-start: 5px;
+
+    .song-img-title {
+      flex: 2;
+
+      .station-details-song {
+        flex: 2;
+      }
+    }
+
+    .song-actions {
+      justify-content: space-between;
+      gap: 24px;
+
+      .three-dots-container {
+        width: 10px;
+        justify-content: normal;
+      }
+    }
+  }
+}
+
+@media screen and(max-width:570px) {
+  .song-container {
+    .added-at,
+    .song-num {
+      display: none;
+    }
+  }
+}
 
 @include for-mobile-layout {
-    .song-container {
-        padding-inline-start: 5px;
+  .song-container {
+    padding-inline-start: 5px;
 
-        .song-img-title {
-            flex: 1;
+    .song-img-title {
+      flex: 1;
 
-            .station-details-song {
-                flex: 1;
-            }
-        }
-
-        .added-at,
-        .song-num {
-            display: none;
-        }
-
-        .song-actions {
-            justify-content: center;
-            gap: 24px;
-            width: fit-content;
-
-            .song-duration {
-                display: none;
-            }
-            .three-dots-container{
-                width: 10px;
-                justify-content: normal;
-            }
-
-        }
+      .station-details-song {
+        flex: 1;
+      }
     }
+
+    .added-at,
+    .song-num {
+      display: none;
+    }
+
+    .song-actions {
+      justify-content: center;
+      gap: 24px;
+      width: fit-content;
+
+      .song-duration {
+        display: none;
+      }
+      .three-dots-container {
+        width: 10px;
+        justify-content: normal;
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 380px) {
+  .song-container {
+    .song-img-title {
+      .title-autor {
+        max-width: 170px;
+      }
+    }
+  }
+}
+@media screen and(max-width: 330px) {
+  .song-container {
+    .song-img-title {
+      .title-autor {
+        max-width: 120px;
+      }
+    }
+  }
 }

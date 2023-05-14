@@ -1,112 +1,184 @@
 .library-page-container {
-    color: $clr-white-F;
-    grid-area: main-content;
-    padding: 0 24px 32px 24px;
-    overflow-y: auto;
+  color: $clr-white-F;
+  grid-area: main-content;
+  padding: 0 24px 32px 24px;
+  overflow-y: auto;
+  background: linear-gradient(#2a1f52 1%, #121212, #000000);
+  background-repeat: no-repeat;
+
+  .your-playlist-container {
+    .menu-link {
+      display: none;
+    }
+  }
+
+  h1 {
+    margin: 0;
+    padding: 16px 0;
+  }
+
+  .library-header {
+    display: flex;
+    align-items: center;
+    // padding-bottom: 12px;
+    width: 100%;
 
     h1 {
-        margin: 0;
-        padding: 16px 0;
+      flex: 1;
+      font-size: 36px;
+    }
+    // h1 {
+    //     flex: 1;
+    //     padding: 8px 0 ;
+    //     font-size: 36px;
+    // }
+
+    .library-create-playlist {
+      display: none;
+    }
+  }
+
+  .library-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    // grid-auto-rows: auto;
+    grid-template-rows: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 24px;
+
+    .library-liked-card {
+      grid-column: span 2;
+
+      .card-img {
+        img {
+          aspect-ratio: 2.3/1;
+        }
+      }
     }
 
+    .card-container {
+      background-color: $clr-black-18;
 
-    .library-grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        // grid-auto-rows: auto;
-        grid-template-rows: repeat(auto-fill, minmax(180px, 1fr));
-        grid-gap: 24px;
+      &:hover {
+        background-color: $clr-hover;
+        transition: background-color 500ms;
+      }
 
-
-
-
-        .library-liked-card {
-            grid-column: span 2;
-
-            .card-img {
-                img {
-                    aspect-ratio: 2.3/1;
-                }
-            }
+      .card-info {
+        .card-title {
+          height: 30px;
+          // overflow: hidden
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
-        .card-container {
-            background-color: $clr-black-18;
-
-            &:hover{
-                background-color: $clr-hover;
-                transition: background-color 500ms;
-            }
-
-            .card-info {
-                .card-title {
-                    height: 30px;
-                    // overflow: hidden
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                }
-
-                .card-autors {
-                    flex: 1;
-                    display: flex;
-                    align-items: flex-end;
-                }
-            }
+        .card-autors {
+          flex: 1;
+          display: flex;
+          align-items: flex-end;
         }
+      }
     }
+  }
 }
 
-
+@include for-tablet-layout {
+  .your-playlist-container {
+    display: flex;
+    justify-content: space-between;
+    .menu-link {
+      padding: 16px;
+      .menu-create-playlist {
+        @include flex-center;
+        background-color: $clr-text-grey;
+        height: 24px;
+        width: 24px;
+        border-radius: 3px;
+      }
+    }
+  }
+}
 
 @include for-mobile-layout {
-    .library-page-container {
-        overflow-x: hidden;
-        padding: 20px 16px;
+  .library-page-container {
+    overflow-x: hidden;
+    padding: 20px 16px;
 
-        .library-grid-container {
-            gap: 8px;
-            display: flex;
-            flex-direction: column;
-            // flex-wrap: wrap;
+    .library-header {
+      @include flex-center;
+      // padding-bottom: 12px;
+      width: 100%;
 
-            
-            .card-container {
-                display: flex;
-                align-items: center;
-                flex: 1;
-                flex-direction: row;
-                width: 100% !important;
-                max-width: 100%;
-                gap: 24px;
+      .user-logo {
+        height: 32px;
+        width: 32px;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
 
-                .card-img {
-                    flex: 0.3;
-                }
-                
-                .card-info {
-                    .card-title {
-                        height: 30px;
-                        // overflow: hidden
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                    }
+      h1 {
+        flex: 1;
+        font-size: 36px;
+        padding: 0;
+      }
+      // h1 {
+      //     flex: 1;
+      //     padding: 8px 0 ;
+      //     font-size: 36px;
+      // }
 
-                    .card-autors {
-                        flex: 1;
-                        display: flex;
-                        align-items: flex-end;
-                    }
-                }
-            }
-            .library-liked-card{
-                .card-img{
-                    img{
-                        aspect-ratio: 1/1;
-                    }
-                }
-            }
-        }
+      .library-create-playlist {
+        display: block;
+        font-size: 24px;
+        padding: 0 12px;
+      }
     }
+
+    .library-grid-container {
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      // flex-wrap: wrap;
+
+      .card-container {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        flex-direction: row;
+        width: 100% !important;
+        max-width: 100%;
+        gap: 24px;
+
+        .card-img {
+          img {
+            height: 80px;
+            width: 80px;
+          }
+        }
+
+        .card-info {
+          .card-title {
+            height: 30px;
+            // overflow: hidden
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          .card-autors {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+          }
+        }
+      }
+      .library-liked-card {
+        .card-img {
+          img {
+            aspect-ratio: 1/1;
+          }
+        }
+      }
+    }
+  }
 }

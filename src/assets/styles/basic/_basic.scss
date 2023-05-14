@@ -1,81 +1,88 @@
 html {
-    font-family: font-circ-bold, font-circ-heb;
+  font-family: font-circ-bold, font-circ-heb;
 }
 
-*> {
-    font-family: font-circ-bold, font-circ-heb;
+* > {
+  font-family: font-circ-bold, font-circ-heb;
 }
 
 body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    font-family: font-circ-bold, font-circ-heb;
-    overflow: hidden;
-    
-    
-    ::-webkit-scrollbar {
-        width: 0px;
-        height: 0px;
-    }
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: font-circ-bold, font-circ-heb;
+  overflow: hidden;
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 }
 
 button {
-    font-family: font-circ-bold, font-circ-heb;
+  font-family: font-circ-bold, font-circ-heb;
 }
 
 h2 {
-    margin: 0;
+  margin: 0;
 }
 
 .root-cmp {
-    height: 100vh;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    // height: 100%;
-    display: grid;
-    // grid-gap: 8px;
-    background-color: $clr-black-000;
-    // grid-column-gap: 8px;
-    grid-template-columns: 180px calc(100% - 180px);
-    grid-template-rows: 64px calc(100% - 144px) 80px;
-    grid-template-areas:
-        "app-header app-header"
-        "menu main-content"
-        "app-footer app-footer";
-        
-        ul {
-        padding: 0;
-        margin: 0;
-    }
+  height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  // height: 100%;
+  display: grid;
+  // grid-gap: 8px;
+  background-color: $clr-black-000;
+  // grid-column-gap: 8px;
+  grid-template-columns: 180px calc(100% - 180px);
+  grid-template-rows: 64px calc(100% - 144px) 80px;
+  grid-template-areas:
+    "app-header app-header"
+    "menu main-content"
+    "app-footer app-footer";
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .hide {
-    visibility: hidden;
+  visibility: hidden;
 }
-
 
 .hide-none {
-    display: none !important;
+  display: none !important;
 }
 
-
 @include for-laptop-narrow-layout {
-    .root-cmp {
-        // grid-column-gap: 8px;
-        grid-template-columns: 165px calc(100% - 165px);
-    }
+  .root-cmp {
+    // grid-column-gap: 8px;
+    grid-template-columns: 140px calc(100% - 140px);
+  }
+}
+
+@include for-tablet-layout {
+  .root-cmp {
+    grid-template-columns: 100%;
+    grid-template-rows: calc(100% - 60px) 60px;
+    grid-template-areas:
+      "main-content"
+      "app-footer";
+  }
 }
 
 @include for-mobile-layout {
-    .root-cmp {
-        overflow-x: hidden;
-        font-family: font-circ-bold, font-circ-heb;
-        // grid-column-gap: 8px;
-        grid-template-columns: 100%;
-        grid-template-rows: calc(100% - 60px) 60px;
-        grid-template-areas:
-            "main-content"
-            "app-footer";
-    }
+  .root-cmp {
+    overflow-x: hidden;
+    font-family: font-circ-bold, font-circ-heb;
+    // grid-column-gap: 8px;
+    grid-template-columns: 100%;
+    grid-template-rows: calc(100% - 60px) 60px;
+    grid-template-areas:
+      "main-content"
+      "app-footer";
+  }
 }

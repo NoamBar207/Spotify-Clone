@@ -1,0 +1,16 @@
+.title-autor {
+  white-space: nowrap;
+  overflow: visible;
+  position: relative;
+
+  .title {
+    font-size: 16px;
+    color: $clr-white-F;
+    overflow: hidden;
+  }
+
+  .autor {
+    overflow: hidden;
+    font-size: 12px;
+  }
+}
