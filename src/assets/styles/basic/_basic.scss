@@ -36,6 +36,7 @@ h2 {
   // grid-gap: 8px;
   background-color: $clr-black-000;
   // grid-column-gap: 8px;
+  font-family: font-circ-bold, font-circ-heb;
   grid-template-columns: 180px calc(100% - 180px);
   grid-template-rows: 64px calc(100% - 144px) 80px;
   grid-template-areas:
@@ -77,7 +78,6 @@ h2 {
 @include for-mobile-layout {
   .root-cmp {
     overflow-x: hidden;
-    font-family: font-circ-bold, font-circ-heb;
     // grid-column-gap: 8px;
     grid-template-columns: 100%;
     grid-template-rows: calc(100% - 60px) 60px;
