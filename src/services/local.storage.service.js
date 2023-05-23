@@ -64,8 +64,6 @@ function getById(stationId) {
 
 function updateStation(updatedStation) {
   let user = loadFromStorage(USER_KEY);
-  console.log(user);
-  console.log(updatedStation);
   if (updatedStation.name === "Liked Songs") {
     user.likedSongs = updatedStation.songs;
   } else {

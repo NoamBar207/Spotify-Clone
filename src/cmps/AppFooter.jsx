@@ -31,9 +31,6 @@ export const AppFooter = () => {
   const [volume, setVolume] = useState(0);
   const [reapetInd, setReapetInd] = useState("");
   const [isLiked, setIsLiked] = useState(false);
-  const containerRef = useRef();
-  const titleRef = useRef();
-  const authorRef = useRef();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +38,7 @@ export const AppFooter = () => {
   // let songTimeInterval = useRef(0)
   let intervalId = useRef();
   let appFooterRef = useRef();
+  let songContainerRef = useRef();
 
   const dispatch = useDispatch();
   const opts = {
@@ -191,7 +189,6 @@ export const AppFooter = () => {
       currSong
     );
     dispatch(onSetShuffele(!isShuffeld));
-    console.log(shuffeldSongs);
     dispatch(setCurrStation({ ...currStation, songs: shuffeldSongs }));
   };
 
@@ -200,7 +197,6 @@ export const AppFooter = () => {
       if (!reapetInd) setReapetInd("repeat-all");
       else if (reapetInd === "repeat-all") setReapetInd("repeat-one");
       else setReapetInd("");
-      // console.log(reapetInd);
     } else return;
   };
 

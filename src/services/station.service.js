@@ -4,9 +4,6 @@ import { localStorageService } from "./local.storage.service";
 import { songService } from "./song.service";
 import { userService } from "./user.service";
 import { utilService } from "./util.service";
-// const gStation = require('../data/station.json')
-// console.log(gStation);
-// const gStation
 
 const STORAGE_KEY = "station";
 
@@ -20,24 +17,14 @@ export const stationService = {
   updateStation,
   deleteStation,
   shuffleStation,
-  // remove,
-  // save
 
   getStationDuration,
 };
 
 async function query() {
-  // const stations = await storageService.query(STORAGE_KEY)
-  // const stations = await httpService.get(STORAGE_KEY)
   const stations = await httpService.get(STORAGE_KEY);
   return stations;
 }
-
-// async function update(station) {
-//     var updatedStation = await storageService.put(STORAGE_KEY, station)
-
-//     return updatedStation
-// }
 
 async function getById(stationId) {
   var station = !stationId.includes("guest")
@@ -140,7 +127,6 @@ function shuffleStation(array, currSong) {
   let currentIndex = array.length - 1;
   let randomIndex;
   const newArr = array.filter((song) => song.videoId !== currSong.videoId);
-  // console.log(currentIndex);
   // While there remain elements to shuffle.
   while (currentIndex !== 0) {
     // Pick a remaining element.
@@ -156,43 +142,3 @@ function shuffleStation(array, currSong) {
   if (Object.keys(currSong).length) newArr.unshift(currSong);
   return newArr;
 }
-
-// function remove(stationId) {
-//     const idx = gStation.findIndex(song => song._id === songId)
-//     gStation.splice(idx, 1)
-//     return _saveSongsToFile();
-// }
-
-// function save(song) {
-//     if (song._id) {
-//         const idx = gStation.findIndex(currSong => currSong._id === song._id)
-//         gStation[idx] = song
-//     } else {
-//         song._id = _makeId();
-//         gStation.push(song);
-//     }
-//     return _saveSongsToFile().then(() => song);
-// }
-
-// function _makeId(length = 5) {
-//     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-//     var txt = ''
-//     for (let i = 0; i < length; i++) {
-//         txt += possible.charAt(Math.floor(Math.random() * possible.length))
-//     }
-//     return txt
-// }
-
-// function _saveSongsToFile() {
-//     return new Promise((resolve, reject) => {
-//         fs.writeFile('data/station.json', JSON.stringify(gStation, null, 2), (err) => {
-//             if (err) {
-//                 console.log(err);
-//                 reject('Cannot write to file')
-//             } else {
-//                 console.log('Wrote Successfully!')
-//                 resolve()
-//             }
-//         })
-//     })
-// }

@@ -4,14 +4,6 @@
 import { SongToAdd } from "./SongToAdd";
 
 export const SearchResults = ({ isSearchYotube, items }) => {
-  // const [results, setResults] = useState([])
-
-  // useEffect(() => {
-  //   // console.log('Resultsss', items);
-  //   // onMount()
-  //   console.log(items);
-  // }, [items]);
-
   return (
     <section className="search-results-container">
       {Object.keys(items).length &&

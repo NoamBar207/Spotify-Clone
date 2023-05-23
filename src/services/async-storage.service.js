@@ -3,7 +3,6 @@
 // const station = require('../data/station.json')
 const station = require("../data/station.json");
 
-// console.log(station);
 export const storageService = {
   query,
   get,
@@ -27,7 +26,6 @@ function query(entityType, delay = 200) {
     }
   }
 
-  // console.log(entities);
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       // reject('OOOOPs')
@@ -42,7 +40,6 @@ function get(entityType, entityId) {
   return query(entityType).then((entities) =>
     entities.find((entity) => {
       if (entity._id === entityId) {
-        // console.log('in get async  ', entity)
         return entity;
       }
     })
@@ -50,7 +47,6 @@ function get(entityType, entityId) {
 }
 function post(entityType, newEntity) {
   newEntity._id = _makeId();
-  // console.log(newEntity)
   return query(entityType).then((entities) => {
     entities.push(newEntity);
     _save(entityType, entities);
@@ -106,25 +102,6 @@ function load(key) {
   if (localUser) return localUser;
   else return {};
 }
-
-// function save(entityType, entity) {
-// 	let arrStation = []
-// 	let stations = JSON.parse(localStorage.getItem(entityType));
-// 	// console.log(stations);
-// 	if (stations) {
-// 		let isExsit = stations.forEach(stat => {
-// 			if(stat._id === entity._id) return true
-// 			else return false
-// 		});
-// 		console.log(isExsit);
-// 		if (!isExsit) arrStation = [...stations, entity]
-// 	}
-// 	else arrStation.push(entity)
-// 	// console.log(arrStation);
-// 	// const isSavedAlready = stations.find(entity)
-// 	// console.log(isSavedAlready);
-// 	localStorage.setItem(entityType, JSON.stringify(arrStation));
-// }
 
 function isExist(key) {
   return !!localStorage.getItem(key);

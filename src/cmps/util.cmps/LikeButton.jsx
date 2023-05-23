@@ -31,7 +31,6 @@ export const LikeButton = ({ songProp = null }) => {
     ev.stopPropagation();
     const song = !songProp ? currSong : songProp;
     let userReturned = await songService.addSongToLike(song, currUser, isLiked);
-    console.log(currUser);
     setIsLiked(!isLiked);
     if (Object.keys(currUser).length) {
       userReturned = await userService.updateUser(userReturned);

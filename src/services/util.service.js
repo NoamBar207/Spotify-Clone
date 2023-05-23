@@ -81,22 +81,18 @@ function getSongDurationToMin(songDuration) {
     }
   }
 
-  // console.log(stringToReturn);
   return stringToReturn;
 }
 
 function getFormatedDate(date) {
   const options = { month: "short", day: "numeric", year: "numeric" };
   const MM = date.toLocaleString("en-us", options);
-  // const time = date.toLocaleTimeString()
   const createdAt = `${MM}`;
   return createdAt;
 }
 
 function shuffleFunc(songs, currSong) {
   let songsCopy = cloneDeep(songs);
-  // let songsCopy = JSON.parse(JSON.stringify(songs))
-  // console.log(songsCopy[0], 'songsCopy');
   let songsCopyLength = songsCopy.length - 1;
   let currSongIdx = songsCopy.findIndex(
     (song) => song.id.videoId === currSong.id.videoId
@@ -110,27 +106,8 @@ function shuffleFunc(songs, currSong) {
     // And swap it with the current element.
     listToReturn.push(songsCopy[randomIndex]);
     songsCopy.splice(randomIndex);
-    //   [songs[currentIndex], songs[randomIndex]] = [
-    // songs[randomIndex], songs[currentIndex]];
   }
   return listToReturn;
-
-  // console.log(copySongs);
-  // let currentIndex = songs.length, randomIndex;
-
-  // // While there remain elements to shuffle.
-  // while (currentIndex != 0) {
-
-  //     // Pick a remaining element.
-  //     randomIndex = Math.floor(Math.random() * currentIndex);
-  //     currentIndex--;
-
-  //     // And swap it with the current element.
-  //     [songs[currentIndex], songs[randomIndex]] = [
-  //         songs[randomIndex], songs[currentIndex]];
-  // }
-  // console.log(songs);
-  // return songs;
 }
 
 function titleEditor(title) {

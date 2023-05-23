@@ -38,7 +38,6 @@ export const StationSong = ({ song, idx }) => {
         <SongTitleAuthor song={song} />
         {/* {song.snippet.title.includes('(') ? <h3>{cutExtraTitle(song.snippet.title)}</h3> : <h3>{song.snippet.title}</h3>} */}
       </div>
-      {/* {console.log(song.createdAt)} */}
       <div className="added-at">
         {utilService.getFormatedDate(new Date(song.createdAt))}
       </div>

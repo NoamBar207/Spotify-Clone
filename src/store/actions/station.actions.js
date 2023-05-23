@@ -1,15 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { localStorageService } from "../../services/local.storage.service";
 import { socketService } from "../../services/socket.service";
 import { stationService } from "../../services/station.service";
-import { userService } from "../../services/user.service";
 import { storageService } from "../../services/async-storage.service";
 
 const YOTUBE_SOURCE = "https://www.youtube.com/embed/";
 
 export function setCurrStation(station) {
-  // console.log('setCurr Station ', station);
-  // socketService.emit(SOCKET_EMIT_STATION_UPDATE, station)
   return async (dispatch) => {
     try {
       const action = { type: "SET_CURR_STATION", station };
@@ -21,17 +17,11 @@ export function setCurrStation(station) {
 }
 
 export function onSaveStation(station) {
-  // socketService.emit(SOCKET_EMIT_STATION_UPDATE, station)
   return async (dispatch) => {
     try {
-      const loggedInUser = await userService.getLoggedinUser();
-      // socketService.emit('station-updated', { station: station, userId: loggedInUser._id })
       const savedStation = await stationService.updateStation(station);
       socketService.emit("station-updated", { station: savedStation });
       return savedStation;
-
-      // const action = { type: 'SAVED_STATION', station: {...savedStation} }
-      // dispatch(action)
     } catch (err) {
       console.log("station: err in saveStation", err);
     }
@@ -40,13 +30,9 @@ export function onSaveStation(station) {
 
 export function setCurrSong(song) {
   return async (dispatch, getState) => {
-    // let currSong
     try {
-      // currSong = YOTUBE_SOURCE+songVideoId
       const action = { type: "SET_CURR_SONG", song };
       dispatch(action);
-      const state = getState();
-      console.log(state);
     } catch (err) {
       console.error("Cannot set currSong", err);
     }
@@ -58,8 +44,6 @@ export function setIsPlaying(isPlaying) {
     try {
       const action = { type: "SET_IS_PLAYING", isPlaying };
       dispatch(action);
-      const state = getState();
-      console.log(state);
     } catch (err) {
       console.error("cannot set isPlaying", err);
     }
@@ -111,23 +95,6 @@ export function setUserLikedSongs(currUser) {
     }
   };
 }
-
-// const onSetUserStations = async () => {
-//     if (currUser.stations?.length) {
-//         try {
-//             let userStations = await Promise.all(
-//                 currUser.stations.map(async (id) => {
-//                     const station = await stationService.getById(id)
-//                     return station
-//                 })
-//             )
-//             dispatch(setUserStation(userStations))
-//         } catch (err) {
-//             console.log('Cannot Load user Stations ', err);
-//         }
-//     }
-//     else dispatch(setUserStation([]))
-// }
 
 export function setUserStations(currUser) {
   return async (dispatch) => {

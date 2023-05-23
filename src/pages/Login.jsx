@@ -75,7 +75,7 @@ export const Login = () => {
       <header className="sign-up-header">
         <span>
           <i
-            class="fa-brands fa-spotify"
+            className="fa-brands fa-spotify"
             style={{ height: "56px", width: "56px" }}
           ></i>{" "}
           Mellofy

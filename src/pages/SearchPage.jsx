@@ -17,8 +17,6 @@ export function SearchPage() {
   ];
   const [stationList, setStationList] = useState({});
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     loadStation();
   });
@@ -27,9 +25,6 @@ export function SearchPage() {
     try {
       const stations = await stationService.query();
       setStationList(stations);
-      // const stateStation = station[0]
-      // dispatch(setCurrStation(station[0]))
-      // await setStation(stateStation)
     } catch {
       console.error("cannot load Stations");
     }

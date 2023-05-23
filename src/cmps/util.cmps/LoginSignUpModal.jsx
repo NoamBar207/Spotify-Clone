@@ -17,7 +17,6 @@ export const LoginSignUpModal = ({ modalRef }) => {
   };
 
   const onLogOutModal = () => {
-    console.log("loggingOut");
     dispatch(onLogout());
     dispatch(setCurrStation({}));
     navigate("/");

@@ -36,7 +36,6 @@ export const MainMenu = () => {
 
     socketService.on("update-station", (station) => {
       getUserOnMenu().then((res) => {
-        console.log(res);
         res.followedStations.forEach((stationId) => {
           if (stationId === station._id) dispatch(onUpdateUser({ ...res }));
         });

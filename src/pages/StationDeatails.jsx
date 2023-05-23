@@ -74,8 +74,6 @@ export function StationDeatails() {
   useEffect(() => {
     socketService.off("update-station");
     socketService.on("update-station", (station) => {
-      // if (currStation._id === station._id) dispatch({ type: 'SET_CURR_STATION', station })
-      console.log(stationId, station._id);
       if (stationId === station._id) setSongsOrder([...station.songs]);
     });
     return () => {
@@ -84,7 +82,6 @@ export function StationDeatails() {
   }, []);
 
   useEffect(() => {
-    console.log("effect");
     loadStation();
     setUpFunc();
     loadUsers();

@@ -67,22 +67,22 @@ h2 {
 
 @include for-tablet-layout {
   .root-cmp {
+    overflow-x: hidden;
     grid-template-columns: 100%;
-    grid-template-rows: calc(100% - 60px) 60px;
+    grid-template-rows: calc(100% - 115px) 60px;
     grid-template-areas:
       "main-content"
       "app-footer";
   }
 }
 
-@include for-mobile-layout {
-  .root-cmp {
-    overflow-x: hidden;
-    // grid-column-gap: 8px;
-    grid-template-columns: 100%;
-    grid-template-rows: calc(100% - 60px) 60px;
-    grid-template-areas:
-      "main-content"
-      "app-footer";
-  }
-}
+// @include for-mobile-layout {
+//   .root-cmp {
+//     // grid-column-gap: 8px;
+//     grid-template-columns: 100%;
+//     grid-template-rows: calc(100% - 60px) 60px;
+//     grid-template-areas:
+//       "main-content"
+//       "app-footer";
+//   }
+// }

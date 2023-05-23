@@ -29,7 +29,6 @@ export const ChatApp = ({
 
     socketService.on("add-msg", ({ subject, cluster }) => {
       if (selectedSubject.subjectName === subject.subjectName) {
-        // console.log('add-msg  ** AppMenu',subject);
         setSelectedSubject({ ...subject });
         if (selectedCluster.name === cluster.name) {
           setSelectedCluster({ ...cluster });
@@ -38,12 +37,8 @@ export const ChatApp = ({
     });
 
     socketService.on("add-question", (obj) => {
-      // console.log('hey');
-      console.log("add-qustion  ** AppMenu", obj);
-      console.log(selectedCluster, selectedSubject);
       if (selectedSubject._id === obj.selectedSubject._id) {
         loadSubjects();
-        // setSelectedSubject({ ...subject })
         if (selectedCluster._id === obj.clusterFromBack._id) {
           setSelectedCluster({ ...obj.clusterFromBack });
         }
@@ -51,7 +46,6 @@ export const ChatApp = ({
     });
 
     socketService.on("add-like", (obj) => {
-      // console.log('like-change  ** selected-msg', obj);
       if (selectedSubject && obj.subject?._id === selectedSubject?._id) {
         setSelectedSubject({ ...obj.subject });
         if (selectedCluster && obj.cluster?._id === selectedCluster?._id) {
@@ -68,7 +62,6 @@ export const ChatApp = ({
   }, []);
 
   useEffect(() => {
-    console.log(Object.keys(currUser).length);
     if (!Object.keys(currUser).length) utilService.onLoadPopUp(popUpRef);
   }, []);
 
@@ -193,7 +186,7 @@ export const ChatApp = ({
             <form className="msg-form" ref={formRef} onSubmit={onSubmit}>
               <input onChange={handleChange} placeholder="Add question" />
               <button className="send-form">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i className="fa-solid fa-arrow-right"></i>
               </button>
             </form>
           </div>

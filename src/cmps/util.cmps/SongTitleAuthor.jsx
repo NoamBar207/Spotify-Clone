@@ -14,6 +14,7 @@ export const SongTitleAuthor = ({ song }) => {
       authorRef.current.classList.add("animate-text");
     else authorRef.current.classList.remove("animate-text");
   }, [song]);
+
   return (
     <div className="title-autor" ref={containerRef}>
       <div className="title">

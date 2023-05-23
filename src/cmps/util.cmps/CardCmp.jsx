@@ -7,7 +7,6 @@ import { setCurrStation } from "../../store/actions/station.actions";
 import { storageService } from "../../services/async-storage.service";
 
 export function CardCmp({ station }) {
-  // console.log(station);
   // const { currSong, isPlaying, currStation } = useSelector((state) => state.stationModule)
   const { currUser } = useSelector((state) => state.userModule);
   const dispatch = useDispatch();
@@ -19,19 +18,9 @@ export function CardCmp({ station }) {
     infoAutorsGetter();
   }, []);
 
-  // useEffect(() => {
-  // console.log(currStation);
-  // }, [currStation])
-
-  const saveToLocalStorage = () => {
-    // if(location.pathname === '/') console.log('hey');
-    storageService.save("homepageStation", station);
-  };
-
   const infoAutorsGetter = () => {
     station?.songs.map((song, idx) => {
       let author = utilService.getAutorName(song);
-      // console.log(author);
       if (idx > 3) return;
       else if (idx === 0) setAutorsState(author);
       else if (idx < 3 && !authorsState.includes(author)) {
