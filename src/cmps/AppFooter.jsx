@@ -13,7 +13,7 @@ import { utilService } from "../services/util.service";
 import { LikeButton } from "./util.cmps/LikeButton";
 import { stationService } from "../services/station.service";
 import { ResponsiveFooter } from "./responsiveLayout/ResponsiveFooter";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SongTitleAuthor } from "./util.cmps/SongTitleAuthor";
 
 export const AppFooter = () => {
@@ -38,7 +38,6 @@ export const AppFooter = () => {
   // let songTimeInterval = useRef(0)
   let intervalId = useRef();
   let appFooterRef = useRef();
-  let songContainerRef = useRef();
 
   const dispatch = useDispatch();
   const opts = {
@@ -209,7 +208,10 @@ export const AppFooter = () => {
     if (window.innerWidth <= 780 && !Object.keys(currSong).length)
       appFooterRef.current.classList.add("hide-player-mobile");
     else appFooterRef.current.classList.remove("hide-player-mobile");
-    if (location.pathname.includes("song"))
+    if (
+      location.pathname.includes("song") &&
+      !location.pathname.includes("likedsongs")
+    )
       appFooterRef.current.classList.add("song-deatails-player");
     else appFooterRef.current.classList.remove("song-deatails-player");
   };
