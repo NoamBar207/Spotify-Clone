@@ -210,14 +210,13 @@ export const AppFooter = () => {
     else appFooterRef.current.classList.remove("hide-player-mobile");
     if (
       location.pathname.includes("song") &&
-      !location.pathname.includes("likedsongs")
+      location.pathname.includes("station") === false
     )
       appFooterRef.current.classList.add("song-deatails-player");
     else appFooterRef.current.classList.remove("song-deatails-player");
   };
 
   // {(window.innerWidth <= 480 && !Object.keys(currSong).length) ? <></> :
-
   return (
     <main>
       <section className="app-footer" ref={appFooterRef} onClick={onAppFooter}>
